@@ -9,6 +9,7 @@ public class GameWindow {
         jFrame.setSize(windowWidth,windowHeight);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.add(gamePanel);
+        jFrame.setLocationRelativeTo(null);//kozepre helyezi az ablakot (ahhoz kepest viszonyitja)
         jFrame.setVisible(true);
     }
 }
