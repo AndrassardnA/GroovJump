@@ -18,20 +18,35 @@ public class KeyboardInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_W:
-                gamePanel.changeYDelta(-5);
-                break;
-            case KeyEvent.VK_A:
-                gamePanel.changeXDelta(-5);
-                break;
-            case KeyEvent.VK_S:
-                gamePanel.changeYDelta(5);
-                break;
-            case KeyEvent.VK_D:
-                gamePanel.changeXDelta(5);
-                break;
+        if(e.getKeyCode()==KeyEvent.VK_W){
+            gamePanel.setYPos(-gamePanel.getYSpeed());
         }
+        if(e.getKeyCode()==KeyEvent.VK_A){
+            gamePanel.setXPos(-gamePanel.getXSpeed());
+        }
+        if(e.getKeyCode()==KeyEvent.VK_S){
+            gamePanel.setYPos(gamePanel.getYSpeed());
+        }
+        if(e.getKeyCode()==KeyEvent.VK_D){
+            gamePanel.setXPos(gamePanel.getXSpeed());
+        }
+/*
+        if(e.getKeyCode()==KeyEvent.VK_W && e.getKeyCode()==KeyEvent.VK_A){
+            gamePanel.setYPos(-gamePanel.getYSpeed()*1.414213f);
+            gamePanel.setXPos(-gamePanel.getXSpeed()*1.414213f);
+        }
+        if(e.getKeyCode()==KeyEvent.VK_W && e.getKeyCode()==KeyEvent.VK_D){
+            gamePanel.setYPos(-gamePanel.getYSpeed()*1.414213f);
+            gamePanel.setXPos(gamePanel.getXSpeed()*1.414213f);
+        }
+        if(e.getKeyCode()==KeyEvent.VK_Y && e.getKeyCode()==KeyEvent.VK_A){
+            gamePanel.setYPos(gamePanel.getYSpeed()*1.414213f);
+            gamePanel.setXPos(-gamePanel.getXSpeed()*1.414213f);
+        }
+        if(e.getKeyCode()==KeyEvent.VK_Y && e.getKeyCode()==KeyEvent.VK_D){
+            gamePanel.setYPos(gamePanel.getYSpeed()*1.414213f);
+            gamePanel.setXPos(gamePanel.getXSpeed()*1.414213f);
+        }*/
     }
 
     @Override
