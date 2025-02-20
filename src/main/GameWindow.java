@@ -4,9 +4,8 @@ import javax.swing.*;
 
 public class GameWindow {
     private JFrame jFrame;
-    public GameWindow(int windowWidth, int windowHeight, GamePanel gamePanel){
+    public GameWindow(GamePanel gamePanel){
         jFrame=new JFrame();
-        jFrame.setSize(windowWidth,windowHeight);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.add(gamePanel);
         jFrame.setLocationRelativeTo(null);//kozepre helyezi az ablakot (ahhoz kepest viszonyitja)
