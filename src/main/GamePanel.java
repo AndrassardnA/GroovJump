@@ -7,16 +7,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    private int fps;
-    private long lastTimeCheck;
     private MouseInputs mouseInputs;
     private float xPos =150, yPos =150;
     private float xSpeed=10, ySpeed=10;
     public GamePanel(){
+        setPanelSize();
         mouseInputs = new MouseInputs(this);
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
+    }
+    private void setPanelSize() {
+        Dimension size = new Dimension(1280,680);
+        setPreferredSize(size);
     }
     public float getXSpeed(){
         return xSpeed;

@@ -14,18 +14,12 @@ public class GameControl implements Runnable{
     public GameControl(){
         gamePanel=new GamePanel();
         gameWindow=new GameWindow(gamePanel);
-        setPanelSize();
         gamePanel.setFocusable(true); // engedélyezi, hogy fókuszolható legyen (fogadhasson inputokat)
         gamePanel.requestFocus(true); // az inputok a gampanelbe fognak menni
         startGameLoop();
     }
 
-    private void setPanelSize() {
-        Dimension size = new Dimension(1600,1000);
-        gamePanel.setMinimumSize(size);
-        gamePanel.setPreferredSize(size);
-        gamePanel.setMaximumSize(size);
-    }
+
 
     @Override
     public void run() {
