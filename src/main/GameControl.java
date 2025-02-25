@@ -7,9 +7,13 @@ public class GameControl implements Runnable{
     private GamePanel gamePanel;
     private  Thread gameLoop;
     private final int FPS_SET=120;
+    private final int UPS_SET=200;
     private void startGameLoop(){
         gameLoop= new Thread(this);
         gameLoop.run();
+    }
+    private void update(){
+        gamePanel.updateGame();
     }
     public GameControl(){
         gamePanel=new GamePanel();
@@ -24,13 +28,28 @@ public class GameControl implements Runnable{
     @Override
     public void run() {
         double timePerFrame= 1000000000.0/FPS_SET;
-        long now=System.nanoTime();
-        long lastFrame=now;
+        double timePerUpdate= 1000000000.0/UPS_SET;
+
+        long currentTime=System.nanoTime();
+        long previousTime=System.nanoTime();
+
+        double deltaU=0;
+        double deltaF=0;
+
         while(true){
-            now=System.nanoTime();
-            if(now-lastFrame>=timePerFrame){
+            currentTime=System.nanoTime();
+
+            deltaU+=(currentTime-previousTime)/timePerUpdate;
+            deltaF+=(currentTime-previousTime)/timePerFrame;
+            previousTime=currentTime;
+
+            if(deltaU>=1){
+                update();
+                deltaU-=1;
+            }
+            if(deltaF>=1){
                 gamePanel.repaint();
-                lastFrame=now;
+                deltaF-=1;
             }
         }
     }
