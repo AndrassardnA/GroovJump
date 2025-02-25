@@ -33,14 +33,8 @@ public class GamePanel extends JPanel {
     public void setYPos(float value){
         yPos +=value;
     }
-    public void setRectPos(float x,float y){
-        xPos =x;
-        yPos =y;
-
-    }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.fillRect((int)xPos, (int)yPos,100,100);
     }
 }
