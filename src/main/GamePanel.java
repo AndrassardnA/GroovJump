@@ -19,12 +19,17 @@ public class GamePanel extends JPanel {
 
     public GamePanel(){
         setPanelSize();
-        player=new Player(100,100);
+        initClasses();
         mouseInputs = new MouseInputs(player);
         addKeyListener(new KeyboardInputs(player));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
     }
+
+    private void initClasses() {
+        player=new Player(100,100);
+    }
+
     private void setPanelSize() {
         Dimension size = new Dimension(1280,680);
         setPreferredSize(size);
