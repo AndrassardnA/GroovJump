@@ -112,6 +112,14 @@ public class Player extends  Entity{
         }
     }
 
+    //OTHER
+    public void stopMoving(){
+        up=false;
+        down=false;
+        left=false;
+        right=false;
+    }
+
     //BOOLEAN SETTERS
     public void setUp(boolean up) {
         this.up = up;

@@ -38,6 +38,9 @@ public class GamePanel extends JPanel {
     public void updateGame(){
         player.update();
     }
+    public Player getPlayer(){
+        return player;
+    }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         player.render(g);
