@@ -1,16 +1,16 @@
 package Inputs;
 
+import entityes.Player;
 import main.GamePanel;
 
-import javax.swing.event.MouseInputListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
-    private GamePanel gamePanel;
-    public MouseInputs(GamePanel gp){
-        this.gamePanel=gp;
+    private Player player;
+    public MouseInputs(Player p){
+        this.player =p;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
