@@ -21,16 +21,16 @@ public class KeyboardInputs implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){
             case KeyEvent.VK_W:
-                player.setDirection(UP);
+                player.setUp(true);
                 break;
             case KeyEvent.VK_D:
-                player.setDirection(RIGHT);
+                player.setRight(true);
                 break;
             case KeyEvent.VK_S:
-                player.setDirection(DOWN);
+                player.setDown(true);
                 break;
             case KeyEvent.VK_A:
-                player.setDirection(LEFT);
+                player.setLeft(true);
                 break;
         }
     }
@@ -39,10 +39,16 @@ public class KeyboardInputs implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()){
             case KeyEvent.VK_W:
+                player.setUp(false);
+                break;
             case KeyEvent.VK_D:
+                player.setRight(false);
+                break;
             case KeyEvent.VK_S:
+                player.setDown(false);
+                break;
             case KeyEvent.VK_A:
-                player.isMoving(false);
+                player.setLeft(false);
                 break;
         }
     }
