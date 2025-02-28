@@ -32,6 +32,9 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_A:
                 player.setLeft(true);
                 break;
+            case KeyEvent.VK_SPACE:
+                player.setJump(true);
+                break;
         }
     }
 

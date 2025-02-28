@@ -23,7 +23,7 @@ public class Player extends  Entity{
     private boolean moving=false;
     private int turningMod =1; //1 if facing right -1 if facing left
     private int turningPositionCorrection =0; //correct the position while mirroring
-    private boolean up,down,right,left;
+    private boolean up,down,right,left,jump;
 
     //CONSTRUCTOR
     public Player(float x, float y) {
@@ -76,6 +76,10 @@ public class Player extends  Entity{
             animIndex++;
             if(animIndex>=getSpritesAmount(action)){
                 animIndex=0;
+                //jump off
+                if(action==JUMP){
+                    jump=false;
+                }
             }
         }
     }
@@ -85,6 +89,9 @@ public class Player extends  Entity{
         }
         else {
             action =IDLE;
+        }
+        if(jump){
+        action=JUMP;
         }
     }
     private void updatePos(){
@@ -118,6 +125,7 @@ public class Player extends  Entity{
         down=false;
         left=false;
         right=false;
+        jump=false;
     }
 
     //BOOLEAN SETTERS
@@ -135,5 +143,12 @@ public class Player extends  Entity{
 
     public void setLeft(boolean left) {
         this.left = left;
+    }
+    public void setJump(boolean jump){
+        //set anim index zero to start jump
+        if(!this.jump && jump){
+            animIndex=0;
+        }
+        this.jump=jump;
     }
 }
