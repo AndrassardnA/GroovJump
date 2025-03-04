@@ -8,6 +8,9 @@ public class GameControl implements Runnable{
     private  Thread gameLoop;
     private final int FPS_SET=120;
     private final int UPS_SET=200;
+    public final static int TILE_DEFAULT_SIZE=16;
+    public final static float SCALE=8f;
+    public final static int TILE_SIZE=(int)(SCALE*TILE_DEFAULT_SIZE);
     private void startGameLoop(){
         gameLoop= new Thread(this);
         gameLoop.run();

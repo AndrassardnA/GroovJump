@@ -1,5 +1,6 @@
 package entityes;
 
+import main.GameControl;
 import utilz.LoadSave;
 
 import javax.imageio.ImageIO;
@@ -25,6 +26,8 @@ public class Player extends  Entity{
     private int turningMod =1; //1 if facing right -1 if facing left
     private int turningPositionCorrection =0; //correct the position while mirroring
     private boolean up,down,right,left,jump;
+    private int playerWidth=16;
+    private int playerHeight=16;
 
     //CONSTRUCTOR
     public Player(float x, float y) {
@@ -39,7 +42,7 @@ public class Player extends  Entity{
         updateAnimLoop();
     }
     public void render(Graphics g){
-        g.drawImage(animations[action][animIndex],(int)x+turningPositionCorrection,(int)y,128*turningMod,128,null);
+        g.drawImage(animations[action][animIndex],(int)x+(int)(playerWidth* GameControl.SCALE*turningPositionCorrection),(int)y,(int)(playerWidth* GameControl.SCALE)*turningMod,(int)(playerHeight* GameControl.SCALE),null);
     }
 
     //LOADERS
@@ -84,7 +87,7 @@ public class Player extends  Entity{
         if(left && !right){
             x-=speed;
             turningMod=-1;
-            turningPositionCorrection=128;
+            turningPositionCorrection=1;
         } else if (right && !left) {
             x+=speed;
             turningMod=1;
