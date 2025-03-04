@@ -44,7 +44,7 @@ public class Player extends  Entity{
 
     //LOADERS
     private void loadAnimation() {
-            BufferedImage img= LoadSave.getPlayerSprite();
+            BufferedImage img= LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
             animations=new BufferedImage[4][8];
             for (int i=0; i< animations.length;i++){
                 for (int j=0; j<animations[i].length;j++){
