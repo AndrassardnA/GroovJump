@@ -1,5 +1,7 @@
 package entityes;
 
+import utilz.LoadSave;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +13,6 @@ import static utilz.Constants.Directions.LEFT;
 import static utilz.Constants.PlayerConstants.*;
 
 public class Player extends  Entity{
-
     private BufferedImage[][] animations;
     private int animTimer=0; //incrases by frame;
     private int animIndex, animSpeed=120/6; //means 120/(120/x) means x frames per second
@@ -43,28 +44,13 @@ public class Player extends  Entity{
 
     //LOADERS
     private void loadAnimation() {
-        InputStream is = getClass().getResourceAsStream("/sprites/test_Player_sprite2.png");
-        try {
-            BufferedImage img= ImageIO.read(is);
+            BufferedImage img= LoadSave.getPlayerSprite();
             animations=new BufferedImage[4][8];
             for (int i=0; i< animations.length;i++){
                 for (int j=0; j<animations[i].length;j++){
                     animations[i][j]=img.getSubimage(j*16,i*16,16,16);
                 }
             }
-
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                is.close();
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     //TO UPDATE
