@@ -51,9 +51,14 @@ public class LevelManager {
             for(int j=0; j<testLevel.getMap()[i].length;j++){
                 if(testLevel.getMap()[i][j]<9){
                     g.drawImage(platformSprite[testLevel.getMap()[i][j]],j*GameControl.TILE_SIZE,i*GameControl.TILE_SIZE, GameControl.TILE_SIZE,GameControl.TILE_SIZE,null);
+                    drawHitbox(j*GameControl.TILE_SIZE,i*GameControl.TILE_SIZE,GameControl.TILE_SIZE,GameControl.TILE_SIZE,g);
                 }
             }
         }
+    }
+    private void drawHitbox(int x, int y, int width, int height, Graphics g){
+        g.setColor(Color.RED);
+        g.drawRect(x,y,width,height);
     }
     public void update(){}
 }

@@ -1,5 +1,7 @@
 package levels;
 
+import java.awt.*;
+
 public class Level {
     private int[][] map;
     public Level(int[][] map){

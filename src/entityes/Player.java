@@ -26,23 +26,29 @@ public class Player extends  Entity{
     private int turningMod =1; //1 if facing right -1 if facing left
     private int turningPositionCorrection =0; //correct the position while mirroring
     private boolean up,down,right,left,jump;
-    private int playerWidth=16;
-    private int playerHeight=16;
+    private static final int PLAYER_DEFAULT_HEIGHT=16;
+    private static final int PLAYER_DEFAULT_WIDTH=16;
+    private float height, width;
 
     //CONSTRUCTOR
     public Player(float x, float y) {
-        super(x, y);
+        super(x, y,(int)(PLAYER_DEFAULT_WIDTH*GameControl.SCALE), (int)(PLAYER_DEFAULT_HEIGHT*GameControl.SCALE));
+        height=PLAYER_DEFAULT_HEIGHT*GameControl.SCALE;
+        width=PLAYER_DEFAULT_WIDTH*GameControl.SCALE;
         loadAnimation();
     }
 
     //UPDATE AND RENDER
     public void update(){
         updatePos();
+        updateHitbox();
         setAnimation();
         updateAnimLoop();
+
     }
     public void render(Graphics g){
-        g.drawImage(animations[action][animIndex],(int)x+(int)(playerWidth* GameControl.SCALE*turningPositionCorrection),(int)y,(int)(playerWidth* GameControl.SCALE)*turningMod,(int)(playerHeight* GameControl.SCALE),null);
+        g.drawImage(animations[action][animIndex],(int)x+(int)(width*turningPositionCorrection),(int)y,(int)(width*turningMod),(int)(height),null);
+        drawHitbox(g);
     }
 
     //LOADERS
@@ -115,6 +121,9 @@ public class Player extends  Entity{
         left=false;
         right=false;
         jump=false;
+    }
+    private void detectCollision(){
+
     }
 
     //BOOLEAN SETTERS
