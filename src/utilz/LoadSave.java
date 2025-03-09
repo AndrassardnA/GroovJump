@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 public class LoadSave {
     public static final String PLAYER_SPRITE="sprites/test_Player_sprite2.png";
+    public static final String PLATFORM_SPRITE="sprites/ground_test_sprite.png";
     public static BufferedImage getSprite(String filePath){
         BufferedImage img=null;
         InputStream is = LoadSave.class.getResourceAsStream("/" + filePath);
