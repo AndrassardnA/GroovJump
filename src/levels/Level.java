@@ -1,13 +1,19 @@
 package levels;
 
+import main.GameControl;
+import utilz.LoadSave;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Level {
-    private int[][] map;
-    public Level(int[][] map){
-        this.map=map;
+    private Platform[] platforms;
+
+    public Level(Platform[] platforms) {
+        this.platforms = platforms;
     }
-    public int[][] getMap(){
-        return map;
+    public Platform[] getPlatforms(){
+        return platforms;
     }
+
 }

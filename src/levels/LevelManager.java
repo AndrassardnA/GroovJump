@@ -11,54 +11,42 @@ public class LevelManager {
     private GamePanel gamePanel;
     private BufferedImage platformSprite[];
     private Level testLevel;
-    private int[][] testMap= {
-            {9,9,9,9,9,9,9,9,9,9},
-            {9,9,9,9,9,9,9,9,9,9},
-            {9,9,9,9,9,9,2,0,0,0},
-            {9,9,9,9,9,9,9,9,9,9},
-            {0,0,0,0,0,0,0,0,0,0},
-            {1,1,1,1,1,1,1,1,1,1}
-    };
+    private Platform platform0=new Platform(0,0,4,1);
+    private Platform platform1=new Platform(7,4,8,3);
+    private Platform platform2=new Platform(0,8,2,2);
+    private  Platform platform3=new Platform(2,2,2,4);
+    private Platform[] platforms = {platform0,platform1,platform2,platform3};
 
     public LevelManager(GamePanel game){
         this.gamePanel =game;
-        //platformSprite=LoadSave.getSprite(LoadSave.PLATFORM_SPRITE);
         loadOutSideImg();
         loadLevels();
     }
     private void loadLevels(){
-        testLevel=new Level(testMap);
+        testLevel=new Level(platforms);
     }
     private void loadOutSideImg() {
         BufferedImage img =LoadSave.getSprite(LoadSave.PLATFORM_SPRITE);
-        platformSprite=new BufferedImage[9];
+        platformSprite=new BufferedImage[12];
         for(int i=0; i<3;i++){
             for(int j=0; j<4;j++){
                 int index=i*4+j;
-                if(index>=9){
-                   // break;
-                }else{
                     platformSprite[index]=img.getSubimage(j*GameControl.TILE_DEFAULT_SIZE,i*GameControl.TILE_DEFAULT_SIZE,GameControl.TILE_DEFAULT_SIZE,GameControl.TILE_DEFAULT_SIZE);
-                }
-
             }
         }
     }
-
+    public void drawPlatform(Graphics g, Platform p){
+        for(int i=0; i<p.getHeight();i++){
+            for(int j=0; j<p.getWidth();j++){
+                g.drawImage(platformSprite[p.getBody()[i][j]],p.getPosX()+j*GameControl.TILE_SIZE,p.getPosY()+i*GameControl.TILE_SIZE,GameControl.TILE_SIZE,GameControl.TILE_SIZE,null);
+            }
+        }
+    }
     public void draw(Graphics g){
-        //g.drawImage(platformSprite[8],0,0, GameControl.TILE_SIZE,GameControl.TILE_SIZE,null);
-        for (int i=0;i< testLevel.getMap().length;i++){
-            for(int j=0; j<testLevel.getMap()[i].length;j++){
-                if(testLevel.getMap()[i][j]<9){
-                    g.drawImage(platformSprite[testLevel.getMap()[i][j]],j*GameControl.TILE_SIZE,i*GameControl.TILE_SIZE, GameControl.TILE_SIZE,GameControl.TILE_SIZE,null);
-                    drawHitbox(j*GameControl.TILE_SIZE,i*GameControl.TILE_SIZE,GameControl.TILE_SIZE,GameControl.TILE_SIZE,g);
-                }
-            }
+        for (int i=0;i<testLevel.getPlatforms().length;i++){
+            drawPlatform(g,testLevel.getPlatforms()[i]);
         }
     }
-    private void drawHitbox(int x, int y, int width, int height, Graphics g){
-        g.setColor(Color.RED);
-        g.drawRect(x,y,width,height);
-    }
+
     public void update(){}
 }
