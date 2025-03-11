@@ -30,6 +30,7 @@ public class Player extends  Entity{
     private Level level;
     private boolean feetCollision, headCollision, rightCollision, leftCollision;
     private float yVel=0;
+    private float jumpPower=5;
     private float fallingSpeed=0.08f;
     private boolean onGround;
 
@@ -62,6 +63,7 @@ public class Player extends  Entity{
     //UPDATE AND RENDER
     public void update(){
         gravity();
+        jump();
         updatePos();
         updateHitbox();
         detectCollision();
@@ -106,9 +108,6 @@ public class Player extends  Entity{
         }
         else {
             action =IDLE;
-        }
-        if(jump){
-        action=JUMP;
         }
     }
     private void updatePos(){
@@ -181,6 +180,14 @@ public class Player extends  Entity{
             yVel=0;
         }
     }
+    private void jump(){
+        if(jump && onGround){
+            yVel=jumpPower;
+        }
+        if(yVel<0){
+            jump=false;
+        }
+    }
 
     //BOOLEAN SETTERS
     public void setUp(boolean up) {
@@ -199,10 +206,6 @@ public class Player extends  Entity{
         this.left = left;
     }
     public void setJump(boolean jump){
-        //set anim index zero to start jump
-        if(!this.jump && jump){
-            animIndex=0;
-        }
         this.jump=jump;
     }
 }
