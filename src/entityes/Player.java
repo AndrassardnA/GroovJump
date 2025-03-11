@@ -120,19 +120,18 @@ public class Player extends  Entity{
             turningMod=1;
             turningPositionCorrection=0;
         }
-
+        //no need for this functions jet
         if (up && !down && !headCollision){
-            y-=speed;
+            //y-=speed;
         }
         else if(down && !up && !feetCollision){
-            y+=speed;
+           // y+=speed;
         }
 
         if((up||down)&&(left||right)){
-            speed=speedSqrRootTwo;
+           // speed=speedSqrRootTwo;
         }else{
-            speed=normalspeed;
-
+           // speed=normalspeed;
         }
         y-=yVel;
     }
