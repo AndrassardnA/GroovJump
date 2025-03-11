@@ -52,7 +52,6 @@ public class Player extends  Entity{
         detectCollision();
         setAnimation();
         updateAnimLoop();
-
     }
     public void render(Graphics g){
         g.drawImage(animations[action][animIndex],(int)x+(int)(width*turningPositionCorrection),(int)y,(int)(width*turningMod),(int)(height),null);
@@ -119,6 +118,7 @@ public class Player extends  Entity{
             speed=speedSqrRootTwo;
         }else{
             speed=normalspeed;
+
         }
     }
 
@@ -131,34 +131,24 @@ public class Player extends  Entity{
         jump=false;
     }
     private void detectCollision(){
+        feetCollision=false;
+        headCollision=false;
+        bodyCollisionRight=false;
+        bodyCollisionLeft=false;
         for (Platform p: level.getPlatforms()){
             if(hitboxFeet.intersects(p.getBounds())){
                 feetCollision=true;
             }
-            else {
-                feetCollision=false;
-            }
             if(hitboxHead.intersects(p.getBounds())){
                 headCollision=true;
-            }
-            else {
-                headCollision=false;
             }
             if(hitboxBody.intersects(p.getBounds())){
                 if(right){
                     bodyCollisionRight=true;
                 }
-                else {
-                    bodyCollisionRight=false;
-                }
                 if(left){
                     bodyCollisionLeft=true;
                 }
-                else bodyCollisionLeft=false;
-            }
-            else {
-                bodyCollisionLeft=false;
-                bodyCollisionRight=false;
             }
         }
     }
