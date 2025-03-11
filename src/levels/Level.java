@@ -1,11 +1,4 @@
 package levels;
-
-import main.GameControl;
-import utilz.LoadSave;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 public class Level {
     private Platform[] platforms;
 
@@ -15,5 +8,4 @@ public class Level {
     public Platform[] getPlatforms(){
         return platforms;
     }
-
 }

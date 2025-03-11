@@ -90,7 +90,6 @@ public class Platform {
     public int getWidth() {
         return body[0].length;
     }
-
     public int[][] getBody() {
         return body;
     }

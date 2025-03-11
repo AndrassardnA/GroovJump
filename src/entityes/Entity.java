@@ -12,10 +12,10 @@ public abstract class Entity {
         this.y=y;
         this.width=width;
         this.height=height;
-        initHitbox();
+        initHitboxes();
     }
 
-    private void initHitbox() {
+    private void initHitboxes() {
         modLeftHitx=0;
         modLeftHity=5;
         modRightHitx=width-5;

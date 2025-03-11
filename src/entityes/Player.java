@@ -12,27 +12,30 @@ import static utilz.Constants.PlayerConstants.*;
 
 
 public class Player extends  Entity{
+    //ANIMATION
     private BufferedImage[][] animations;
     private int animTimer=0; //incrases by frame;
     private int animIndex, animSpeed=120/6; //means 120/(120/x) means x frames per second
     private int action =RUN;
+    //MOVEMENT
     private float speed=2;
-    private float normalspeed=speed;
-    private float speedSqrRootTwo=speed/1.4142f;
-    private int direction =-1;
-    private boolean moving=false;
-    private int turningMod =1; //1 if facing right -1 if facing left
-    private int turningPositionCorrection =0; //correct the position while mirroring
-    private boolean up,down,right,left,jump;
-    private static final int PLAYER_DEFAULT_HEIGHT=16;
-    private static final int PLAYER_DEFAULT_WIDTH=16;
-    private float height, width;
-    private Level level;
-    private boolean feetCollision, headCollision, rightCollision, leftCollision;
     private float yVel=0;
     private float jumpPower=5;
     private float fallingSpeed=0.08f;
     private boolean onGround;
+    private boolean up,down,right,left,jump;
+    //RENDER
+    private int direction =-1;
+    private boolean moving=false;
+    private int turningMod =1; //1 if facing right -1 if facing left
+    private int turningPositionCorrection =0; //correct the position while mirroring
+    private static final int PLAYER_DEFAULT_HEIGHT=16;
+    private static final int PLAYER_DEFAULT_WIDTH=16;
+    private float height, width;
+    //COLLISION
+    private Level level;
+    private boolean feetCollision, headCollision, rightCollision, leftCollision;
+
 
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
@@ -169,7 +172,7 @@ public class Player extends  Entity{
             }
         }
     }
-    //GRAVITY
+    //GRAVITY && JUMP
 
     private void gravity(){
         if(!onGround&&!up){
@@ -192,15 +195,12 @@ public class Player extends  Entity{
     public void setUp(boolean up) {
         this.up = up;
     }
-
     public void setDown(boolean down) {
         this.down = down;
     }
-
     public void setRight(boolean right) {
         this.right = right;
     }
-
     public void setLeft(boolean left) {
         this.left = left;
     }
