@@ -11,11 +11,11 @@ public class LevelManager {
     private GamePanel gamePanel;
     private BufferedImage platformSprite[];
     private Level testLevel;
-    private Platform platform0=new Platform(0,0,4,1);
-    private Platform platform1=new Platform(7,4,8,3);
-    private Platform platform2=new Platform(0,8,2,2);
-    private  Platform platform3=new Platform(2,2,2,4);
-    private Platform[] platforms = {platform0,platform1,platform2,platform3};
+    private Platform platform0=new Platform(0,9,16,1);
+    private Platform platform1=new Platform(13,8,5,4);
+    private Platform platform2=new Platform(0,0,16,2);
+    //private  Platform platform3=new Platform(2,2,0,0);
+    private Platform[] platforms = {platform0,platform1,platform2,/*platform3*/};
 
     public LevelManager(GamePanel game){
         this.gamePanel =game;

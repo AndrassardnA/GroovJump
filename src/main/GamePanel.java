@@ -30,7 +30,7 @@ public class GamePanel extends JPanel {
 
     private void initClasses() {
         levelManager=new LevelManager(this);
-        player=new Player(500,100, levelManager.getCurrentLevel());
+        player=new Player(500,500, levelManager.getCurrentLevel());
     }
 
     private void setPanelSize() {

@@ -29,6 +29,9 @@ public class Player extends  Entity{
     private float height, width;
     private Level level;
     private boolean feetCollision, headCollision, rightCollision, leftCollision;
+    private float yVel=0;
+    private float fallingSpeed=0.08f;
+    private boolean onGround;
 
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
@@ -58,6 +61,7 @@ public class Player extends  Entity{
 
     //UPDATE AND RENDER
     public void update(){
+        gravity();
         updatePos();
         updateHitbox();
         detectCollision();
@@ -131,6 +135,7 @@ public class Player extends  Entity{
             speed=normalspeed;
 
         }
+        y-=yVel;
     }
 
     //OTHER
@@ -146,9 +151,11 @@ public class Player extends  Entity{
         headCollision=false;
         rightCollision =false;
         leftCollision =false;
+        onGround=false;
         for (Platform p: level.getPlatforms()){
             if(hitboxFeet.intersects(p.getBounds())){
                 feetCollision=true;
+                onGround=true;
             }
             if(hitboxHead.intersects(p.getBounds())){
                 headCollision=true;
@@ -159,6 +166,19 @@ public class Player extends  Entity{
             if(hitboxRight.intersects(p.getBounds())){
                 rightCollision=true;
             }
+            if(hitboxFeet.intersects(p.getBounds())&&(hitboxLeft.intersects(p.getBounds())||hitboxRight.intersects(p.getBounds()))){ //againts stucking in ground
+                y-=1;
+            }
+        }
+    }
+    //GRAVITY
+
+    private void gravity(){
+        if(!onGround&&!up){
+            yVel-=fallingSpeed;
+        }
+        else{
+            yVel=0;
         }
     }
 
