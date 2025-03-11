@@ -37,6 +37,23 @@ public class Player extends  Entity{
         width=PLAYER_DEFAULT_WIDTH*GameControl.SCALE;
         this.level=level;
         loadAnimation();
+        setHitboxes();
+    }
+
+    private void setHitboxes() {
+        modLeftHitx=(int)width/8;
+        modLeftHity=(int)height/2+5;
+        modRightHitx=(int)width-(int)width/8-5;
+        modRightHity=(int)height/2+5;
+        modHeadHitx=(int)width/8+5;
+        modHeadHity=(int)height/2;
+        modFeetHitx=(int)width/8+5;
+        modFeetHity=(int)height-5;
+
+        hitboxLeft=new Rectangle((int)x+modLeftHitx,(int)y+modLeftHity,5,(int)height/2-10);
+        hitboxRight=new Rectangle((int)x+modRightHitx,(int)y+modRightHity,5,(int)height/2-10);
+        hitboxHead=new Rectangle((int)x+modHeadHitx,(int)y+modHeadHity,(int)width-2*((int)width/8)-10,5);
+        hitboxFeet=new Rectangle((int)x+modFeetHitx,(int)y+modFeetHity,(int)width-2*((int)width/8)-10,5);
     }
 
     //UPDATE AND RENDER

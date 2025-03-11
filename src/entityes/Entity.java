@@ -6,6 +6,7 @@ public abstract class Entity {
     protected float x,y;
     protected int width, height;
     protected Rectangle hitboxRight, hitboxLeft,  hitboxFeet, hitboxHead;
+    protected int modRightHitx, modRightHity, modLeftHitx, modLeftHity,modFeetHitx,modFeetHity, modHeadHitx,modHeadHity;
     public Entity(float x, float y,int width,int height){
         this.x=x;
         this.y=y;
@@ -15,23 +16,32 @@ public abstract class Entity {
     }
 
     private void initHitbox() {
-        hitboxLeft=new Rectangle((int)x,(int)y+5,5,height-10);
-        hitboxRight=new Rectangle((int)x+width-5,(int)y+5,5,height-10);
-        hitboxHead=new Rectangle((int)x+3,(int)y,width-6,5);
-        hitboxFeet=new Rectangle((int)x+3,(int)y+height-5,width-6,5);
+        modLeftHitx=0;
+        modLeftHity=5;
+        modRightHitx=width-5;
+        modRightHity=5;
+        modHeadHitx=3;
+        modHeadHity=0;
+        modFeetHitx=3;
+        modFeetHity=height-5;
+
+        hitboxLeft=new Rectangle((int)x+modLeftHitx,(int)y+modLeftHity,5,height-10);
+        hitboxRight=new Rectangle((int)x+modRightHitx,(int)y+modRightHity,5,height-10);
+        hitboxHead=new Rectangle((int)x+modHeadHitx,(int)y+modHeadHity,width-6,5);
+        hitboxFeet=new Rectangle((int)x+modFeetHitx,(int)y+modFeetHity,width-6,5);
     }
     protected void updateHitbox(){
-        hitboxRight.x=(int)x+width-5;
-        hitboxRight.y=(int)y+5;
+        hitboxRight.x=(int)x+modRightHitx;
+        hitboxRight.y=(int)y+modRightHity;
 
-        hitboxLeft.x=(int)x;
-        hitboxLeft.y=(int)y+5;
+        hitboxLeft.x=(int)x+modLeftHitx;
+        hitboxLeft.y=(int)y+modLeftHity;
 
-        hitboxHead.x=(int)x+3;
-        hitboxHead.y=(int)y;
+        hitboxHead.x=(int)x+modHeadHitx;
+        hitboxHead.y=(int)y+modHeadHity;
 
-        hitboxFeet.x=(int)x+3;
-        hitboxFeet.y=(int)y+height-5;
+        hitboxFeet.x=(int)x+modFeetHitx;
+        hitboxFeet.y=(int)y+modFeetHity;
     }
     public Rectangle getHitboxLeft(){
         return hitboxLeft;
@@ -55,4 +65,5 @@ public abstract class Entity {
 
         g.drawRect(hitboxFeet.x, hitboxFeet.y, hitboxFeet.width, hitboxFeet.height);
     }
+
 }
