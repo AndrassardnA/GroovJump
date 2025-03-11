@@ -1,7 +1,10 @@
 package entityes;
 
+import levels.LevelManager;
+import levels.Platform;
 import main.GameControl;
 import utilz.LoadSave;
+import levels.Level;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,6 +15,7 @@ import java.io.InputStream;
 import static utilz.Constants.Directions.*;
 import static utilz.Constants.Directions.LEFT;
 import static utilz.Constants.PlayerConstants.*;
+
 
 public class Player extends  Entity{
     private BufferedImage[][] animations;
@@ -29,12 +33,15 @@ public class Player extends  Entity{
     private static final int PLAYER_DEFAULT_HEIGHT=16;
     private static final int PLAYER_DEFAULT_WIDTH=16;
     private float height, width;
+    private Level level;
+    private boolean feetCollision, headCollision, bodyCollisionRight, bodyCollisionLeft;
 
     //CONSTRUCTOR
-    public Player(float x, float y) {
+    public Player(float x, float y, Level level) {
         super(x, y,(int)(PLAYER_DEFAULT_WIDTH*GameControl.SCALE), (int)(PLAYER_DEFAULT_HEIGHT*GameControl.SCALE));
         height=PLAYER_DEFAULT_HEIGHT*GameControl.SCALE;
         width=PLAYER_DEFAULT_WIDTH*GameControl.SCALE;
+        this.level=level;
         loadAnimation();
     }
 
@@ -42,6 +49,7 @@ public class Player extends  Entity{
     public void update(){
         updatePos();
         updateHitbox();
+        detectCollision();
         setAnimation();
         updateAnimLoop();
 
@@ -90,20 +98,20 @@ public class Player extends  Entity{
         }
     }
     private void updatePos(){
-        if(left && !right){
+        if(left && !right && !bodyCollisionLeft){
             x-=speed;
             turningMod=-1;
             turningPositionCorrection=1;
-        } else if (right && !left) {
+        } else if (right && !left && !bodyCollisionRight) {
             x+=speed;
             turningMod=1;
             turningPositionCorrection=0;
         }
 
-        if (up && !down){
+        if (up && !down && !headCollision){
             y-=speed;
         }
-        else if(down && !up){
+        else if(down && !up && !feetCollision){
             y+=speed;
         }
 
@@ -123,7 +131,36 @@ public class Player extends  Entity{
         jump=false;
     }
     private void detectCollision(){
-
+        for (Platform p: level.getPlatforms()){
+            if(hitboxFeet.intersects(p.getBounds())){
+                feetCollision=true;
+            }
+            else {
+                feetCollision=false;
+            }
+            if(hitboxHead.intersects(p.getBounds())){
+                headCollision=true;
+            }
+            else {
+                headCollision=false;
+            }
+            if(hitboxBody.intersects(p.getBounds())){
+                if(right){
+                    bodyCollisionRight=true;
+                }
+                else {
+                    bodyCollisionRight=false;
+                }
+                if(left){
+                    bodyCollisionLeft=true;
+                }
+                else bodyCollisionLeft=false;
+            }
+            else {
+                bodyCollisionLeft=false;
+                bodyCollisionRight=false;
+            }
+        }
     }
 
     //BOOLEAN SETTERS

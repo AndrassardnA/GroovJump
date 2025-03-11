@@ -2,6 +2,8 @@ package levels;
 
 import main.GameControl;
 
+import java.awt.*;
+
 public class Platform {
     private int posX;
     private int posY;
@@ -91,5 +93,8 @@ public class Platform {
 
     public int[][] getBody() {
         return body;
+    }
+    public Rectangle getBounds(){
+        return new Rectangle(posX,posY,body[0].length*GameControl.TILE_SIZE,body.length*GameControl.TILE_SIZE);
     }
 }

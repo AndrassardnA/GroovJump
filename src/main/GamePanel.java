@@ -26,11 +26,11 @@ public class GamePanel extends JPanel {
         addKeyListener(new KeyboardInputs(player));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
-        levelManager=new LevelManager(this);
     }
 
     private void initClasses() {
-        player=new Player(100,100);
+        levelManager=new LevelManager(this);
+        player=new Player(500,100, levelManager.getCurrentLevel());
     }
 
     private void setPanelSize() {

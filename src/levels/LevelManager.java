@@ -42,9 +42,16 @@ public class LevelManager {
             }
         }
     }
+
+    public Level getCurrentLevel(){
+        return testLevel;
+    }
     public void draw(Graphics g){
         for (int i=0;i<testLevel.getPlatforms().length;i++){
             drawPlatform(g,testLevel.getPlatforms()[i]);
+            //for debug
+            g.setColor(Color.RED);
+            g.drawRect(testLevel.getPlatforms()[i].getBounds().x,testLevel.getPlatforms()[i].getBounds().y,testLevel.getPlatforms()[i].getBounds().width,testLevel.getPlatforms()[i].getBounds().height);
         }
     }
 
