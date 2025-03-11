@@ -1,19 +1,13 @@
 package entityes;
 
-import levels.LevelManager;
 import levels.Platform;
 import main.GameControl;
 import utilz.LoadSave;
 import levels.Level;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
-import static utilz.Constants.Directions.*;
-import static utilz.Constants.Directions.LEFT;
 import static utilz.Constants.PlayerConstants.*;
 
 
@@ -34,7 +28,7 @@ public class Player extends  Entity{
     private static final int PLAYER_DEFAULT_WIDTH=16;
     private float height, width;
     private Level level;
-    private boolean feetCollision, headCollision, bodyCollisionRight, bodyCollisionLeft;
+    private boolean feetCollision, headCollision, rightCollision, leftCollision;
 
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
@@ -97,11 +91,11 @@ public class Player extends  Entity{
         }
     }
     private void updatePos(){
-        if(left && !right && !bodyCollisionLeft){
+        if(left && !right && !leftCollision){
             x-=speed;
             turningMod=-1;
             turningPositionCorrection=1;
-        } else if (right && !left && !bodyCollisionRight) {
+        } else if (right && !left && !rightCollision) {
             x+=speed;
             turningMod=1;
             turningPositionCorrection=0;
@@ -133,8 +127,8 @@ public class Player extends  Entity{
     private void detectCollision(){
         feetCollision=false;
         headCollision=false;
-        bodyCollisionRight=false;
-        bodyCollisionLeft=false;
+        rightCollision =false;
+        leftCollision =false;
         for (Platform p: level.getPlatforms()){
             if(hitboxFeet.intersects(p.getBounds())){
                 feetCollision=true;
@@ -142,13 +136,11 @@ public class Player extends  Entity{
             if(hitboxHead.intersects(p.getBounds())){
                 headCollision=true;
             }
-            if(hitboxBody.intersects(p.getBounds())){
-                if(right){
-                    bodyCollisionRight=true;
-                }
-                if(left){
-                    bodyCollisionLeft=true;
-                }
+            if(hitboxLeft.intersects(p.getBounds())){
+                leftCollision=true;
+            }
+            if(hitboxRight.intersects(p.getBounds())){
+                rightCollision=true;
             }
         }
     }
