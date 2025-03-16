@@ -24,6 +24,7 @@ public class Player extends  Entity{
     private float fallingSpeed=0.08f;
     private boolean onGround;
     private boolean up,down,right,left,jump;
+    private boolean jumpBeingHeld;
     //RENDER
     private int direction =-1;
     private boolean moving=false;
@@ -183,8 +184,9 @@ public class Player extends  Entity{
         }
     }
     private void jump(){
-        if(jump && onGround){
+        if(jump && onGround && !jumpBeingHeld){
             yVel=jumpPower;
+            jumpBeingHeld=true;
         }
         if(yVel<0){
             jump=false;
@@ -206,5 +208,13 @@ public class Player extends  Entity{
     }
     public void setJump(boolean jump){
         this.jump=jump;
+    }
+    public void setJumpBeingHeld(boolean jumpBeingHeld) {
+        this.jumpBeingHeld = jumpBeingHeld;
+    }
+
+    //BOOLEAN GETTERS
+    public boolean isJumpBeingHeld() {
+        return jumpBeingHeld;
     }
 }

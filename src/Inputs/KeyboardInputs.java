@@ -14,7 +14,6 @@ public class KeyboardInputs implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -33,7 +32,9 @@ public class KeyboardInputs implements KeyListener {
                 player.setLeft(true);
                 break;
             case KeyEvent.VK_SPACE:
-                player.setJump(true);
+                if(!player.isJumpBeingHeld()){
+                    player.setJump(true);
+                }
                 break;
         }
     }
@@ -52,6 +53,10 @@ public class KeyboardInputs implements KeyListener {
                 break;
             case KeyEvent.VK_A:
                 player.setLeft(false);
+                break;
+            case KeyEvent.VK_SPACE:
+                player.setJump(false);
+                player.setJumpBeingHeld(false);
                 break;
         }
     }
