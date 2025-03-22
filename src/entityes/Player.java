@@ -176,6 +176,9 @@ public class Player extends  Entity{
     //GRAVITY && JUMP
 
     private void gravity(){
+        if(headCollision){
+            yVel-=yVel;
+        }
         if(!onGround&&!up){
             yVel-=fallingSpeed;
         }
