@@ -14,8 +14,8 @@ public class LevelManager {
     private Platform platform0=new Platform(0,9,16,1);
     private Platform platform1=new Platform(13,8,5,4);
     private Platform platform2=new Platform(0,0,16,2);
-    //private  Platform platform3=new Platform(2,2,0,0);
-    private Platform[] platforms = {platform0,platform1,platform2,/*platform3*/};
+    private  Platform platform3=new Platform(12,6,1,1);
+    private Platform[] platforms = {platform0,platform1,platform2,platform3};
 
     public LevelManager(GamePanel game){
         this.gamePanel =game;
