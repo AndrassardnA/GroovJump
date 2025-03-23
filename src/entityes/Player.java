@@ -20,8 +20,8 @@ public class Player extends  Entity{
     //MOVEMENT
     private float speed=2;
     private float yVel=0;
-    private float jumpPower=5;
-    private float fallingSpeed=0.08f;
+    private float jumpPower=7;
+    private float fallingSpeed=0.1f;
     private boolean onGround;
     private boolean up,down,right,left,jump;
     private boolean jumpBeingHeld;
@@ -178,8 +178,10 @@ public class Player extends  Entity{
     private void gravity(){
         if(headCollision){
             yVel-=yVel;
+            jump=false;
+            y+=1;
         }
-        if(!onGround&&!up){
+        if(!onGround){
             yVel-=fallingSpeed;
         }
         else{
@@ -190,6 +192,9 @@ public class Player extends  Entity{
         if(jump && onGround && !jumpBeingHeld){
             yVel=jumpPower;
             jumpBeingHeld=true;
+        }
+        else if(!jump&&!jumpBeingHeld && !onGround && yVel>0){
+            yVel/=1.1f;
         }
         if(yVel<0){
             jump=false;
