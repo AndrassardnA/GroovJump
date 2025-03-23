@@ -25,6 +25,9 @@ public class Player extends  Entity{
     private boolean onGround;
     private boolean up,down,right,left,jump;
     private boolean jumpBeingHeld;
+    private float coyotJump=0.2f;
+    private float coyotJumpTimer=0;
+    private boolean jumpAlradyPressed=false;
     //RENDER
     private int direction =-1;
     private boolean moving=false;
@@ -189,15 +192,29 @@ public class Player extends  Entity{
         }
     }
     private void jump(){
-        if(jump && onGround && !jumpBeingHeld){
+        if(onGround){
+            jumpAlradyPressed=false;
+        }
+        setCoyotJumpTimer();
+        if(jump && (onGround || coyotJumpTimer<=coyotJump) && !jumpBeingHeld && !jumpAlradyPressed){
+            jumpAlradyPressed=true;
             yVel=jumpPower;
             jumpBeingHeld=true;
         }
-        else if(!jump&&!jumpBeingHeld && !onGround && yVel>0){
+        else if(!jump&&!jumpBeingHeld && !onGround && yVel>0){ //small jump
             yVel/=1.1f;
         }
         if(yVel<0){
             jump=false;
+        }
+
+    }
+    private void setCoyotJumpTimer(){
+        if(onGround){
+            coyotJumpTimer=0;
+        }
+        else{
+            coyotJumpTimer+=1f/200f;
         }
     }
 
