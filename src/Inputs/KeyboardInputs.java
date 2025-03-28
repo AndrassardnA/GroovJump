@@ -34,6 +34,7 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_SPACE:
                 if(!player.isJumpBeingHeld()){
                     player.setJump(true);
+                    player.setPrejumpIntent(true);
                 }
                 break;
         }

@@ -18,16 +18,20 @@ public class Player extends  Entity{
     private int animIndex, animSpeed=120/6; //means 120/(120/x) means x frames per second
     private int action =RUN;
     //MOVEMENT
-    private float speed=2;
+    private final float speed=2;
     private float yVel=0;
-    private float jumpPower=7;
-    private float fallingSpeed=0.1f;
+    private final float jumpPower=7;
+    private final float fallingSpeed=0.1f;
     private boolean onGround;
-    private boolean up,down,right,left,jump;
-    private boolean jumpBeingHeld;
-    private float coyotJump=0.2f;
+    private boolean up,down,right,left,jump; // jump: ha lenyomom a space-t true, ha felengedem false. Ha nyomvatartás közben bármi falsra állítja a nyomvatartás nem állítja vissza, újra fel kell engeni és le kell nyomni
+    private boolean jumpBeingHeld; // figyeli, hogy nyomvatartás közben a jump ne álljon automatikusan true-ra ha egyszer false lett. Player ugráskor lesz true és input felengedéskor false
+    private final float coyotJump=0.15f;
     private float coyotJumpTimer=0;
-    private boolean jumpAlradyPressed=false;
+    private boolean jumpAlradyPressed=false; //ha lenyomták az ugrást true, ha földreért false
+    private final float prejump=1.5f;
+    private float prejumpTimer=prejump;
+    private boolean prejumpTimerStarted=false;
+    private boolean prejumpIntent=false;
     //RENDER
     private int direction =-1;
     private boolean moving=false;
@@ -69,11 +73,11 @@ public class Player extends  Entity{
 
     //UPDATE AND RENDER
     public void update(){
+        detectCollision();
         gravity();
         jump();
         updatePos();
         updateHitbox();
-        detectCollision();
         setAnimation();
         updateAnimLoop();
     }
@@ -192,22 +196,41 @@ public class Player extends  Entity{
         }
     }
     private void jump(){
+
         if(onGround){
             jumpAlradyPressed=false;
         }
         setCoyotJumpTimer();
-        if(jump && (onGround || coyotJumpTimer<=coyotJump) && !jumpBeingHeld && !jumpAlradyPressed){
-            jumpAlradyPressed=true;
+        setPrejumpTimer();
+        boolean canJump=(onGround /*|| coyotJumpTimer<=coyotJump*/) && !jumpBeingHeld && !jumpAlradyPressed;
+        boolean shouldJump= prejumpTimer>0 && onGround;
+        if((jump && canJump) /*|| (prejumpIntent && shouldJump)*/){
             yVel=jumpPower;
             jumpBeingHeld=true;
+            prejumpTimer=-1;
+            prejumpIntent=false;
         }
-        else if(!jump&&!jumpBeingHeld && !onGround && yVel>0){ //small jump
+        else if(!jump && !jumpBeingHeld && !onGround && yVel>0){ //small jump
             yVel/=1.1f;
+        }
+        if(jump) {
+            jumpAlradyPressed=true;
         }
         if(yVel<0){
             jump=false;
         }
-
+    }
+    private void setPrejumpTimer(){
+        if(!onGround&&prejumpIntent&&!prejumpTimerStarted&&!jumpBeingHeld){
+            prejumpTimer=prejump;
+            prejumpTimerStarted=true;
+        } else if (prejumpTimerStarted) {
+            prejumpTimer-=1f/200f;
+        }
+        if(onGround || yVel>0){
+            prejumpTimerStarted=false;
+            prejumpTimer=-1;
+        }
     }
     private void setCoyotJumpTimer(){
         if(onGround){
@@ -237,6 +260,7 @@ public class Player extends  Entity{
     public void setJumpBeingHeld(boolean jumpBeingHeld) {
         this.jumpBeingHeld = jumpBeingHeld;
     }
+    public void setPrejumpIntent(boolean prejumpIntent){this.prejumpIntent=prejumpIntent;}
 
     //BOOLEAN GETTERS
     public boolean isJumpBeingHeld() {
