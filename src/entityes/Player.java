@@ -57,18 +57,18 @@ public class Player extends  Entity{
 
     private void setHitboxes() {
         modLeftHitx=(int)width/8;
-        modLeftHity=(int)height/2+5;
+        modLeftHity=(int)height/2+4;
         modRightHitx=(int)width-(int)width/8-5;
-        modRightHity=(int)height/2+5;
-        modHeadHitx=(int)width/8+5;
-        modHeadHity=(int)height/2;
-        modFeetHitx=(int)width/8+5;
-        modFeetHity=(int)height-5;
+        modRightHity=(int)height/2+4;
+        modHeadHitx=(int)width/8+4;
+        modHeadHity=(int)height/2-1;
+        modFeetHitx=(int)width/8+4;
+        modFeetHity=(int)height+1;
 
-        hitboxLeft=new Rectangle((int)x+modLeftHitx,(int)y+modLeftHity,5,(int)height/2-10);
-        hitboxRight=new Rectangle((int)x+modRightHitx,(int)y+modRightHity,5,(int)height/2-10);
-        hitboxHead=new Rectangle((int)x+modHeadHitx,(int)y+modHeadHity,(int)width-2*((int)width/8)-10,5);
-        hitboxFeet=new Rectangle((int)x+modFeetHitx,(int)y+modFeetHity,(int)width-2*((int)width/8)-10,5);
+        hitboxLeft=new Rectangle((int)x+modLeftHitx,(int)y+modLeftHity,1,(int)height/2-7);
+        hitboxRight=new Rectangle((int)x+modRightHitx,(int)y+modRightHity,1,(int)height/2-7);
+        hitboxHead=new Rectangle((int)x+modHeadHitx,(int)y+modHeadHity,(int)width-2*((int)width/8)-11,1);
+        hitboxFeet=new Rectangle((int)x+modFeetHitx,(int)y+modFeetHity,(int)width-2*((int)width/8)-11,1);
     }
 
     //UPDATE AND RENDER
@@ -143,6 +143,12 @@ public class Player extends  Entity{
            // speed=speedSqrRootTwo;
         }else{
            // speed=normalspeed;
+        }
+        if(feetCollision||headCollision&&(rightCollision)){
+            x-=1;
+        }
+        if(feetCollision||headCollision&&(leftCollision)){
+            x+=1;
         }
         y-=yVel;
     }
