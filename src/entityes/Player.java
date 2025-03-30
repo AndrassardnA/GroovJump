@@ -28,7 +28,7 @@ public class Player extends  Entity{
     private final float coyotJump=0.15f;
     private float coyotJumpTimer=0;
     private boolean jumpAlradyPressed=false; //ha lenyomták az ugrást true, ha földreért false
-    private final float prejump=1.5f;
+    private final float prejump=0.15f;
     private float prejumpTimer=prejump;
     private boolean prejumpTimerStarted=false;
     private boolean prejumpIntent=false;
@@ -202,9 +202,9 @@ public class Player extends  Entity{
         }
         setCoyotJumpTimer();
         setPrejumpTimer();
-        boolean canJump=(onGround /*|| coyotJumpTimer<=coyotJump*/) && !jumpBeingHeld && !jumpAlradyPressed;
+        boolean canJump=(onGround || coyotJumpTimer<=coyotJump) && !jumpBeingHeld && !jumpAlradyPressed;
         boolean shouldJump= prejumpTimer>0 && onGround;
-        if((jump && canJump) /*|| (prejumpIntent && shouldJump)*/){
+        if((jump && canJump) || (prejumpIntent && shouldJump)){
             yVel=jumpPower;
             jumpBeingHeld=true;
             prejumpTimer=-1;
@@ -215,8 +215,9 @@ public class Player extends  Entity{
         }
         if(jump) {
             jumpAlradyPressed=true;
+            jumpBeingHeld=true;
         }
-        if(yVel<0){
+        if(prejumpTimer<0){
             jump=false;
         }
     }
@@ -227,7 +228,7 @@ public class Player extends  Entity{
         } else if (prejumpTimerStarted) {
             prejumpTimer-=1f/200f;
         }
-        if(onGround || yVel>0){
+        if(yVel>0){
             prejumpTimerStarted=false;
             prejumpTimer=-1;
         }
