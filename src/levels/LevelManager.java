@@ -11,6 +11,7 @@ public class LevelManager {
     private GamePanel gamePanel;
     private BufferedImage platformSprite[];
     private Level testLevel;
+    private Level[] levels= new Level[5];
     private Platform platform0=new Platform(0,9,16,1);
     private Platform platform1=new Platform(13,8,5,4);
     private Platform platform2=new Platform(0,0,16,2);
@@ -24,6 +25,9 @@ public class LevelManager {
     }
     private void loadLevels(){
         testLevel=new Level(platforms);
+        for(int i=1; i<=5;i++){
+            levels[i-1]=LoadSave.loadLevelData(i);
+        }
     }
     private void loadOutSideImg() {
         BufferedImage img =LoadSave.getSprite(LoadSave.PLATFORM_SPRITE);
@@ -44,14 +48,14 @@ public class LevelManager {
     }
 
     public Level getCurrentLevel(){
-        return testLevel;
+        return levels[0];
     }
     public void draw(Graphics g){
-        for (int i=0;i<testLevel.getPlatforms().length;i++){
-            drawPlatform(g,testLevel.getPlatforms()[i]);
+        for (int i=0;i<getCurrentLevel().getPlatforms().length;i++){
+            drawPlatform(g,getCurrentLevel().getPlatforms()[i]);
             //for debug
             g.setColor(Color.RED);
-            g.drawRect(testLevel.getPlatforms()[i].getBounds().x,testLevel.getPlatforms()[i].getBounds().y,testLevel.getPlatforms()[i].getBounds().width,testLevel.getPlatforms()[i].getBounds().height);
+            g.drawRect(getCurrentLevel().getPlatforms()[i].getBounds().x,getCurrentLevel().getPlatforms()[i].getBounds().y,getCurrentLevel().getPlatforms()[i].getBounds().width,getCurrentLevel().getPlatforms()[i].getBounds().height);
         }
     }
 
