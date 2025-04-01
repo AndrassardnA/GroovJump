@@ -26,4 +26,9 @@ public class Constants {
         }
 
     }
+    public static class Sizes{
+        public final static int TILE_DEFAULT_SIZE=16;
+        public final static float SCALE=6f;
+        public final static int TILE_SIZE=(int)(SCALE*TILE_DEFAULT_SIZE);
+    }
 }

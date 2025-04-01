@@ -3,6 +3,7 @@ package entityes;
 import levels.LevelManager;
 import levels.Platform;
 import main.GameControl;
+import utilz.Constants;
 import utilz.LoadSave;
 import levels.Level;
 
@@ -48,9 +49,9 @@ public class Player extends  Entity{
 
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
-        super(x, y,(int)(PLAYER_DEFAULT_WIDTH*GameControl.SCALE), (int)(PLAYER_DEFAULT_HEIGHT*GameControl.SCALE));
-        height=PLAYER_DEFAULT_HEIGHT*GameControl.SCALE;
-        width=PLAYER_DEFAULT_WIDTH*GameControl.SCALE;
+        super(x, y,(int)(PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE), (int)(PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE));
+        height=PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE;
+        width=PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE;
         this.level=level;
         loadAnimation();
         setHitboxes();
@@ -163,8 +164,8 @@ public class Player extends  Entity{
         jump=false;
     }
     public void levelChanged(){
-        x=1*GameControl.TILE_SIZE;
-        y=4*GameControl.TILE_SIZE;
+        x=1* Constants.Sizes.TILE_SIZE;
+        y=4* Constants.Sizes.TILE_SIZE;
         yVel=0;
     }
     private void detectCollision(){

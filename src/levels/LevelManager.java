@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import main.GameControl;
+import utilz.Constants;
 import utilz.LoadSave;
 
 public class LevelManager {
@@ -34,14 +35,14 @@ public class LevelManager {
         for(int i=0; i<3;i++){
             for(int j=0; j<4;j++){
                 int index=i*4+j;
-                    platformSprite[index]=img.getSubimage(j*GameControl.TILE_DEFAULT_SIZE,i*GameControl.TILE_DEFAULT_SIZE,GameControl.TILE_DEFAULT_SIZE,GameControl.TILE_DEFAULT_SIZE);
+                    platformSprite[index]=img.getSubimage(j* Constants.Sizes.TILE_DEFAULT_SIZE,i* Constants.Sizes.TILE_DEFAULT_SIZE, Constants.Sizes.TILE_DEFAULT_SIZE, Constants.Sizes.TILE_DEFAULT_SIZE);
             }
         }
     }
     public void drawPlatform(Graphics g, Platform p){
         for(int i=0; i<p.getHeight();i++){
             for(int j=0; j<p.getWidth();j++){
-                g.drawImage(platformSprite[p.getBody()[i][j]],p.getPosX()+j*GameControl.TILE_SIZE,p.getPosY()+i*GameControl.TILE_SIZE,GameControl.TILE_SIZE,GameControl.TILE_SIZE,null);
+                g.drawImage(platformSprite[p.getBody()[i][j]],p.getPosX()+j* Constants.Sizes.TILE_SIZE,p.getPosY()+i* Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE,null);
             }
         }
     }

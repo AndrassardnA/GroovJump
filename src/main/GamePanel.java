@@ -4,6 +4,7 @@ import Inputs.KeyboardInputs;
 import Inputs.MouseInputs;
 import entityes.Player;
 import levels.LevelManager;
+import utilz.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel {
         return levelManager;
     }
     private void setPanelSize() {
-        Dimension size = new Dimension(GameControl.TILE_SIZE*16,GameControl.TILE_SIZE*10);
+        Dimension size = new Dimension(Constants.Sizes.TILE_SIZE*16, Constants.Sizes.TILE_SIZE*10);
         setPreferredSize(size);
     }
     public void paintComponent(Graphics g){
