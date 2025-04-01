@@ -4,11 +4,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import main.GameControl;
-import main.GamePanel;
 import utilz.LoadSave;
 
 public class LevelManager {
-    private GamePanel gamePanel;
     private static int currentLevel;
     private BufferedImage platformSprite[];
     private Level testLevel;
@@ -19,8 +17,7 @@ public class LevelManager {
     private  Platform platform3=new Platform(12,6,1,1);
     private Platform[] platforms = {platform0,platform1,platform2,platform3};
 
-    public LevelManager(GamePanel game){
-        this.gamePanel =game;
+    public LevelManager(){
         loadOutSideImg();
         loadLevels();
     }

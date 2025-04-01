@@ -6,7 +6,7 @@ import java.awt.event.WindowFocusListener;
 
 public class GameWindow {
     private JFrame jFrame;
-    public GameWindow(GamePanel gamePanel){
+    public GameWindow(GamePanel gamePanel, GameControl gameControl){
         jFrame=new JFrame();
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.add(gamePanel);
@@ -22,7 +22,7 @@ public class GameWindow {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                gamePanel.getPlayer().stopMoving();
+                gameControl.getPlayer().stopMoving();
             }
         });
     }

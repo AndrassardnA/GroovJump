@@ -1,6 +1,13 @@
 package main;
 
+import Inputs.KeyboardInputs;
+import Inputs.MouseInputs;
+import entityes.Player;
+import levels.LevelManager;
+
 import java.awt.*;
+
+//import static com.sun.java.accessibility.util.AWTEventMonitor.*;
 
 public class GameControl implements Runnable{
     private GameWindow gameWindow;
@@ -11,23 +18,35 @@ public class GameControl implements Runnable{
     public final static int TILE_DEFAULT_SIZE=16;
     public final static float SCALE=6f;
     public final static int TILE_SIZE=(int)(SCALE*TILE_DEFAULT_SIZE);
+    private LevelManager levelManager;
+    Player player;
     private void startGameLoop(){
         gameLoop= new Thread(this);
         gameLoop.run();
     }
     private void update(){
-        gamePanel.updateGame();
+        //gamePanel.updateGame();
+        player.update();
+        levelManager.update();
     }
     public GameControl(){
-        gamePanel=new GamePanel();
-        gameWindow=new GameWindow(gamePanel);
+        initClasses();
+        gamePanel=new GamePanel(player,levelManager);
+        gameWindow=new GameWindow(gamePanel,this);
         gamePanel.setFocusable(true); // engedélyezi, hogy fókuszolható legyen (fogadhasson inputokat)
         gamePanel.requestFocus(true); // az inputok a gampanelbe fognak menni
         startGameLoop();
     }
-
-
-
+    private void initClasses() {
+        levelManager=new LevelManager();
+        player=new Player(500,500, levelManager.getCurrentLevel());
+    }
+    public Player getPlayer(){
+        return player;
+    }
+    public LevelManager getLevelManager(){
+        return levelManager;
+    }
     @Override
     public void run() {
         double timePerFrame= 1000000000.0/FPS_SET;
