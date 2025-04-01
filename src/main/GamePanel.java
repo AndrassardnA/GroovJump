@@ -11,7 +11,7 @@ import java.awt.*;
 public class GamePanel extends JPanel {
     private MouseInputs mouseInputs;
     private Player player;
-    private LevelManager levelManager;
+    public static LevelManager levelManager;
 
     public GamePanel(){
         setPanelSize();

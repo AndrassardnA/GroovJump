@@ -1,6 +1,7 @@
 package Inputs;
 
 import entityes.Player;
+import levels.LevelManager;
 import main.GamePanel;
 
 import java.awt.event.KeyEvent;
@@ -11,6 +12,7 @@ public class KeyboardInputs implements KeyListener {
     public KeyboardInputs(Player p){
         this.player =p;
     }
+    private boolean shiftHolded=false;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -37,6 +39,13 @@ public class KeyboardInputs implements KeyListener {
                     player.setPrejumpIntent(true);
                 }
                 break;
+            case KeyEvent.VK_SHIFT:
+                if(!shiftHolded){
+                    GamePanel.levelManager.nextLevel();
+                    player.levelChanged();
+                    shiftHolded=true;
+                }
+                break;
         }
     }
 
@@ -58,6 +67,9 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_SPACE:
                 player.setJump(false);
                 player.setJumpBeingHeld(false);
+                break;
+            case KeyEvent.VK_SHIFT:
+                shiftHolded=false;
                 break;
         }
     }

@@ -9,9 +9,10 @@ import utilz.LoadSave;
 
 public class LevelManager {
     private GamePanel gamePanel;
+    private static int currentLevel;
     private BufferedImage platformSprite[];
     private Level testLevel;
-    private Level[] levels= new Level[5];
+    private static Level[] levels= new Level[5];
     private Platform platform0=new Platform(0,9,16,1);
     private Platform platform1=new Platform(13,8,5,4);
     private Platform platform2=new Platform(0,0,16,2);
@@ -28,6 +29,7 @@ public class LevelManager {
         for(int i=1; i<=5;i++){
             levels[i-1]=LoadSave.loadLevelData(i);
         }
+        currentLevel=0;
     }
     private void loadOutSideImg() {
         BufferedImage img =LoadSave.getSprite(LoadSave.PLATFORM_SPRITE);
@@ -47,8 +49,19 @@ public class LevelManager {
         }
     }
 
-    public Level getCurrentLevel(){
-        return levels[0];
+    public static Level getCurrentLevel(){
+        return levels[currentLevel];
+    }
+    public void setCurrentLevel(int num){
+        currentLevel=num;
+    }
+    public void nextLevel(){
+        if(currentLevel<levels.length-1){
+            currentLevel++;
+        }
+        else{
+            System.out.println("No more levels to load");
+        }
     }
     public void draw(Graphics g){
         for (int i=0;i<getCurrentLevel().getPlatforms().length;i++){

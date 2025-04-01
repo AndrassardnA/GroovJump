@@ -1,5 +1,6 @@
 package entityes;
 
+import levels.LevelManager;
 import levels.Platform;
 import main.GameControl;
 import utilz.LoadSave;
@@ -161,7 +162,13 @@ public class Player extends  Entity{
         right=false;
         jump=false;
     }
+    public void levelChanged(){
+        x=1*GameControl.TILE_SIZE;
+        y=4*GameControl.TILE_SIZE;
+        yVel=0;
+    }
     private void detectCollision(){
+        level= LevelManager.getCurrentLevel();
         feetCollision=false;
         headCollision=false;
         rightCollision =false;
