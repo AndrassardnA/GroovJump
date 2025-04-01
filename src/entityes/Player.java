@@ -1,8 +1,7 @@
 package entityes;
 
 import levels.LevelManager;
-import levels.Platform;
-import main.GameControl;
+import movement.Physic;
 import utilz.Constants;
 import utilz.LoadSave;
 import levels.Level;
@@ -14,6 +13,7 @@ import static utilz.Constants.PlayerConstants.*;
 
 
 public class Player extends  Entity{
+    Physic physic;
     //ANIMATION
     private BufferedImage[][] animations;
     private int animTimer=0; //incrases by frame;
@@ -21,10 +21,10 @@ public class Player extends  Entity{
     private int action =RUN;
     //MOVEMENT
     private final float speed=2;
-    private float yVel=0;
+   // private float yVel=0;
     private final float jumpPower=7;
     private final float fallingSpeed=0.1f;
-    private boolean onGround;
+   // private boolean onGround;
     private boolean up,down,right,left,jump; // jump: ha lenyomom a space-t true, ha felengedem false. Ha nyomvatartás közben bármi falsra állítja a nyomvatartás nem állítja vissza, újra fel kell engeni és le kell nyomni
     private boolean jumpBeingHeld; // figyeli, hogy nyomvatartás közben a jump ne álljon automatikusan true-ra ha egyszer false lett. Player ugráskor lesz true és input felengedéskor false
     private final float coyotJump=0.15f;
@@ -35,16 +35,11 @@ public class Player extends  Entity{
     private boolean prejumpTimerStarted=false;
     private boolean prejumpIntent=false;
     //RENDER
-    private int direction =-1;
-    private boolean moving=false;
     private int turningMod =1; //1 if facing right -1 if facing left
     private int turningPositionCorrection =0; //correct the position while mirroring
     private static final int PLAYER_DEFAULT_HEIGHT=16;
     private static final int PLAYER_DEFAULT_WIDTH=16;
     private float height, width;
-    //COLLISION
-    private Level level;
-    private boolean feetCollision, headCollision, rightCollision, leftCollision;
 
 
     //CONSTRUCTOR
@@ -52,9 +47,9 @@ public class Player extends  Entity{
         super(x, y,(int)(PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE), (int)(PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE));
         height=PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE;
         width=PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE;
-        this.level=level;
         loadAnimation();
         setHitboxes();
+        physic=new Physic(this);
     }
 
     private void setHitboxes() {
@@ -75,10 +70,12 @@ public class Player extends  Entity{
 
     //UPDATE AND RENDER
     public void update(){
-        detectCollision();
-        gravity();
+        physic.detectCollision(LevelManager.getCurrentLevel());
+        physic.calculateGravity(fallingSpeed);
         jump();
         updatePos();
+        physic.applyGravity();
+        physic.dontStuck();
         updateHitbox();
         setAnimation();
         updateAnimLoop();
@@ -98,7 +95,6 @@ public class Player extends  Entity{
                 }
             }
     }
-
     //TO UPDATE
     private void updateAnimLoop() {
         animTimer++;
@@ -124,37 +120,16 @@ public class Player extends  Entity{
         }
     }
     private void updatePos(){
-        if(left && !right && !leftCollision){
-            x-=speed;
+        if(left && !right && !physic.isLeftCollision()){
+            physic.moveLeft(speed);
             turningMod=-1;
             turningPositionCorrection=1;
-        } else if (right && !left && !rightCollision) {
-            x+=speed;
+        } else if (right && !left && !physic.isRightCollision()) {
+            physic.moveRight(speed);
             turningMod=1;
             turningPositionCorrection=0;
         }
-        //no need for this functions jet
-        if (up && !down && !headCollision){
-            //y-=speed;
-        }
-        else if(down && !up && !feetCollision){
-           // y+=speed;
-        }
-
-        if((up||down)&&(left||right)){
-           // speed=speedSqrRootTwo;
-        }else{
-           // speed=normalspeed;
-        }
-        if(feetCollision||headCollision&&(rightCollision)){
-            x-=1;
-        }
-        if(feetCollision||headCollision&&(leftCollision)){
-            x+=1;
-        }
-        y-=yVel;
     }
-
     //OTHER
     public void stopMoving(){
         up=false;
@@ -166,66 +141,25 @@ public class Player extends  Entity{
     public void levelChanged(){
         x=1* Constants.Sizes.TILE_SIZE;
         y=4* Constants.Sizes.TILE_SIZE;
-        yVel=0;
-    }
-    private void detectCollision(){
-        level= LevelManager.getCurrentLevel();
-        feetCollision=false;
-        headCollision=false;
-        rightCollision =false;
-        leftCollision =false;
-        onGround=false;
-        for (Platform p: level.getPlatforms()){
-            if(hitboxFeet.intersects(p.getBounds())){
-                feetCollision=true;
-                onGround=true;
-            }
-            if(hitboxHead.intersects(p.getBounds())){
-                headCollision=true;
-            }
-            if(hitboxLeft.intersects(p.getBounds())){
-                leftCollision=true;
-            }
-            if(hitboxRight.intersects(p.getBounds())){
-                rightCollision=true;
-            }
-            if(hitboxFeet.intersects(p.getBounds())&&(hitboxLeft.intersects(p.getBounds())||hitboxRight.intersects(p.getBounds()))){ //againts stucking in ground
-                y-=1;
-            }
-        }
-    }
-    //GRAVITY && JUMP
-
-    private void gravity(){
-        if(headCollision){
-            yVel-=yVel;
-            jump=false;
-            y+=1;
-        }
-        if(!onGround){
-            yVel-=fallingSpeed;
-        }
-        else{
-            yVel=0;
-        }
+        physic.setyVel(0);
     }
     private void jump(){
 
-        if(onGround){
+        if(physic.isGrounded()){
             jumpAlradyPressed=false;
         }
         setCoyotJumpTimer();
         setPrejumpTimer();
-        boolean canJump=(onGround || coyotJumpTimer<=coyotJump) && !jumpBeingHeld && !jumpAlradyPressed;
-        boolean shouldJump= prejumpTimer>0 && onGround;
+        boolean canJump=(physic.isGrounded() || coyotJumpTimer<=coyotJump) && !jumpBeingHeld && !jumpAlradyPressed;
+        boolean shouldJump= prejumpTimer>0 && physic.isGrounded();
         if((jump && canJump) || (prejumpIntent && shouldJump)){
-            yVel=jumpPower;
+            physic.setyVel(jumpPower);
             jumpBeingHeld=true;
             prejumpTimer=-1;
             prejumpIntent=false;
         }
-        else if(!jump && !jumpBeingHeld && !onGround && yVel>0){ //small jump
-            yVel/=1.1f;
+        else if(!jump && !jumpBeingHeld && !physic.isGrounded() && physic.getyVel()>0){ //small jump
+            physic.setyVel(physic.getyVel()/1.1f);
         }
         if(jump) {
             jumpAlradyPressed=true;
@@ -236,19 +170,19 @@ public class Player extends  Entity{
         }
     }
     private void setPrejumpTimer(){
-        if(!onGround&&prejumpIntent&&!prejumpTimerStarted&&!jumpBeingHeld){
+        if(!physic.isGrounded()&&prejumpIntent&&!prejumpTimerStarted&&!jumpBeingHeld){
             prejumpTimer=prejump;
             prejumpTimerStarted=true;
         } else if (prejumpTimerStarted) {
             prejumpTimer-=1f/200f;
         }
-        if(yVel>0){
+        if(physic.getyVel()>0){
             prejumpTimerStarted=false;
             prejumpTimer=-1;
         }
     }
     private void setCoyotJumpTimer(){
-        if(onGround){
+        if(physic.isGrounded()){
             coyotJumpTimer=0;
         }
         else{
