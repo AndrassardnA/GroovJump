@@ -23,7 +23,7 @@ public class LevelManager {
         loadLevels();
     }
     private void loadLevels(){
-        testLevel=new Level(platforms);
+        testLevel=new Level(platforms,1600,1000);
         for(int i=1; i<=5;i++){
             levels[i-1]=LoadSave.loadLevelData(i);
         }
