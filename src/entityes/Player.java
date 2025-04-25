@@ -35,6 +35,8 @@ public class Player extends  Entity{
     private boolean prejumpTimerStarted=false;
     private boolean prejumpIntent=false;
     //RENDER
+    private final int screenX=1;
+    private int screenY;
     private int turningMod =1; //1 if facing right -1 if facing left
     private int turningPositionCorrection =0; //correct the position while mirroring
     private static final int PLAYER_DEFAULT_HEIGHT=16;
@@ -62,10 +64,10 @@ public class Player extends  Entity{
         modFeetHitx=(int)width/8+3;
         modFeetHity=(int)height+1;
 
-        hitboxLeft=new Rectangle((int)x+modLeftHitx,(int)y+modLeftHity,1,(int)height/2-3);
-        hitboxRight=new Rectangle((int)x+modRightHitx,(int)y+modRightHity,1,(int)height/2-3);
-        hitboxHead=new Rectangle((int)x+modHeadHitx,(int)y+modHeadHity,(int)width-2*((int)width/8)-9,1);
-        hitboxFeet=new Rectangle((int)x+modFeetHitx,(int)y+modFeetHity,(int)width-2*((int)width/8)-9,1);
+        hitboxLeft=new Rectangle((int) worldX +modLeftHitx,(int) worldY +modLeftHity,1,(int)height/2-3);
+        hitboxRight=new Rectangle((int) worldX +modRightHitx,(int) worldY +modRightHity,1,(int)height/2-3);
+        hitboxHead=new Rectangle((int) worldX +modHeadHitx,(int) worldY +modHeadHity,(int)width-2*((int)width/8)-9,1);
+        hitboxFeet=new Rectangle((int) worldX +modFeetHitx,(int) worldY +modFeetHity,(int)width-2*((int)width/8)-9,1);
     }
 
     //UPDATE AND RENDER
@@ -81,7 +83,7 @@ public class Player extends  Entity{
         updateAnimLoop();
     }
     public void render(Graphics g){
-        g.drawImage(animations[action][animIndex],(int)x+(int)(width*turningPositionCorrection),(int)y,(int)(width*turningMod),(int)(height),null);
+        g.drawImage(animations[action][animIndex],(int) worldX +(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
         drawHitbox(g);
     }
 
@@ -139,8 +141,8 @@ public class Player extends  Entity{
         jump=false;
     }
     public void levelChanged(){
-        x=1* Constants.Sizes.TILE_SIZE;
-        y=4* Constants.Sizes.TILE_SIZE;
+        worldX =1* Constants.Sizes.TILE_SIZE;
+        worldY =4* Constants.Sizes.TILE_SIZE;
         physic.setyVel(0);
     }
     private void jump(){

@@ -14,16 +14,16 @@ public class Physic {
 
     //Moving
     public void moveUp(float speed){
-        entity.setY(entity.getY()-speed);
+        entity.setWorldY(entity.getWorldY()-speed);
     }
     public void moveDown(float speed){
-        entity.setY(entity.getY()+speed);
+        entity.setWorldY(entity.getWorldY()+speed);
     }
     public void moveLeft(float speed){
-        entity.setX(entity.getX()-speed);
+        entity.setWorldX(entity.getWorldX()-speed);
     }
     public void moveRight(float speed){
-        entity.setX(entity.getX()+speed);
+        entity.setWorldX(entity.getWorldX()+speed);
     }
     //Gravity
     public void calculateGravity(float gravityForce) {
@@ -35,7 +35,7 @@ public class Physic {
         }
     }
     public void applyGravity(){
-        entity.setY(entity.getY() - yVel);
+        entity.setWorldY(entity.getWorldY() - yVel);
     }
     //Collision
     public void detectCollision(Level level){
