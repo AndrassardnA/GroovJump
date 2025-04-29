@@ -44,7 +44,7 @@ public class LevelManager {
     public void drawPlatform(Graphics g, Platform p){
         for(int i=0; i<p.getHeight();i++){
             for(int j=0; j<p.getWidth();j++){
-                g.drawImage(platformSprite[p.getBody()[i][j]],(p.getPosX()+j* Constants.Sizes.TILE_SIZE),p.getPosY()+i* Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE,null);
+                g.drawImage(platformSprite[p.getBody()[i][j]],(p.getPosX()+j* Constants.Sizes.TILE_SIZE),p.getPosY()+i* Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE+2, Constants.Sizes.TILE_SIZE+2,null);
             }
         }
     }
