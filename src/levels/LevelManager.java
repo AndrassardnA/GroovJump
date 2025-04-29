@@ -3,6 +3,7 @@ package levels;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import entityes.Player;
 import main.GameControl;
 import utilz.Constants;
 import utilz.LoadSave;
@@ -17,6 +18,7 @@ public class LevelManager {
     private Platform platform2=new Platform(0,0,16,2);
     private  Platform platform3=new Platform(12,6,1,1);
     private Platform[] platforms = {platform0,platform1,platform2,platform3};
+    public int xMod=0;
 
     public LevelManager(){
         loadOutSideImg();
@@ -42,8 +44,15 @@ public class LevelManager {
     public void drawPlatform(Graphics g, Platform p){
         for(int i=0; i<p.getHeight();i++){
             for(int j=0; j<p.getWidth();j++){
-                g.drawImage(platformSprite[p.getBody()[i][j]],p.getPosX()+j* Constants.Sizes.TILE_SIZE,p.getPosY()+i* Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE,null);
+                g.drawImage(platformSprite[p.getBody()[i][j]],(p.getPosX()+j* Constants.Sizes.TILE_SIZE),p.getPosY()+i* Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE,null);
             }
+        }
+    }
+    private void updateLevelPos(Level level){
+        Platform[] platformArr=level.getPlatforms();
+        for(int i=0; i<platformArr.length;i++){
+            Platform currPlatform=platformArr[i];
+            currPlatform.setPosX(currPlatform.getOriginalPosX()-xMod);
         }
     }
 
@@ -70,5 +79,7 @@ public class LevelManager {
         }
     }
 
-    public void update(){}
+    public void update(){
+        updateLevelPos(getCurrentLevel());
+    }
 }

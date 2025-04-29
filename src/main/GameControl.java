@@ -20,6 +20,7 @@ public class GameControl implements Runnable{
     private void update(){
         player.update();
         levelManager.update();
+        levelManager.xMod=(int)player.worldX;
     }
     public GameControl(){
         initClasses();

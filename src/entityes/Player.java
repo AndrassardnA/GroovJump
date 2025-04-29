@@ -35,7 +35,7 @@ public class Player extends  Entity{
     private boolean prejumpTimerStarted=false;
     private boolean prejumpIntent=false;
     //RENDER
-    private final int screenX=1;
+    private final int screenX;
     private int screenY;
     private int turningMod =1; //1 if facing right -1 if facing left
     private int turningPositionCorrection =0; //correct the position while mirroring
@@ -49,6 +49,7 @@ public class Player extends  Entity{
         super(x, y,(int)(PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE), (int)(PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE));
         height=PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE;
         width=PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE;
+        screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
         loadAnimation();
         setHitboxes();
         physic=new Physic(this);
@@ -64,10 +65,10 @@ public class Player extends  Entity{
         modFeetHitx=(int)width/8+3;
         modFeetHity=(int)height+1;
 
-        hitboxLeft=new Rectangle((int) worldX +modLeftHitx,(int) worldY +modLeftHity,1,(int)height/2-3);
-        hitboxRight=new Rectangle((int) worldX +modRightHitx,(int) worldY +modRightHity,1,(int)height/2-3);
-        hitboxHead=new Rectangle((int) worldX +modHeadHitx,(int) worldY +modHeadHity,(int)width-2*((int)width/8)-9,1);
-        hitboxFeet=new Rectangle((int) worldX +modFeetHitx,(int) worldY +modFeetHity,(int)width-2*((int)width/8)-9,1);
+        hitboxLeft=new Rectangle((int) screenX +modLeftHitx,(int) worldY +modLeftHity,1,(int)height/2-3);
+        hitboxRight=new Rectangle((int) screenX +modRightHitx,(int) worldY +modRightHity,1,(int)height/2-3);
+        hitboxHead=new Rectangle((int) screenX +modHeadHitx,(int) worldY +modHeadHity,(int)width-2*((int)width/8)-9,1);
+        hitboxFeet=new Rectangle((int) screenX +modFeetHitx,(int) worldY +modFeetHity,(int)width-2*((int)width/8)-9,1);
     }
 
     //UPDATE AND RENDER
@@ -83,7 +84,7 @@ public class Player extends  Entity{
         updateAnimLoop();
     }
     public void render(Graphics g){
-        g.drawImage(animations[action][animIndex],(int) worldX +(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
+        g.drawImage(animations[action][animIndex], screenX+(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
         drawHitbox(g);
     }
 
@@ -131,6 +132,20 @@ public class Player extends  Entity{
             turningMod=1;
             turningPositionCorrection=0;
         }
+    }
+
+    @Override protected void updateHitbox(){
+        hitboxRight.x= screenX +modRightHitx;
+        hitboxRight.y=(int) worldY +modRightHity;
+
+        hitboxLeft.x= screenX +modLeftHitx;
+        hitboxLeft.y=(int) worldY +modLeftHity;
+
+        hitboxHead.x= screenX +modHeadHitx;
+        hitboxHead.y=(int) worldY +modHeadHity;
+
+        hitboxFeet.x= screenX +modFeetHitx;
+        hitboxFeet.y=(int) worldY +modFeetHity;
     }
     //OTHER
     public void stopMoving(){

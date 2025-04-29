@@ -3,7 +3,7 @@ package entityes;
 import java.awt.*;
 
 public abstract class Entity {
-    protected float worldX, worldY;
+    public float worldX, worldY;
     protected int width, height;
     protected Rectangle hitboxRight, hitboxLeft,  hitboxFeet, hitboxHead;
     protected int modRightHitx, modRightHity, modLeftHitx, modLeftHity,modFeetHitx,modFeetHity, modHeadHitx,modHeadHity;

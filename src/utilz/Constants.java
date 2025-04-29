@@ -30,5 +30,7 @@ public class Constants {
         public final static int TILE_DEFAULT_SIZE=16;
         public final static float SCALE=6f;
         public final static int TILE_SIZE=(int)(SCALE*TILE_DEFAULT_SIZE);
+        public final static int WINDOW_WIDTH=TILE_SIZE*16;
+        public final static int WINDOW_HEIGHT=TILE_SIZE*10;
     }
 }
