@@ -27,7 +27,7 @@ public class GamePanel extends JPanel {
         return levelManager;
     }
     private void setPanelSize() {
-        Dimension size = new Dimension(Constants.Sizes.TILE_SIZE*16, Constants.Sizes.TILE_SIZE*10);
+        Dimension size = new Dimension(Constants.Sizes.WINDOW_WIDTH, Constants.Sizes.WINDOW_HEIGHT);
         setPreferredSize(size);
     }
     public void paintComponent(Graphics g){

@@ -3,13 +3,13 @@ package entityes;
 import java.awt.*;
 
 public abstract class Entity {
-    protected float x,y;
+    public float worldX, worldY;
     protected int width, height;
     protected Rectangle hitboxRight, hitboxLeft,  hitboxFeet, hitboxHead;
     protected int modRightHitx, modRightHity, modLeftHitx, modLeftHity,modFeetHitx,modFeetHity, modHeadHitx,modHeadHity;
-    public Entity(float x, float y,int width,int height){
-        this.x=x;
-        this.y=y;
+    public Entity(float worldX, float worldY, int width, int height){
+        this.worldX = worldX;
+        this.worldY = worldY;
         this.width=width;
         this.height=height;
         initHitboxes();
@@ -25,23 +25,23 @@ public abstract class Entity {
         modFeetHitx=3;
         modFeetHity=height-5;
 
-        hitboxLeft=new Rectangle((int)x+modLeftHitx,(int)y+modLeftHity,5,height-10);
-        hitboxRight=new Rectangle((int)x+modRightHitx,(int)y+modRightHity,5,height-10);
-        hitboxHead=new Rectangle((int)x+modHeadHitx,(int)y+modHeadHity,width-6,5);
-        hitboxFeet=new Rectangle((int)x+modFeetHitx,(int)y+modFeetHity,width-6,5);
+        hitboxLeft=new Rectangle((int) worldX +modLeftHitx,(int) worldY +modLeftHity,5,height-10);
+        hitboxRight=new Rectangle((int) worldX +modRightHitx,(int) worldY +modRightHity,5,height-10);
+        hitboxHead=new Rectangle((int) worldX +modHeadHitx,(int) worldY +modHeadHity,width-6,5);
+        hitboxFeet=new Rectangle((int) worldX +modFeetHitx,(int) worldY +modFeetHity,width-6,5);
     }
     protected void updateHitbox(){
-        hitboxRight.x=(int)x+modRightHitx;
-        hitboxRight.y=(int)y+modRightHity;
+        hitboxRight.x=(int) worldX +modRightHitx;
+        hitboxRight.y=(int) worldY +modRightHity;
 
-        hitboxLeft.x=(int)x+modLeftHitx;
-        hitboxLeft.y=(int)y+modLeftHity;
+        hitboxLeft.x=(int) worldX +modLeftHitx;
+        hitboxLeft.y=(int) worldY +modLeftHity;
 
-        hitboxHead.x=(int)x+modHeadHitx;
-        hitboxHead.y=(int)y+modHeadHity;
+        hitboxHead.x=(int) worldX +modHeadHitx;
+        hitboxHead.y=(int) worldY +modHeadHity;
 
-        hitboxFeet.x=(int)x+modFeetHitx;
-        hitboxFeet.y=(int)y+modFeetHity;
+        hitboxFeet.x=(int) worldX +modFeetHitx;
+        hitboxFeet.y=(int) worldY +modFeetHity;
     }
     public Rectangle getHitboxLeft(){
         return hitboxLeft;
@@ -66,19 +66,19 @@ public abstract class Entity {
         g.drawRect(hitboxFeet.x, hitboxFeet.y, hitboxFeet.width, hitboxFeet.height);
     }
 
-    public float getX() {
-        return x;
+    public float getWorldX() {
+        return worldX;
     }
 
-    public void setX(float x) {
-        this.x = x;
+    public void setWorldX(float worldX) {
+        this.worldX = worldX;
     }
 
-    public float getY() {
-        return y;
+    public float getWorldY() {
+        return worldY;
     }
 
-    public void setY(float y) {
-        this.y = y;
+    public void setWorldY(float worldY) {
+        this.worldY = worldY;
     }
 }

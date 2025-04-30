@@ -9,11 +9,16 @@ public class Platform {
     private int posX;
     private int posY;
     private int[][] body;
+    private final int originalPosX;
+    private final int originalPosY;
+
 
     public Platform(int posX, int posY, int bodyWidth, int bodyHeight) {
         this.posX = posX * Constants.Sizes.TILE_SIZE;
         this.posY = posY * Constants.Sizes.TILE_SIZE;
         fillPlatformBody(bodyWidth, bodyHeight);
+        originalPosX=this.posX;
+        originalPosY=this.posY;
     }
 
     private void fillPlatformBody(int bodyWidth, int bodyHeight) {
@@ -96,5 +101,13 @@ public class Platform {
     }
     public Rectangle getBounds(){
         return new Rectangle(posX,posY,body[0].length* Constants.Sizes.TILE_SIZE,body.length* Constants.Sizes.TILE_SIZE);
+    }
+
+    public int getOriginalPosX() {
+        return originalPosX;
+    }
+
+    public int getOriginalPosY() {
+        return originalPosY;
     }
 }
