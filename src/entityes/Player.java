@@ -43,6 +43,9 @@ public class Player extends  Entity{
     private static final int PLAYER_DEFAULT_WIDTH=16;
     private float height, width;
 
+    //GAME PLAY
+    public int deaths=0;
+
 
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
@@ -236,7 +239,9 @@ public class Player extends  Entity{
 
     //GAME OVER
     private void game_over(){
-        System.out.println("Game Over");
+            deaths++;
+            System.out.println("You Died! Deaths: " + deaths/2);
+            levelChanged();
     }
     public void tryGameOver(){
         if(physic.isHazardCollision()){
