@@ -1,11 +1,12 @@
 package movement;
 
 import entityes.Entity;
+import levels.HazardBlock;
 import levels.Level;
 import levels.Platform;
 
 public class Physic {
-    private boolean feetCollision, headCollision, rightCollision, leftCollision, grounded;
+    private boolean feetCollision, headCollision, rightCollision, leftCollision, grounded, hazardCollision;
     private float yVel=0;
     private Entity entity;
     public Physic(Entity entity){
@@ -44,6 +45,7 @@ public class Physic {
         rightCollision =false;
         leftCollision =false;
         grounded=false;
+        hazardCollision=false;
 
         for (Platform p: level.getPlatforms()){
             if(entity.getHitboxFeet().intersects(p.getBounds())){
@@ -58,6 +60,11 @@ public class Physic {
             }
             if(entity.getHitboxRight().intersects(p.getBounds())){
                 rightCollision=true;
+            }
+        }
+        for (HazardBlock h: level.getHazards()){
+            if(entity.getHitboxFeet().intersects(h.getBounds())||entity.getHitboxHead().intersects(h.getBounds())||entity.getHitboxLeft().intersects(h.getBounds())||entity.getHitboxFeet().intersects(h.getBounds())||entity.getHitboxRight().intersects(h.getBounds())){
+                hazardCollision=true;
             }
         }
     }
@@ -79,6 +86,10 @@ public class Physic {
 
     public boolean isHeadCollision() {
         return headCollision;
+    }
+
+    public boolean isHazardCollision() {
+        return hazardCollision;
     }
 
     public boolean isRightCollision() {

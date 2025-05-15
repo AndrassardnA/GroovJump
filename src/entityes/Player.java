@@ -82,6 +82,7 @@ public class Player extends  Entity{
         updateHitbox();
         setAnimation();
         updateAnimLoop();
+        tryGameOver();
     }
     public void render(Graphics g){
         g.drawImage(animations[action][animIndex], screenX+(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
@@ -231,5 +232,15 @@ public class Player extends  Entity{
     //BOOLEAN GETTERS
     public boolean isJumpBeingHeld() {
         return jumpBeingHeld;
+    }
+
+    //GAME OVER
+    private void game_over(){
+        System.out.println("Game Over");
+    }
+    public void tryGameOver(){
+        if(physic.isHazardCollision()){
+            game_over();
+        }
     }
 }

@@ -25,7 +25,7 @@ public class LevelManager {
         loadLevels();
     }
     private void loadLevels(){
-        testLevel=new Level(platforms);
+        //testLevel=new Level(platforms);
         for(int i=1; i<=5;i++){
             levels[i-1]=LoadSave.loadLevelData(i);
         }
@@ -48,11 +48,20 @@ public class LevelManager {
             }
         }
     }
+    public void  drawHazard(Graphics g, HazardBlock h){
+        g.setColor(Color.RED);
+        g.fillRect(h.getPosX(),h.getPosY(),h.getSize(),h.getSize());
+    }
     private void updateLevelPos(Level level){
         Platform[] platformArr=level.getPlatforms();
         for(int i=0; i<platformArr.length;i++){
             Platform currPlatform=platformArr[i];
             currPlatform.setPosX(currPlatform.getOriginalPosX()-xMod);
+        }
+        HazardBlock[] hazardArr=level.getHazards();
+        for(int i=0; i<hazardArr.length;i++){
+            HazardBlock currHazard=hazardArr[i];
+            currHazard.setPosX(currHazard.getOriginalPosX()-xMod);
         }
     }
 
@@ -76,6 +85,9 @@ public class LevelManager {
             //for debug
             g.setColor(Color.RED);
             g.drawRect(getCurrentLevel().getPlatforms()[i].getBounds().x,getCurrentLevel().getPlatforms()[i].getBounds().y,getCurrentLevel().getPlatforms()[i].getBounds().width,getCurrentLevel().getPlatforms()[i].getBounds().height);
+        }
+        for(int i=0;i<getCurrentLevel().getHazards().length;i++){
+            drawHazard(g,getCurrentLevel().getHazards()[i]);
         }
     }
 

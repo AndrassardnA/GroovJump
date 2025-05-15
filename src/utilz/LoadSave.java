@@ -1,5 +1,6 @@
 package utilz;
 
+import levels.HazardBlock;
 import levels.Level;
 import levels.Platform;
 
@@ -36,23 +37,36 @@ public class LoadSave {
     public static Level loadLevelData(int level_num){
         Level level = null;
         ArrayList<Platform> platforms = new ArrayList<>();
+        ArrayList<HazardBlock> hazards = new ArrayList<>();
         InputStream is = LoadSave.class.getResourceAsStream("/level_files/lvl-" + level_num + ".txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         try {
             String line = reader.readLine();
             while (line!=null) {
                 String[] datas = line.split(" ");
-                Platform platform = new Platform(Integer.parseInt(datas[0]), Integer.parseInt(datas[1]), Integer.parseInt(datas[2]), Integer.parseInt(datas[3]));
-                platforms.add(platform);
+                if(!datas[0].equals("X")){
+                    Platform platform = new Platform(Integer.parseInt(datas[0]), Integer.parseInt(datas[1]), Integer.parseInt(datas[2]), Integer.parseInt(datas[3]));
+                    platforms.add(platform);
+                }else{
+                    HazardBlock hazard= new HazardBlock(Integer.parseInt(datas[1]),Integer.parseInt(datas[2]));
+                    hazards.add(hazard);
+                }
+
                 line= reader.readLine();
             }
             Platform[] platformsArr= new Platform[platforms.size()];
+            HazardBlock[] hazardsArr = new HazardBlock[hazards.size()];
             int counter =0;
             for(Platform p : platforms){
                 platformsArr[counter]=p;
                 counter++;
             }
-            level = new Level(platformsArr);
+            counter=0;
+            for(HazardBlock h : hazards){
+                hazardsArr[counter]=h;
+                counter++;
+            }
+            level = new Level(platformsArr,hazardsArr);
         }catch (IOException e){
             e.printStackTrace();
         }
