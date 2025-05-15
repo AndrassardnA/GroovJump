@@ -56,9 +56,9 @@ public class Player extends  Entity{
     }
 
     private void setHitboxes() {
-        modLeftHitx=(int)width/8;
+        modLeftHitx=(int)width/8-2;
         modLeftHity=(int)height/2+2;
-        modRightHitx=(int)width-(int)width/8-5;
+        modRightHitx=(int)width-(int)width/8-3;
         modRightHity=(int)height/2+2;
         modHeadHitx=(int)width/8+3;
         modHeadHity=(int)height/2-1;
