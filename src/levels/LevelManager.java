@@ -50,7 +50,7 @@ public class LevelManager {
     }
     public void  drawHazard(Graphics g, HazardBlock h){
         g.setColor(Color.RED);
-        g.fillRect(h.getPosX(),h.getPosY(),h.getSize(),h.getSize());
+        g.fillRect(h.getPosX(),h.getPosY(),h.getWidth(),h.getHeight());
     }
     private void updateLevelPos(Level level){
         Platform[] platformArr=level.getPlatforms();

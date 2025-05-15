@@ -48,7 +48,7 @@ public class LoadSave {
                     Platform platform = new Platform(Integer.parseInt(datas[0]), Integer.parseInt(datas[1]), Integer.parseInt(datas[2]), Integer.parseInt(datas[3]));
                     platforms.add(platform);
                 }else{
-                    HazardBlock hazard= new HazardBlock(Integer.parseInt(datas[1]),Integer.parseInt(datas[2]));
+                    HazardBlock hazard= new HazardBlock(Integer.parseInt(datas[1]),Integer.parseInt(datas[2]),Integer.parseInt(datas[3]),Integer.parseInt(datas[4]));
                     hazards.add(hazard);
                 }
 
