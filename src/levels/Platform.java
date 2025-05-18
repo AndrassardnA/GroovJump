@@ -5,20 +5,13 @@ import utilz.Constants;
 
 import java.awt.*;
 
-public class Platform {
-    private int posX;
-    private int posY;
+public class Platform extends Block{
     private int[][] body;
-    private final int originalPosX;
-    private final int originalPosY;
 
 
     public Platform(int posX, int posY, int bodyWidth, int bodyHeight) {
-        this.posX = posX * Constants.Sizes.TILE_SIZE;
-        this.posY = posY * Constants.Sizes.TILE_SIZE;
+        super(posX,posY,bodyWidth*Constants.Sizes.TILE_SIZE,bodyHeight*Constants.Sizes.TILE_SIZE);
         fillPlatformBody(bodyWidth, bodyHeight);
-        originalPosX=this.posX;
-        originalPosY=this.posY;
     }
 
     private void fillPlatformBody(int bodyWidth, int bodyHeight) {
@@ -73,22 +66,6 @@ public class Platform {
         }
     }
 
-    public int getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-
     public int getHeight() {
         return body.length;
     }
@@ -98,16 +75,5 @@ public class Platform {
     }
     public int[][] getBody() {
         return body;
-    }
-    public Rectangle getBounds(){
-        return new Rectangle(posX,posY,body[0].length* Constants.Sizes.TILE_SIZE,body.length* Constants.Sizes.TILE_SIZE);
-    }
-
-    public int getOriginalPosX() {
-        return originalPosX;
-    }
-
-    public int getOriginalPosY() {
-        return originalPosY;
     }
 }

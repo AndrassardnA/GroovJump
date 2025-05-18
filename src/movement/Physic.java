@@ -69,7 +69,7 @@ public class Physic {
         }
     }
     public void dontStuck(){
-        if(feetCollision&&(rightCollision&&leftCollision)){
+        if(feetCollision&&(rightCollision||leftCollision)){
             moveUp(1);
         }
         if(rightCollision&&(feetCollision&&headCollision)){
