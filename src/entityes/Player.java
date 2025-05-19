@@ -20,7 +20,7 @@ public class Player extends  Entity{
     private int animIndex, animSpeed=120/6; //means 120/(120/x) means x frames per second
     private int action =RUN;
     //MOVEMENT
-    private final float speed=2;
+    private final float speed=2.2f;
    // private float yVel=0;
     private final float jumpPower=7;
     private final float fallingSpeed=0.1f;
@@ -87,7 +87,7 @@ public class Player extends  Entity{
         updateHitbox();
         setAnimation();
         updateAnimLoop();
-        tryGameOver();
+        tryDying();
         if(physic.isFinishCollision()/*&&!levelFinishedBeenLocked*/){
             levelFinished=true;
            // levelFinishedBeenLocked=true;
@@ -95,7 +95,7 @@ public class Player extends  Entity{
     }
     public void render(Graphics g){
         g.drawImage(animations[action][animIndex], screenX+(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
-        //drawHitbox(g);
+        drawHitbox(g);
     }
 
     //LOADERS
@@ -253,14 +253,20 @@ public class Player extends  Entity{
     }
 
     //GAME OVER
-    private void game_over(){
+    private void die(){
             deaths++;
             System.out.println("You Died! Deaths: " + deaths);
             levelChanged();
     }
-    public void tryGameOver(){
+    public void tryDying(){
         if(physic.isHazardCollision()){
-            game_over();
+            die();
         }
+    }
+    public void renderDeathUI(Graphics g){
+        String kiir="Deaths: " + deaths/2;
+        g.setFont(new Font("Arial",Font.BOLD,70));
+        g.setColor(Color.black);
+        g.drawString(kiir,11*Constants.Sizes.TILE_SIZE,1*Constants.Sizes.TILE_SIZE);
     }
 }

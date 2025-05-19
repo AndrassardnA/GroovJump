@@ -34,5 +34,6 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         player.render(g);
         levelManager.draw(g);
+        player.renderDeathUI(g);
     }
 }
