@@ -255,7 +255,7 @@ public class Player extends  Entity{
     //GAME OVER
     private void game_over(){
             deaths++;
-            System.out.println("You Died! Deaths: " + deaths/2);
+            System.out.println("You Died! Deaths: " + deaths);
             levelChanged();
     }
     public void tryGameOver(){
