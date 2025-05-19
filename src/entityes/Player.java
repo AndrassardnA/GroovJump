@@ -95,7 +95,7 @@ public class Player extends  Entity{
     }
     public void render(Graphics g){
         g.drawImage(animations[action][animIndex], screenX+(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
-        drawHitbox(g);
+        //drawHitbox(g);
     }
 
     //LOADERS
@@ -264,7 +264,7 @@ public class Player extends  Entity{
         }
     }
     public void renderDeathUI(Graphics g){
-        String kiir="Deaths: " + deaths/2;
+        String kiir="Deaths: " + deaths;
         g.setFont(new Font("Arial",Font.BOLD,70));
         g.setColor(Color.black);
         g.drawString(kiir,11*Constants.Sizes.TILE_SIZE,1*Constants.Sizes.TILE_SIZE);
