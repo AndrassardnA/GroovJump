@@ -11,13 +11,7 @@ import utilz.LoadSave;
 public class LevelManager {
     private static int currentLevel;
     private BufferedImage platformSprite[];
-    private Level testLevel;
     private static Level[] levels= new Level[5];
-    private Platform platform0=new Platform(0,9,16,1);
-    private Platform platform1=new Platform(13,8,5,4);
-    private Platform platform2=new Platform(0,0,16,2);
-    private  Platform platform3=new Platform(12,6,1,1);
-    private Platform[] platforms = {platform0,platform1,platform2,platform3};
     public int xMod=0;
 
     public LevelManager(){
@@ -25,7 +19,6 @@ public class LevelManager {
         loadLevels();
     }
     private void loadLevels(){
-        //testLevel=new Level(platforms);
         for(int i=1; i<=5;i++){
             levels[i-1]=LoadSave.loadLevelData(i);
         }
@@ -48,10 +41,6 @@ public class LevelManager {
             }
         }
     }
-    public void  drawHazard(Graphics g, HazardBlock h){
-        g.setColor(Color.RED);
-        g.fillRect(h.getPosX(),h.getPosY(),h.getWidth(),h.getHeight());
-    }
     private void updateLevelPos(Level level){
         Platform[] platformArr=level.getPlatforms();
         for(int i=0; i<platformArr.length;i++){
@@ -63,13 +52,12 @@ public class LevelManager {
             HazardBlock currHazard=hazardArr[i];
             currHazard.setPosX(currHazard.getOriginalPosX()-xMod);
         }
+        FinishBlock currFinish=level.getFinish();
+        currFinish.setPosX(currFinish.getOriginalPosX()-xMod);
     }
 
     public static Level getCurrentLevel(){
         return levels[currentLevel];
-    }
-    public void setCurrentLevel(int num){
-        currentLevel=num;
     }
     public void nextLevel(){
         if(currentLevel<levels.length-1){
@@ -86,9 +74,8 @@ public class LevelManager {
             g.setColor(Color.RED);
             g.drawRect(getCurrentLevel().getPlatforms()[i].getBounds().x,getCurrentLevel().getPlatforms()[i].getBounds().y,getCurrentLevel().getPlatforms()[i].getBounds().width,getCurrentLevel().getPlatforms()[i].getBounds().height);
         }
-        for(int i=0;i<getCurrentLevel().getHazards().length;i++){
-            drawHazard(g,getCurrentLevel().getHazards()[i]);
-        }
+        getCurrentLevel().drawHazard(g);
+        getCurrentLevel().drawFinish(g);
     }
 
     public void update(){

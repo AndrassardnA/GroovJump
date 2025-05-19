@@ -1,5 +1,6 @@
 package utilz;
 
+import levels.FinishBlock;
 import levels.HazardBlock;
 import levels.Level;
 import levels.Platform;
@@ -38,18 +39,22 @@ public class LoadSave {
         Level level = null;
         ArrayList<Platform> platforms = new ArrayList<>();
         ArrayList<HazardBlock> hazards = new ArrayList<>();
+        FinishBlock finish= new FinishBlock(0,0,1,1);
         InputStream is = LoadSave.class.getResourceAsStream("/level_files/lvl-" + level_num + ".txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         try {
             String line = reader.readLine();
             while (line!=null) {
                 String[] datas = line.split(" ");
-                if(!datas[0].equals("X")){
-                    Platform platform = new Platform(Integer.parseInt(datas[0]), Integer.parseInt(datas[1]), Integer.parseInt(datas[2]), Integer.parseInt(datas[3]));
-                    platforms.add(platform);
-                }else{
+                if(datas[0].equals("F")){
+                    finish= new FinishBlock(Integer.parseInt(datas[1]),Integer.parseInt(datas[2]),Integer.parseInt(datas[3]),Integer.parseInt(datas[4]));
+                }else if(datas[0].equals("X")) {
                     HazardBlock hazard= new HazardBlock(Integer.parseInt(datas[1]),Integer.parseInt(datas[2]),Integer.parseInt(datas[3]),Integer.parseInt(datas[4]));
                     hazards.add(hazard);
+                }
+                else{
+                    Platform platform = new Platform(Integer.parseInt(datas[0]), Integer.parseInt(datas[1]), Integer.parseInt(datas[2]), Integer.parseInt(datas[3]));
+                    platforms.add(platform);
                 }
 
                 line= reader.readLine();
@@ -66,7 +71,7 @@ public class LoadSave {
                 hazardsArr[counter]=h;
                 counter++;
             }
-            level = new Level(platformsArr,hazardsArr);
+            level = new Level(platformsArr,hazardsArr,finish);
         }catch (IOException e){
             e.printStackTrace();
         }

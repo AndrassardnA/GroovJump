@@ -15,12 +15,16 @@ public class GameControl implements Runnable{
     Player player;
     private void startGameLoop(){
         gameLoop= new Thread(this);
-        gameLoop.run();
+        gameLoop.start();
     }
     private void update(){
         player.update();
-        levelManager.update();
         levelManager.xMod=(int)player.worldX;
+        levelManager.update();
+        if(player.isLevelFinished()){
+            levelManager.nextLevel();
+            player.levelChanged();
+        }
     }
     public GameControl(){
         initClasses();

@@ -45,7 +45,8 @@ public class Player extends  Entity{
 
     //GAME PLAY
     public int deaths=0;
-
+    private boolean levelFinished=false;
+    public boolean levelFinishedBeenLocked=false;
 
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
@@ -76,16 +77,21 @@ public class Player extends  Entity{
 
     //UPDATE AND RENDER
     public void update(){
+        levelFinished=false;
+        updatePos();
         physic.detectCollision(LevelManager.getCurrentLevel());
         physic.calculateGravity(fallingSpeed);
         jump();
-        updatePos();
         physic.applyGravity();
         physic.dontStuck();
         updateHitbox();
         setAnimation();
         updateAnimLoop();
         tryGameOver();
+        if(physic.isFinishCollision()/*&&!levelFinishedBeenLocked*/){
+            levelFinished=true;
+           // levelFinishedBeenLocked=true;
+        }
     }
     public void render(Graphics g){
         g.drawImage(animations[action][animIndex], screenX+(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
@@ -163,6 +169,8 @@ public class Player extends  Entity{
         worldX =1* Constants.Sizes.TILE_SIZE;
         worldY =4* Constants.Sizes.TILE_SIZE;
         physic.setyVel(0);
+        levelFinished=false;
+        levelFinishedBeenLocked=false;
     }
     private void jump(){
 
@@ -232,9 +240,16 @@ public class Player extends  Entity{
     }
     public void setPrejumpIntent(boolean prejumpIntent){this.prejumpIntent=prejumpIntent;}
 
+    public void setLevelFinished(boolean levelFinished) {
+        this.levelFinished = levelFinished;
+    }
+
     //BOOLEAN GETTERS
     public boolean isJumpBeingHeld() {
         return jumpBeingHeld;
+    }
+    public boolean isLevelFinished() {
+        return levelFinished;
     }
 
     //GAME OVER

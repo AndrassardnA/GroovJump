@@ -6,7 +6,7 @@ import levels.Level;
 import levels.Platform;
 
 public class Physic {
-    private boolean feetCollision, headCollision, rightCollision, leftCollision, grounded, hazardCollision;
+    private boolean feetCollision, headCollision, rightCollision, leftCollision, grounded, hazardCollision, finishCollision;
     private float yVel=0;
     private Entity entity;
     public Physic(Entity entity){
@@ -46,6 +46,7 @@ public class Physic {
         leftCollision =false;
         grounded=false;
         hazardCollision=false;
+        finishCollision=false;
 
         for (Platform p: level.getPlatforms()){
             if(entity.getHitboxFeet().intersects(p.getBounds())){
@@ -66,6 +67,9 @@ public class Physic {
             if(entity.getHitboxFeet().intersects(h.getBounds())||entity.getHitboxHead().intersects(h.getBounds())||entity.getHitboxLeft().intersects(h.getBounds())||entity.getHitboxFeet().intersects(h.getBounds())||entity.getHitboxRight().intersects(h.getBounds())){
                 hazardCollision=true;
             }
+        }
+        if(entity.getHitboxFeet().intersects(level.getFinish().getBounds())||entity.getHitboxHead().intersects(level.getFinish().getBounds())||entity.getHitboxLeft().intersects(level.getFinish().getBounds())||entity.getHitboxFeet().intersects(level.getFinish().getBounds())||entity.getHitboxRight().intersects(level.getFinish().getBounds())){
+            finishCollision=true;
         }
     }
     public void dontStuck(){
@@ -90,6 +94,10 @@ public class Physic {
 
     public boolean isHazardCollision() {
         return hazardCollision;
+    }
+
+    public boolean isFinishCollision() {
+        return finishCollision;
     }
 
     public boolean isRightCollision() {
