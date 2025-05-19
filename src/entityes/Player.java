@@ -95,7 +95,7 @@ public class Player extends  Entity{
     }
     public void render(Graphics g){
         g.drawImage(animations[action][animIndex], screenX+(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
-        drawHitbox(g);
+        //drawHitbox(g);
     }
 
     //LOADERS

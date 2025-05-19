@@ -71,8 +71,8 @@ public class LevelManager {
         for (int i=0;i<getCurrentLevel().getPlatforms().length;i++){
             drawPlatform(g,getCurrentLevel().getPlatforms()[i]);
             //for debug
-            g.setColor(Color.RED);
-            g.drawRect(getCurrentLevel().getPlatforms()[i].getBounds().x,getCurrentLevel().getPlatforms()[i].getBounds().y,getCurrentLevel().getPlatforms()[i].getBounds().width,getCurrentLevel().getPlatforms()[i].getBounds().height);
+           /* g.setColor(Color.RED);
+            g.drawRect(getCurrentLevel().getPlatforms()[i].getBounds().x,getCurrentLevel().getPlatforms()[i].getBounds().y,getCurrentLevel().getPlatforms()[i].getBounds().width,getCurrentLevel().getPlatforms()[i].getBounds().height);*/
         }
         getCurrentLevel().drawHazard(g);
         getCurrentLevel().drawFinish(g);
