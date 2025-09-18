@@ -13,6 +13,7 @@ public class LevelManager {
     private BufferedImage platformSprite[];
     private static Level[] levels= new Level[5];
     public int xMod=0;
+    private final float scale = Constants.Sizes.SCALE;
 
     public LevelManager(){
         loadOutSideImg();
@@ -37,7 +38,7 @@ public class LevelManager {
     public void drawPlatform(Graphics g, Platform p){
         for(int i=0; i<p.getHeight();i++){
             for(int j=0; j<p.getWidth();j++){
-                g.drawImage(platformSprite[p.getBody()[i][j]],(p.getPosX()+j* Constants.Sizes.TILE_SIZE),p.getPosY()+i* Constants.Sizes.TILE_SIZE, Constants.Sizes.TILE_SIZE+2, Constants.Sizes.TILE_SIZE+2,null);
+                g.drawImage(platformSprite[p.getBody()[i][j]],(p.getPosX()*(int)scale+j* (int)(Constants.Sizes.TILE_SIZE*scale)),p.getPosY()*(int)scale+i* (int)(Constants.Sizes.TILE_SIZE*scale), (int)(Constants.Sizes.TILE_SIZE*scale)+2, (int)(Constants.Sizes.TILE_SIZE*scale)+2,null);
             }
         }
     }

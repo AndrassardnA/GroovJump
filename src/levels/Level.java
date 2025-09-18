@@ -1,11 +1,14 @@
 package levels;
 
+import utilz.Constants;
+
 import java.awt.*;
 
 public class Level {
     private Platform[] platforms;
     private HazardBlock[] hazards;
     private FinishBlock finish;
+    private final int scale= (int)Constants.Sizes.SCALE;
 
     public Level(Platform[] platforms, HazardBlock[] hazards, FinishBlock finish) {
         this.platforms = platforms;
@@ -27,11 +30,11 @@ public class Level {
         g.setColor(Color.RED);
         for(int i=0; i<hazards.length;i++){
             HazardBlock h=hazards[i];
-            g.fillRect(h.getPosX(),h.getPosY(),h.getWidth(),h.getHeight());
+            g.fillRect(h.getPosX()*scale,h.getPosY()*scale,h.getWidth()*scale,h.getHeight()*scale);
         }
     }
     public void drawFinish(Graphics g){
         g.setColor(Color.BLUE);
-        g.fillRect(finish.getPosX(),finish.getPosY(),finish.getWidth(),finish.getHeight());
+        g.fillRect(finish.getPosX()*scale,finish.getPosY()*scale,finish.getWidth()*scale,finish.getHeight()*scale);
     }
 }

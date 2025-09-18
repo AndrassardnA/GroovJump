@@ -20,11 +20,10 @@ public class Player extends  Entity{
     private int animIndex, animSpeed=120/6; //means 120/(120/x) means x frames per second
     private int action =RUN;
     //MOVEMENT
-    private final float speed=2.2f;
-   // private float yVel=0;
-    private final float jumpPower=7;
-    private final float fallingSpeed=0.1f;
-   // private boolean onGround;
+    private final float scaleMod=6/Constants.Sizes.SCALE;
+    private final float speed=0.8f;
+    private final float jumpPower=2;
+    private final float fallingSpeed=0.05f;
     private boolean up,down,right,left,jump; // jump: ha lenyomom a space-t true, ha felengedem false. Ha nyomvatartás közben bármi falsra állítja a nyomvatartás nem állítja vissza, újra fel kell engeni és le kell nyomni
     private boolean jumpBeingHeld; // figyeli, hogy nyomvatartás közben a jump ne álljon automatikusan true-ra ha egyszer false lett. Player ugráskor lesz true és input felengedéskor false
     private final float coyotJump=0.15f;
@@ -35,6 +34,8 @@ public class Player extends  Entity{
     private boolean prejumpTimerStarted=false;
     private boolean prejumpIntent=false;
     //RENDER
+    private final float scale=Constants.Sizes.SCALE;
+
     private final int screenX;
     private int screenY;
     private int turningMod =1; //1 if facing right -1 if facing left
@@ -50,9 +51,9 @@ public class Player extends  Entity{
 
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
-        super(x, y,(int)(PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE), (int)(PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE));
-        height=PLAYER_DEFAULT_HEIGHT* Constants.Sizes.SCALE;
-        width=PLAYER_DEFAULT_WIDTH* Constants.Sizes.SCALE;
+        super(x, y,(int)(PLAYER_DEFAULT_WIDTH/* Constants.Sizes.SCALE*/), (int)(PLAYER_DEFAULT_HEIGHT/* Constants.Sizes.SCALE*/));
+        height=PLAYER_DEFAULT_HEIGHT/* Constants.Sizes.SCALE*/;
+        width=PLAYER_DEFAULT_WIDTH/* Constants.Sizes.SCALE*/;
         screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
         loadAnimation();
         setHitboxes();
@@ -60,19 +61,19 @@ public class Player extends  Entity{
     }
 
     private void setHitboxes() {
-        modLeftHitx=(int)width/8-2;
-        modLeftHity=(int)height/2+2;
-        modRightHitx=(int)width-(int)width/8-3;
-        modRightHity=(int)height/2+2;
-        modHeadHitx=(int)width/8+3;
-        modHeadHity=(int)height/2-1;
-        modFeetHitx=(int)width/8+3;
-        modFeetHity=(int)height+1;
+        modLeftHitx=0;
+        modLeftHity=2;
+        modRightHitx=(int)width;
+        modRightHity=2;
+        modHeadHitx=2;
+        modHeadHity=0;
+        modFeetHitx=2;
+        modFeetHity=(int)height;
 
-        hitboxLeft=new Rectangle((int) screenX +modLeftHitx,(int) worldY +modLeftHity,1,(int)height/2-3);
-        hitboxRight=new Rectangle((int) screenX +modRightHitx,(int) worldY +modRightHity,1,(int)height/2-3);
-        hitboxHead=new Rectangle((int) screenX +modHeadHitx,(int) worldY +modHeadHity,(int)width-2*((int)width/8)-9,1);
-        hitboxFeet=new Rectangle((int) screenX +modFeetHitx,(int) worldY +modFeetHity,(int)width-2*((int)width/8)-9,1);
+        hitboxLeft=new Rectangle((int) screenX +modLeftHitx,(int) worldY +modLeftHity,1,(int)height-3);
+        hitboxRight=new Rectangle((int) screenX +modRightHitx,(int) worldY +modRightHity,1,(int)height-3);
+        hitboxHead=new Rectangle((int) screenX +modHeadHitx,(int) worldY +modHeadHity,(int)width-3,1);
+        hitboxFeet=new Rectangle((int) screenX +modFeetHitx,(int) worldY +modFeetHity,(int)width-3,1);
     }
 
     //UPDATE AND RENDER
@@ -94,8 +95,14 @@ public class Player extends  Entity{
         }
     }
     public void render(Graphics g){
-        g.drawImage(animations[action][animIndex], screenX+(int)(width*turningPositionCorrection),(int) worldY,(int)(width*turningMod),(int)(height),null);
-        //drawHitbox(g);
+        BufferedImage currentImage=animations[action][animIndex];
+        int X = (int)(screenX + width*turningPositionCorrection);
+        int Y = (int)worldY;
+        int W = (int)(width*turningMod);
+        int H = (int)(height);
+
+        g.drawImage(currentImage,X*(int)scale,Y*(int)scale,W*(int)scale,H*(int)scale,null);
+        drawHitbox(g);
     }
 
     //LOADERS
@@ -197,6 +204,9 @@ public class Player extends  Entity{
         if(prejumpTimer<0){
             jump=false;
         }
+        if(physic.isHeadButt()){
+            physic.setyVel(0);
+        }
     }
     private void setPrejumpTimer(){
         if(!physic.isGrounded()&&prejumpIntent&&!prejumpTimerStarted&&!jumpBeingHeld){
@@ -265,8 +275,8 @@ public class Player extends  Entity{
     }
     public void renderDeathUI(Graphics g){
         String kiir="Deaths: " + deaths;
-        g.setFont(new Font("Arial",Font.BOLD,70));
+        g.setFont(new Font("Arial",Font.BOLD,13*(int)scale));
         g.setColor(Color.black);
-        g.drawString(kiir,11*Constants.Sizes.TILE_SIZE,1*Constants.Sizes.TILE_SIZE);
+        g.drawString(kiir,11*Constants.Sizes.TILE_SIZE*(int)scale,1*Constants.Sizes.TILE_SIZE*(int)scale);
     }
 }

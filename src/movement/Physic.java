@@ -4,9 +4,10 @@ import entityes.Entity;
 import levels.HazardBlock;
 import levels.Level;
 import levels.Platform;
+import utilz.Constants;
 
 public class Physic {
-    private boolean feetCollision, headCollision, rightCollision, leftCollision, grounded, hazardCollision, finishCollision;
+    private boolean feetCollision, headCollision, rightCollision, leftCollision, grounded, hazardCollision, finishCollision, headbutt;
     private float yVel=0;
     private Entity entity;
     public Physic(Entity entity){
@@ -36,7 +37,7 @@ public class Physic {
         }
     }
     public void applyGravity(){
-        entity.setWorldY(entity.getWorldY() - yVel);
+        entity.setWorldY(entity.getWorldY() - yVel/*(6/Constants.Sizes.SCALE)*/);
     }
     //Collision
     public void detectCollision(Level level){
@@ -47,6 +48,7 @@ public class Physic {
         grounded=false;
         hazardCollision=false;
         finishCollision=false;
+        headbutt=false;
 
         for (Platform p: level.getPlatforms()){
             if(entity.getHitboxFeet().intersects(p.getBounds())){
@@ -71,6 +73,9 @@ public class Physic {
         if(entity.getHitboxFeet().intersects(level.getFinish().getBounds())||entity.getHitboxHead().intersects(level.getFinish().getBounds())||entity.getHitboxLeft().intersects(level.getFinish().getBounds())||entity.getHitboxFeet().intersects(level.getFinish().getBounds())||entity.getHitboxRight().intersects(level.getFinish().getBounds())){
             finishCollision=true;
         }
+        if(headCollision&&(!feetCollision&&(leftCollision||rightCollision))){ //Headbutting
+            headbutt=true;
+        }
     }
     public void dontStuck(){
         if(feetCollision&&(rightCollision||leftCollision)){
@@ -82,6 +87,10 @@ public class Physic {
         if(leftCollision&&(feetCollision&&headCollision)){
             moveRight(1);
         }
+        if(headbutt){
+            moveDown(1);
+        }
+
     }
 
     public boolean isFeetCollision() {
@@ -118,5 +127,8 @@ public class Physic {
 
     public void setyVel(float yVel) {
         this.yVel = yVel;
+    }
+    public boolean isHeadButt(){
+        return headbutt;
     }
 }
