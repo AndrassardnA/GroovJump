@@ -21,12 +21,12 @@ public class Player extends  Entity{
     private int action =RUN;
     //MOVEMENT
     private final float scaleMod=6/Constants.Sizes.SCALE;
-    private final float speed=0.8f;
-    private final float jumpPower=2;
-    private final float fallingSpeed=0.05f;
+    private final float speed=0.65f;
+    private final float jumpPower=1.7f;
+    private final float fallingSpeed=0.038f;
     private boolean up,down,right,left,jump; // jump: ha lenyomom a space-t true, ha felengedem false. Ha nyomvatartás közben bármi falsra állítja a nyomvatartás nem állítja vissza, újra fel kell engeni és le kell nyomni
     private boolean jumpBeingHeld; // figyeli, hogy nyomvatartás közben a jump ne álljon automatikusan true-ra ha egyszer false lett. Player ugráskor lesz true és input felengedéskor false
-    private final float coyotJump=0.15f;
+    private final float coyotJump=0.13f;
     private float coyotJumpTimer=0;
     private boolean jumpAlradyPressed=false; //ha lenyomták az ugrást true, ha földreért false
     private final float prejump=0.15f;
