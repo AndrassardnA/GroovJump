@@ -20,7 +20,6 @@ public class Player extends  Entity{
     private int animIndex, animSpeed=120/6; //means 120/(120/x) means x frames per second
     private int action =RUN;
     //MOVEMENT
-    private final float scaleMod=6/Constants.Sizes.SCALE;
     private final float speed=0.65f;
     private final float jumpPower=1.7f;
     private final float fallingSpeed=0.038f;
@@ -34,21 +33,15 @@ public class Player extends  Entity{
     private boolean prejumpTimerStarted=false;
     private boolean prejumpIntent=false;
     //RENDER
-    private final float scale=Constants.Sizes.SCALE;
-
     private final int screenX;
-    private int screenY;
-    private int turningMod =1; //1 if facing right -1 if facing left
-    private int turningPositionCorrection =0; //correct the position while mirroring
+    private boolean facingRight =true; //1 if facing right -1 if facing left
     private static final int PLAYER_DEFAULT_HEIGHT=16;
     private static final int PLAYER_DEFAULT_WIDTH=16;
     private float height, width;
-
     //GAME PLAY
     public int deaths=0;
     private boolean levelFinished=false;
     public boolean levelFinishedBeenLocked=false;
-
     //CONSTRUCTOR
     public Player(float x, float y, Level level) {
         super(x, y,(int)(PLAYER_DEFAULT_WIDTH/* Constants.Sizes.SCALE*/), (int)(PLAYER_DEFAULT_HEIGHT/* Constants.Sizes.SCALE*/));
@@ -76,7 +69,7 @@ public class Player extends  Entity{
         hitboxFeet=new Rectangle((int) screenX +modFeetHitx,(int) worldY +modFeetHity,(int)width-3,1);
     }
 
-    //UPDATE AND RENDER
+    //UPDATE
     public void update(){
         levelFinished=false;
         updatePos();
@@ -89,22 +82,10 @@ public class Player extends  Entity{
         setAnimation();
         updateAnimLoop();
         tryDying();
-        if(physic.isFinishCollision()/*&&!levelFinishedBeenLocked*/){
+        if(physic.isFinishCollision()){
             levelFinished=true;
-           // levelFinishedBeenLocked=true;
         }
     }
-    public void render(Graphics g){
-        BufferedImage currentImage=animations[action][animIndex];
-        int X = (int)(screenX + width*turningPositionCorrection);
-        int Y = (int)worldY;
-        int W = (int)(width*turningMod);
-        int H = (int)(height);
-
-        g.drawImage(currentImage,X*(int)scale,Y*(int)scale,W*(int)scale,H*(int)scale,null);
-        drawHitbox(g);
-    }
-
     //LOADERS
     private void loadAnimation() {
             BufferedImage img= LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
@@ -142,26 +123,25 @@ public class Player extends  Entity{
     private void updatePos(){
         if(left && !right && !physic.isLeftCollision()){
             physic.moveLeft(speed);
-            turningMod=-1;
-            turningPositionCorrection=1;
+            facingRight =false;
         } else if (right && !left && !physic.isRightCollision()) {
             physic.moveRight(speed);
-            turningMod=1;
-            turningPositionCorrection=0;
+            facingRight =true;
         }
     }
 
     @Override protected void updateHitbox(){
-        hitboxRight.x= screenX +modRightHitx;
+        int X = (int)(screenX-width/2);
+        hitboxRight.x= X +modRightHitx;
         hitboxRight.y=(int) worldY +modRightHity;
 
-        hitboxLeft.x= screenX +modLeftHitx;
+        hitboxLeft.x= X +modLeftHitx;
         hitboxLeft.y=(int) worldY +modLeftHity;
 
-        hitboxHead.x= screenX +modHeadHitx;
+        hitboxHead.x= X +modHeadHitx;
         hitboxHead.y=(int) worldY +modHeadHity;
 
-        hitboxFeet.x= screenX +modFeetHitx;
+        hitboxFeet.x= X +modFeetHitx;
         hitboxFeet.y=(int) worldY +modFeetHity;
     }
     //OTHER
@@ -173,8 +153,8 @@ public class Player extends  Entity{
         jump=false;
     }
     public void levelChanged(){
-        worldX =1* Constants.Sizes.TILE_SIZE;
-        worldY =4* Constants.Sizes.TILE_SIZE;
+        worldX =1* Constants.Sizes.TILE_DEFAULT_SIZE;
+        worldY =4* Constants.Sizes.TILE_DEFAULT_SIZE;
         physic.setyVel(0);
         levelFinished=false;
         levelFinishedBeenLocked=false;
@@ -261,6 +241,33 @@ public class Player extends  Entity{
     public boolean isLevelFinished() {
         return levelFinished;
     }
+    public boolean isFacingRight(){
+        return facingRight;
+    }
+
+    //POSITION GETTERS
+    public int getScreenX() {
+        return screenX;
+    }
+
+    //SIZE GETTERS
+    public float getHeight() {
+        return height;
+    }
+    public float getWidth() {
+        return width;
+    }
+
+    //ANIMATION GETTERS
+    public BufferedImage getCurrentFrame(){
+        return animations[action][animIndex];
+    }
+
+    //UI GETTERS
+
+    public int getDeaths() {
+        return deaths;
+    }
 
     //GAME OVER
     private void die(){
@@ -272,11 +279,5 @@ public class Player extends  Entity{
         if(physic.isHazardCollision()){
             die();
         }
-    }
-    public void renderDeathUI(Graphics g){
-        String kiir="Deaths: " + deaths;
-        g.setFont(new Font("Arial",Font.BOLD,13*(int)scale));
-        g.setColor(Color.black);
-        g.drawString(kiir,11*Constants.Sizes.TILE_SIZE*(int)scale,1*Constants.Sizes.TILE_SIZE*(int)scale);
     }
 }

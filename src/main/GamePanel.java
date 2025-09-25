@@ -32,8 +32,13 @@ public class GamePanel extends JPanel {
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        player.render(g);
-        levelManager.draw(g);
-        player.renderDeathUI(g);
+        //draw player
+        utilz.Drawer.drawPlayer(g,player.getCurrentFrame(), player.getScreenX(), player.worldY,player.getWidth(), player.getHeight(), player.isFacingRight());
+        //draw hitbox
+        utilz.Drawer.drawEntityHitbox(g,player.getHitboxLeft(),player.getHitboxRight(),player.getHitboxHead(),player.getHitboxFeet());
+        //draw level
+        utilz.Drawer.drawLevel(g,LevelManager.getCurrentLevel(),levelManager.getPlatformSprite());
+        //draw deathUI
+        utilz.Drawer.renderDeathUI(g,player.getDeaths());
     }
 }

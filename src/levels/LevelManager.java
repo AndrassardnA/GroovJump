@@ -3,8 +3,6 @@ package levels;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import entityes.Player;
-import main.GameControl;
 import utilz.Constants;
 import utilz.LoadSave;
 
@@ -13,12 +11,14 @@ public class LevelManager {
     private BufferedImage platformSprite[];
     private static Level[] levels= new Level[5];
     public int xMod=0;
-    private final float scale = Constants.Sizes.SCALE;
 
+    //CONSTRUCTOR
     public LevelManager(){
         loadOutSideImg();
         loadLevels();
     }
+
+    //LOADERS
     private void loadLevels(){
         for(int i=1; i<=5;i++){
             levels[i-1]=LoadSave.loadLevelData(i);
@@ -35,13 +35,8 @@ public class LevelManager {
             }
         }
     }
-    public void drawPlatform(Graphics g, Platform p){
-        for(int i=0; i<p.getHeight();i++){
-            for(int j=0; j<p.getWidth();j++){
-                g.drawImage(platformSprite[p.getBody()[i][j]],(p.getPosX()*(int)scale+j* (int)(Constants.Sizes.TILE_SIZE*scale)),p.getPosY()*(int)scale+i* (int)(Constants.Sizes.TILE_SIZE*scale), (int)(Constants.Sizes.TILE_SIZE*scale)+2, (int)(Constants.Sizes.TILE_SIZE*scale)+2,null);
-            }
-        }
-    }
+
+    //-------------------------------------------------------------------
     private void updateLevelPos(Level level){
         Platform[] platformArr=level.getPlatforms();
         for(int i=0; i<platformArr.length;i++){
@@ -57,9 +52,6 @@ public class LevelManager {
         currFinish.setPosX(currFinish.getOriginalPosX()-xMod);
     }
 
-    public static Level getCurrentLevel(){
-        return levels[currentLevel];
-    }
     public void nextLevel(){
         if(currentLevel<levels.length-1){
             currentLevel++;
@@ -68,18 +60,17 @@ public class LevelManager {
             System.out.println("No more levels to load");
         }
     }
-    public void draw(Graphics g){
-        for (int i=0;i<getCurrentLevel().getPlatforms().length;i++){
-            drawPlatform(g,getCurrentLevel().getPlatforms()[i]);
-            //for debug
-           /* g.setColor(Color.RED);
-            g.drawRect(getCurrentLevel().getPlatforms()[i].getBounds().x,getCurrentLevel().getPlatforms()[i].getBounds().y,getCurrentLevel().getPlatforms()[i].getBounds().width,getCurrentLevel().getPlatforms()[i].getBounds().height);*/
-        }
-        getCurrentLevel().drawHazard(g);
-        getCurrentLevel().drawFinish(g);
-    }
 
+    //UPDATE
     public void update(){
         updateLevelPos(getCurrentLevel());
+    }
+
+    //GETTERS
+    public BufferedImage[] getPlatformSprite(){
+        return platformSprite;
+    }
+    public static Level getCurrentLevel(){
+        return levels[currentLevel];
     }
 }

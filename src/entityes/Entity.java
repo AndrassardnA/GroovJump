@@ -1,7 +1,5 @@
 package entityes;
 
-import utilz.Constants;
-
 import java.awt.*;
 
 public abstract class Entity {
@@ -56,16 +54,6 @@ public abstract class Entity {
     }
     public Rectangle getHitboxFeet(){
         return hitboxFeet;
-    }
-    protected void drawHitbox(Graphics g){
-        //for debug;
-        g.setColor(Color.RED);
-        g.drawRect(hitboxLeft.x*(int) Constants.Sizes.SCALE, hitboxLeft.y*(int) Constants.Sizes.SCALE, hitboxLeft.width*(int) Constants.Sizes.SCALE, hitboxLeft.height*(int) Constants.Sizes.SCALE);
-        g.drawRect(hitboxRight.x*(int) Constants.Sizes.SCALE, hitboxRight.y*(int) Constants.Sizes.SCALE, hitboxRight.width*(int) Constants.Sizes.SCALE, hitboxRight.height*(int) Constants.Sizes.SCALE);
-        g.setColor(Color.BLUE);
-        g.drawRect(hitboxHead.x*(int) Constants.Sizes.SCALE,hitboxHead.y*(int) Constants.Sizes.SCALE, hitboxHead.width*(int) Constants.Sizes.SCALE,hitboxHead.height*(int) Constants.Sizes.SCALE);
-
-        g.drawRect(hitboxFeet.x*(int) Constants.Sizes.SCALE, hitboxFeet.y*(int) Constants.Sizes.SCALE, hitboxFeet.width*(int) Constants.Sizes.SCALE, hitboxFeet.height*(int) Constants.Sizes.SCALE);
     }
 
     public float getWorldX() {

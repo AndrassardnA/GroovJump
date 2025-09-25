@@ -10,7 +10,7 @@ public class Platform extends Block{
 
 
     public Platform(int posX, int posY, int bodyWidth, int bodyHeight) {
-        super(posX,posY,bodyWidth*Constants.Sizes.TILE_SIZE,bodyHeight*Constants.Sizes.TILE_SIZE);
+        super(posX,posY,bodyWidth*Constants.Sizes.TILE_DEFAULT_SIZE,bodyHeight*Constants.Sizes.TILE_DEFAULT_SIZE);
         fillPlatformBody(bodyWidth, bodyHeight);
     }
 

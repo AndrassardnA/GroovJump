@@ -12,8 +12,8 @@ public class Block {
     private int width, height;
 
     public Block(int posX, int posY, int width, int height) {
-        this.posX = posX * Constants.Sizes.TILE_SIZE;
-        this.posY = posY * Constants.Sizes.TILE_SIZE;
+        this.posX = posX * Constants.Sizes.TILE_DEFAULT_SIZE;
+        this.posY = posY * Constants.Sizes.TILE_DEFAULT_SIZE;
         originalPosX=this.posX;
         originalPosY=this.posY;
         this.width=width;
