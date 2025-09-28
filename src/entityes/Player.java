@@ -13,11 +13,11 @@ import static utilz.Constants.PlayerConstants.*;
 
 
 public class Player extends  Entity{
-    Physic physic;
     //ANIMATION
     private BufferedImage[][] animations;
     private int animTimer=0; //incrases by frame;
-    private int animIndex, animSpeed=120/6; //means 120/(120/x) means x frames per second
+    private int animIndex;
+    private final int animSpeed=120/6; //means 120/(120/x) means x frames per second
     private int action =RUN;
     //MOVEMENT
     private final float speed=0.65f;
@@ -37,36 +37,17 @@ public class Player extends  Entity{
     private boolean facingRight =true; //1 if facing right -1 if facing left
     private static final int PLAYER_DEFAULT_HEIGHT=16;
     private static final int PLAYER_DEFAULT_WIDTH=16;
-    private float height, width;
     //GAME PLAY
     public int deaths=0;
     private boolean levelFinished=false;
     public boolean levelFinishedBeenLocked=false;
     //CONSTRUCTOR
-    public Player(float x, float y, Level level) {
-        super(x, y,(int)(PLAYER_DEFAULT_WIDTH/* Constants.Sizes.SCALE*/), (int)(PLAYER_DEFAULT_HEIGHT/* Constants.Sizes.SCALE*/));
-        height=PLAYER_DEFAULT_HEIGHT/* Constants.Sizes.SCALE*/;
-        width=PLAYER_DEFAULT_WIDTH/* Constants.Sizes.SCALE*/;
+    public Player(float x, float y) {
+        super(x, y,(PLAYER_DEFAULT_WIDTH), (PLAYER_DEFAULT_HEIGHT));
+        height=PLAYER_DEFAULT_HEIGHT;
+        width=PLAYER_DEFAULT_WIDTH;
         screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
         loadAnimation();
-        setHitboxes();
-        physic=new Physic(this);
-    }
-
-    private void setHitboxes() {
-        modLeftHitx=0;
-        modLeftHity=2;
-        modRightHitx=(int)width;
-        modRightHity=2;
-        modHeadHitx=2;
-        modHeadHity=0;
-        modFeetHitx=2;
-        modFeetHity=(int)height;
-
-        hitboxLeft=new Rectangle((int) screenX +modLeftHitx,(int) worldY +modLeftHity,1,(int)height-3);
-        hitboxRight=new Rectangle((int) screenX +modRightHitx,(int) worldY +modRightHity,1,(int)height-3);
-        hitboxHead=new Rectangle((int) screenX +modHeadHitx,(int) worldY +modHeadHity,(int)width-3,1);
-        hitboxFeet=new Rectangle((int) screenX +modFeetHitx,(int) worldY +modFeetHity,(int)width-3,1);
     }
 
     //UPDATE
@@ -78,7 +59,7 @@ public class Player extends  Entity{
         jump();
         physic.applyGravity();
         physic.dontStuck();
-        updateHitbox();
+        physic.updateEntityHitboxes();
         setAnimation();
         updateAnimLoop();
         tryDying();
@@ -130,20 +111,6 @@ public class Player extends  Entity{
         }
     }
 
-    @Override protected void updateHitbox(){
-        int X = (int)(screenX-width/2);
-        hitboxRight.x= X +modRightHitx;
-        hitboxRight.y=(int) worldY +modRightHity;
-
-        hitboxLeft.x= X +modLeftHitx;
-        hitboxLeft.y=(int) worldY +modLeftHity;
-
-        hitboxHead.x= X +modHeadHitx;
-        hitboxHead.y=(int) worldY +modHeadHity;
-
-        hitboxFeet.x= X +modFeetHitx;
-        hitboxFeet.y=(int) worldY +modFeetHity;
-    }
     //OTHER
     public void stopMoving(){
         up=false;
@@ -246,21 +213,19 @@ public class Player extends  Entity{
     }
 
     //POSITION GETTERS
-    public int getScreenX() {
-        return screenX;
-    }
 
-    //SIZE GETTERS
-    public float getHeight() {
-        return height;
-    }
-    public float getWidth() {
-        return width;
+    @Override
+    public int getX(){
+        return screenX;
     }
 
     //ANIMATION GETTERS
     public BufferedImage getCurrentFrame(){
         return animations[action][animIndex];
+    }
+        //for debug
+    public Physic getPhysic(){
+        return physic;
     }
 
     //UI GETTERS

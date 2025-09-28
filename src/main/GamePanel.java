@@ -10,9 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    private MouseInputs mouseInputs;
-    private Player player;
-    private LevelManager levelManager;
+    private final MouseInputs mouseInputs;
+    private final Player player;
+    private final LevelManager levelManager;
 
     public GamePanel(Player player, LevelManager levelManager){
         setPanelSize();
@@ -33,9 +33,9 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         //draw player
-        utilz.Drawer.drawPlayer(g,player.getCurrentFrame(), player.getScreenX(), player.worldY,player.getWidth(), player.getHeight(), player.isFacingRight());
+        utilz.Drawer.drawPlayer(g,player.getCurrentFrame(), player.getX(), player.getY(),player.getWidth(), player.getHeight(), player.isFacingRight());
         //draw hitbox
-        utilz.Drawer.drawEntityHitbox(g,player.getHitboxLeft(),player.getHitboxRight(),player.getHitboxHead(),player.getHitboxFeet());
+        utilz.Drawer.drawEntityHitbox(g,player.getPhysic().getHitboxLeft(), player.getPhysic().getHitboxRight(),player.getPhysic().getHitboxHead(),player.getPhysic().getHitboxFeet());
         //draw level
         utilz.Drawer.drawLevel(g,LevelManager.getCurrentLevel(),levelManager.getPlatformSprite());
         //draw deathUI

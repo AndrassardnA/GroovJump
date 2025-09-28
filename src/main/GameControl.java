@@ -22,7 +22,7 @@ public class GameControl implements Runnable{
     }
     private void update(){
         player.update();
-        levelManager.xMod=(int)player.worldX;
+        levelManager.xMod=(int)player.getWorldX();
         levelManager.update();
         if(player.isLevelFinished()){
             levelManager.nextLevel();
@@ -39,7 +39,7 @@ public class GameControl implements Runnable{
     }
     private void initClasses() {
         levelManager=new LevelManager();
-        player=new Player(Constants.Sizes.TILE_DEFAULT_SIZE*1,Constants.Sizes.TILE_DEFAULT_SIZE*4, levelManager.getCurrentLevel());
+        player=new Player(Constants.Sizes.TILE_DEFAULT_SIZE*1,Constants.Sizes.TILE_DEFAULT_SIZE*4);
     }
     public Player getPlayer(){
         return player;
