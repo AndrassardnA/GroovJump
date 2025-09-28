@@ -9,7 +9,7 @@ import utilz.LoadSave;
 public class LevelManager {
     private static int currentLevel;
     private BufferedImage platformSprite[];
-    private static Level[] levels= new Level[5];
+    private final static Level[] levels= new Level[5];
     public int xMod=0;
 
     //CONSTRUCTOR

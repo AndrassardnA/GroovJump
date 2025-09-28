@@ -32,4 +32,9 @@ public class Constants {
         public final static int WINDOW_WIDTH=(int)(TILE_DEFAULT_SIZE*16);
         public final static int WINDOW_HEIGHT=(int)(TILE_DEFAULT_SIZE*10);
     }
+    public static class Game{
+        public static final int FPS=120;
+        public static final int UPS=200;
+    }
+
 }

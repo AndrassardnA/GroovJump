@@ -7,11 +7,11 @@ import utilz.Constants;
 import utilz.GameState;
 
 public class GameControl implements Runnable{
-    private GameWindow gameWindow;
-    private GamePanel gamePanel;
-    private  Thread gameLoop;
-    private final int FPS_SET=120;
-    private final int UPS_SET=200;
+    private final GameWindow gameWindow;
+    private final GamePanel gamePanel;
+    private Thread gameLoop;
+    private final int FPS_SET=Constants.Game.FPS;
+    private final int UPS_SET=Constants.Game.UPS;
     private GameState gamestate = GameState.PLAYING;
 
     private LevelManager levelManager;
@@ -43,9 +43,6 @@ public class GameControl implements Runnable{
     }
     public Player getPlayer(){
         return player;
-    }
-    public LevelManager getLevelManager(){
-        return levelManager;
     }
     @Override
     public void run() {

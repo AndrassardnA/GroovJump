@@ -2,23 +2,19 @@ package entityes;
 
 import levels.LevelManager;
 import movement.Physic;
+import utilz.Animator;
 import utilz.Constants;
 import utilz.LoadSave;
-import levels.Level;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import static utilz.Constants.PlayerConstants.*;
 
 
 public class Player extends  Entity{
     //ANIMATION
-    private BufferedImage[][] animations;
-    private int animTimer=0; //incrases by frame;
-    private int animIndex;
-    private final int animSpeed=120/6; //means 120/(120/x) means x frames per second
     private int action =RUN;
+    private Animator animator;
     //MOVEMENT
     private final float speed=0.65f;
     private final float jumpPower=1.7f;
@@ -47,7 +43,7 @@ public class Player extends  Entity{
         height=PLAYER_DEFAULT_HEIGHT;
         width=PLAYER_DEFAULT_WIDTH;
         screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
-        loadAnimation();
+        animator=new Animator(LoadSave.getSprite(LoadSave.PLAYER_SPRITE),4,8);
     }
 
     //UPDATE
@@ -61,38 +57,13 @@ public class Player extends  Entity{
         physic.dontStuck();
         physic.updateEntityHitboxes();
         setAnimation();
-        updateAnimLoop();
+        Animator.updateAnimLoop(action);
         tryDying();
         if(physic.isFinishCollision()){
             levelFinished=true;
         }
     }
-    //LOADERS
-    private void loadAnimation() {
-            BufferedImage img= LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
-            animations=new BufferedImage[4][8];
-            for (int i=0; i< animations.length;i++){
-                for (int j=0; j<animations[i].length;j++){
-                    animations[i][j]=img.getSubimage(j*16,i*16,16,16);
-                }
-            }
-    }
-    //TO UPDATE
-    private void updateAnimLoop() {
-        animTimer++;
 
-        if(animTimer>=animSpeed){
-            animTimer=0;
-            animIndex++;
-            if(animIndex>=getSpritesAmount(action)){
-                animIndex=0;
-                //jump off
-                if(action==JUMP){
-                    jump=false;
-                }
-            }
-        }
-    }
     private void setAnimation(){
         if((right||left)&&!(left&&right)){
             action =RUN;
@@ -220,10 +191,15 @@ public class Player extends  Entity{
     }
 
     //ANIMATION GETTERS
-    public BufferedImage getCurrentFrame(){
-        return animations[action][animIndex];
+
+    public Animator getAnimator() {
+        return animator;
     }
-        //for debug
+    public int getAction(){
+        return action;
+    }
+
+    //for debug
     public Physic getPhysic(){
         return physic;
     }

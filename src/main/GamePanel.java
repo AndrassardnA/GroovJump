@@ -33,7 +33,7 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         //draw player
-        utilz.Drawer.drawPlayer(g,player.getCurrentFrame(), player.getX(), player.getY(),player.getWidth(), player.getHeight(), player.isFacingRight());
+        utilz.Drawer.drawPlayer(g,player.getAnimator().getCurrentFrame(player.getAction()), player.getX(), player.getY(),player.getWidth(), player.getHeight(), player.isFacingRight());
         //draw hitbox
         utilz.Drawer.drawEntityHitbox(g,player.getPhysic().getHitboxLeft(), player.getPhysic().getHitboxRight(),player.getPhysic().getHitboxHead(),player.getPhysic().getHitboxFeet());
         //draw level
