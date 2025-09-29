@@ -9,15 +9,16 @@ public class Constants {
     }
     public static class PlayerConstants{
         public static final int IDLE=0;
-        public static final int JUMP=1;
-        public static final int RUN=2;
+        public static final int JUMP=2;
+        public static final int RUN=1;
         public static final int ATTACK=3;
         public static int getSpritesAmount(int playerAction){
             switch (playerAction){
                 case IDLE:
-                case JUMP:
-                case ATTACK:
                     return 15;
+                case ATTACK:
+                case JUMP:
+                    return 12;
                 case RUN:
                     return 14;
                 default:

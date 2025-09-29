@@ -65,7 +65,10 @@ public class Player extends  Entity{
     }
 
     private void setAnimation(){
-        if((right||left)&&!(left&&right)){
+        if(!physic.isGrounded()){
+            action=JUMP;
+        }
+        else if((right||left)&&!(left&&right)){
             action =RUN;
         }
         else {
