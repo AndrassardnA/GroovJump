@@ -3,6 +3,7 @@ package levels;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import entityes.Player;
 import utilz.Constants;
 import utilz.LoadSave;
 
@@ -53,12 +54,11 @@ public class LevelManager {
     }
 
     public void nextLevel(){
-        if(currentLevel<levels.length-1){
-            currentLevel++;
-        }
-        else{
-            System.out.println("No more levels to load");
-        }
+            if (currentLevel < levels.length - 1) {
+                currentLevel++;
+            } else {
+                System.out.println("No more levels to load");
+            }
     }
 
     //UPDATE

@@ -35,8 +35,7 @@ public class Player extends  Entity{
     private static final int PLAYER_DEFAULT_WIDTH=16;
     //GAME PLAY
     public int deaths=0;
-    private boolean levelFinished=false;
-    public boolean levelFinishedBeenLocked=false;
+    public static boolean levelFinished=false;
     //CONSTRUCTOR
     public Player(float x, float y) {
         super(x, y,(PLAYER_DEFAULT_WIDTH), (PLAYER_DEFAULT_HEIGHT));
@@ -91,11 +90,10 @@ public class Player extends  Entity{
         jump=false;
     }
     public void levelChanged(){
-        worldX =1* Constants.Sizes.TILE_DEFAULT_SIZE;
-        worldY =4* Constants.Sizes.TILE_DEFAULT_SIZE;
-        physic.setyVel(0);
-        levelFinished=false;
-        levelFinishedBeenLocked=false;
+            worldX = 1 * Constants.Sizes.TILE_DEFAULT_SIZE;
+            worldY = 4 * Constants.Sizes.TILE_DEFAULT_SIZE;
+            physic.setyVel(0);
+            System.out.println("Level changed");
     }
     private void jump(){
 
@@ -168,16 +166,9 @@ public class Player extends  Entity{
     }
     public void setPrejumpIntent(boolean prejumpIntent){this.prejumpIntent=prejumpIntent;}
 
-    public void setLevelFinished(boolean levelFinished) {
-        this.levelFinished = levelFinished;
-    }
-
     //BOOLEAN GETTERS
     public boolean isJumpBeingHeld() {
         return jumpBeingHeld;
-    }
-    public boolean isLevelFinished() {
-        return levelFinished;
     }
     public boolean isFacingRight(){
         return facingRight;

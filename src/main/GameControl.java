@@ -24,7 +24,7 @@ public class GameControl implements Runnable{
         player.update();
         levelManager.xMod=(int)player.getWorldX();
         levelManager.update();
-        if(player.isLevelFinished()){
+        if(Player.levelFinished){
             levelManager.nextLevel();
             player.levelChanged();
         }
