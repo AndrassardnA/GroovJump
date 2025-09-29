@@ -36,6 +36,7 @@ public class Player extends  Entity{
     //GAME PLAY
     public int deaths=0;
     public static boolean levelFinished=false;
+    private boolean respawning=false;
     //CONSTRUCTOR
     public Player(float x, float y) {
         super(x, y,(PLAYER_DEFAULT_WIDTH), (PLAYER_DEFAULT_HEIGHT));
@@ -93,7 +94,8 @@ public class Player extends  Entity{
             worldX = 1 * Constants.Sizes.TILE_DEFAULT_SIZE;
             worldY = 4 * Constants.Sizes.TILE_DEFAULT_SIZE;
             physic.setyVel(0);
-            System.out.println("Level changed");
+            physic.updateEntityHitboxes();
+            respawning=false;
     }
     private void jump(){
 
@@ -208,7 +210,8 @@ public class Player extends  Entity{
             levelChanged();
     }
     public void tryDying(){
-        if(physic.isHazardCollision()){
+        if(physic.isHazardCollision()&&!respawning){
+            respawning=true;
             die();
         }
     }
