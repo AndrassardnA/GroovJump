@@ -3,14 +3,13 @@ package utilz;
 import java.awt.image.BufferedImage;
 
 import static utilz.Constants.PlayerConstants.*;
-import static utilz.Constants.PlayerConstants.IDLE;
 
 public class Animator {
     private final BufferedImage[][] animations;
     private final BufferedImage animSprite;
     private static int animTimer=0; //incrases by frame;
     private static int animIndex;
-    private static final int animSpeed=Constants.Game.FPS/6; //means FPS/(FPS/x) means x frames per second
+    private static final int animSpeed=Constants.Game.FPS/9; //means FPS/(FPS/x) means x frames per second
 
     public Animator(BufferedImage sprite, int animTypeCount, int animFrameCount){
         this.animations=new BufferedImage[animTypeCount][animFrameCount];

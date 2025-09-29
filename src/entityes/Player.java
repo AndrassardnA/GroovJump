@@ -13,7 +13,7 @@ import static utilz.Constants.PlayerConstants.*;
 
 public class Player extends  Entity{
     //ANIMATION
-    private int action =RUN;
+    private int action =IDLE;
     private Animator animator;
     //MOVEMENT
     private final float speed=0.65f;
@@ -43,7 +43,7 @@ public class Player extends  Entity{
         height=PLAYER_DEFAULT_HEIGHT;
         width=PLAYER_DEFAULT_WIDTH;
         screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
-        animator=new Animator(LoadSave.getSprite(LoadSave.PLAYER_SPRITE),4,8);
+        animator=new Animator(LoadSave.getSprite(LoadSave.PLAYER_SPRITE),3,15);
     }
 
     //UPDATE

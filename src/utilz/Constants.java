@@ -17,9 +17,9 @@ public class Constants {
                 case IDLE:
                 case JUMP:
                 case ATTACK:
-                    return 8;
+                    return 15;
                 case RUN:
-                    return 6;
+                    return 14;
                 default:
                     return 1;
             }
