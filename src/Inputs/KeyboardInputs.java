@@ -1,16 +1,13 @@
 package Inputs;
 
 import entityes.Player;
-import levels.LevelManager;
-import main.GameControl;
 import main.GamePanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import static utilz.Constants.Directions.*;
 public class KeyboardInputs implements KeyListener {
-    private Player player;
-    private GamePanel gamePanel;
+    private final Player player;
+    private final GamePanel gamePanel;
     public KeyboardInputs(Player p, GamePanel gp){
         this.player =p;
         this.gamePanel=gp;

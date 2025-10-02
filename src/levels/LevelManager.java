@@ -1,15 +1,13 @@
 package levels;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import entityes.Player;
 import utilz.Constants;
 import utilz.LoadSave;
 
 public class LevelManager {
     private static int currentLevel;
-    private BufferedImage platformSprite[];
+    private BufferedImage[] platformSprite;
     private final static Level[] levels= new Level[5];
     public int xMod=0;
 
@@ -17,6 +15,7 @@ public class LevelManager {
     public LevelManager(){
         loadOutSideImg();
         loadLevels();
+     //   BufferedImage image=LoadSave.getSprite(LoadSave.FINISH_SPRITE);
     }
 
     //LOADERS
@@ -40,14 +39,12 @@ public class LevelManager {
     //-------------------------------------------------------------------
     private void updateLevelPos(Level level){
         Platform[] platformArr=level.getPlatforms();
-        for(int i=0; i<platformArr.length;i++){
-            Platform currPlatform=platformArr[i];
-            currPlatform.setPosX(currPlatform.getOriginalPosX()-xMod);
+        for (Platform currPlatform : platformArr) {
+            currPlatform.setPosX(currPlatform.getOriginalPosX() - xMod);
         }
         HazardBlock[] hazardArr=level.getHazards();
-        for(int i=0; i<hazardArr.length;i++){
-            HazardBlock currHazard=hazardArr[i];
-            currHazard.setPosX(currHazard.getOriginalPosX()-xMod);
+        for (HazardBlock currHazard : hazardArr) {
+            currHazard.setPosX(currHazard.getOriginalPosX() - xMod);
         }
         FinishBlock currFinish=level.getFinish();
         currFinish.setPosX(currFinish.getOriginalPosX()-xMod);
@@ -64,6 +61,8 @@ public class LevelManager {
     //UPDATE
     public void update(){
         updateLevelPos(getCurrentLevel());
+        getCurrentLevel().updateFinishFrame();
+        getCurrentLevel().updateHazardFrame();
     }
 
     //GETTERS

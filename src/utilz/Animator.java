@@ -7,9 +7,9 @@ import static utilz.Constants.PlayerConstants.*;
 public class Animator {
     private final BufferedImage[][] animations;
     private final BufferedImage animSprite;
-    private static int animTimer=0; //incrases by frame;
-    private static int animIndex;
-    private static final int animSpeed=Constants.Game.FPS/9; //means FPS/(FPS/x) means x frames per second
+    private int animTimer=0; //incrases by frame;
+    private int animIndex=0;
+    private static final int animSpeed=Constants.Game.FPS/19; //means FPS/(FPS/x) means x frames per second
 
     public Animator(BufferedImage sprite, int animTypeCount, int animFrameCount){
         this.animations=new BufferedImage[animTypeCount][animFrameCount];
@@ -26,7 +26,7 @@ public class Animator {
         }
     }
 
-    public static void updateAnimLoop(int action) {
+    public void updateAnimLoop(int action) {
         animTimer++;
 
         if(animTimer>=animSpeed){

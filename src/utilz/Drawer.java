@@ -1,25 +1,22 @@
 package utilz;
 
-import levels.FinishBlock;
-import levels.HazardBlock;
-import levels.Level;
-import levels.Platform;
+import levels.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Drawer {
-    private static float scale = Constants.Sizes.SCALE;
+    private static final float scale = Constants.Sizes.SCALE;
 
-    public static void drawPlatform(Graphics g, Platform p, BufferedImage platformSprite[]) {
+    public static void drawPlatform(Graphics g, Platform p, BufferedImage[] platformSprite) {
         for (int i = 0; i < p.getHeight(); i++) {
             for (int j = 0; j < p.getWidth(); j++) {
-                g.drawImage(platformSprite[p.getBody()[i][j]], (p.getPosX() * (int) scale + j * (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale)), p.getPosY() * (int) scale + i * (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale), (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale) + 2, (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale) + 2, null);
+                g.drawImage(platformSprite[p.getBody()[i][j]], (p.getPosX() * (int) scale + j * (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale)), p.getPosY() * (int) scale + i * (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale), (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale) + (int)scale, (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale) + (int)scale, null);
             }
         }
     }
 
-    public static void drawLevel(Graphics g, Level level, BufferedImage platformSprite[]) {
+    public static void drawLevel(Graphics g, Level level, BufferedImage[] platformSprite) {
         for (int i = 0; i < level.getPlatforms().length; i++) {
             drawPlatform(g, level.getPlatforms()[i], platformSprite);
 
@@ -28,17 +25,15 @@ public class Drawer {
         drawHazard(g, level.getHazards());
     }
 
-    public static void drawHazard(Graphics g, HazardBlock hazard_arr[]) {
+    public static void drawHazard(Graphics g, HazardBlock[] hazard_arr) {
         g.setColor(Color.RED);
-        for (int i = 0; i < hazard_arr.length; i++) {
-            HazardBlock h = hazard_arr[i];
-            g.fillRect((int) (h.getPosX() * scale), (int) (h.getPosY() * scale), (int) (h.getWidth() * scale), (int) (h.getHeight() * scale));
+        for (HazardBlock h : hazard_arr) {
+             g.drawImage(LevelManager.getCurrentLevel().getHazardFrame(), (int) (h.getPosX() * scale), (int) (h.getPosY() * scale), (int) (h.getWidth() * scale), (int) (h.getHeight() * scale), null);
         }
     }
 
     public static void drawFinish(Graphics g, FinishBlock finish) {
-        g.setColor(Color.BLUE);
-        g.fillRect((int) (finish.getPosX() * scale), (int) (finish.getPosY() * scale), (int) (finish.getWidth() * scale), (int) (finish.getHeight() * scale));
+        g.drawImage(LevelManager.getCurrentLevel().getFinishFrame(), (int) (finish.getPosX() * scale), (int) (finish.getPosY() * scale), (int) (finish.getWidth() * scale), (int) (finish.getHeight() * scale),null);
     }
 
     public static void drawPlayer(Graphics g, BufferedImage image, float x, float y, float width, float height, boolean isFacingRight) {

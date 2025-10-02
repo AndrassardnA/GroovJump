@@ -57,7 +57,7 @@ public class Player extends  Entity{
         physic.dontStuck();
         physic.updateEntityHitboxes();
         setAnimation();
-        Animator.updateAnimLoop(action);
+        animator.updateAnimLoop(action);
         tryDying();
         if(physic.isFinishCollision()){
             levelFinished=true;
