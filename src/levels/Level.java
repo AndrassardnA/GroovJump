@@ -23,6 +23,7 @@ public class Level {
         BufferedImage hazardImage= LoadSave.getSprite(LoadSave.HAZARD_SPRITE);
         hazard_Animator=new Animator(hazardImage,1, Constants.LevelConstants.getSpritesAmount(Constants.LevelConstants.HAZARD));
         BufferedImage finishImage= LoadSave.getSprite(LoadSave.FINISH_SPRITE);
+       // finishImage.getScaledInstance()
         finish_Animator=new Animator(finishImage,1,Constants.LevelConstants.getSpritesAmount(Constants.LevelConstants.FINISH));
     }
 

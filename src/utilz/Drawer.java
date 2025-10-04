@@ -33,16 +33,11 @@ public class Drawer {
     }
 
     public static void drawFinish(Graphics g, FinishBlock finish) {
-        g.drawImage(LevelManager.getCurrentLevel().getFinishFrame(), (int) (finish.getPosX() * scale), (int) (finish.getPosY() * scale), (int) (finish.getWidth() * scale), (int) (finish.getHeight() * scale),null);
+        g.drawImage(LevelManager.getCurrentLevel().getFinishFrame(), (int) (finish.getPosX()*scale), (int) (finish.getPosY() * scale), (int) (finish.getWidth()), (int) (finish.getHeight()),null);
     }
 
-    public static void drawPlayer(Graphics g, BufferedImage image, float x, float y, float width, float height, boolean isFacingRight) {
-        int X = (int) (x + width / 2 * -(isFacingRight ? 1 : -1));
-        int Y = (int) y;
-        int W = (int) (width * (isFacingRight ? 1 : -1));
-        int H = (int) (height);
-
-        g.drawImage(image, X * (int) scale, Y * (int) scale, W * (int) scale, H * (int) scale, null);
+    public static void drawPlayer(Graphics g, BufferedImage image, float x, float y, float width, float height) {
+        g.drawImage(image, (int)(x * scale), (int)(y * scale), (int)(width * scale), (int)(height * scale), null);
     }
 
     public static void drawEntityHitbox(Graphics g, Rectangle hitboxLeft, Rectangle hitboxRight, Rectangle hitboxHead, Rectangle hitboxFeet) {

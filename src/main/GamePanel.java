@@ -33,9 +33,9 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         //draw player
-        utilz.Drawer.drawPlayer(g,player.getAnimator().getCurrentFrame(player.getAction()), player.getX(), player.getY(),player.getWidth(), player.getHeight(), player.isFacingRight());
+        utilz.Drawer.drawPlayer(g,player.getAnimator().getCurrentFrame(player.getAction()+(player.isFacingRight() ? 0 : 1)), player.getX(), player.getY(),player.getWidth(), player.getHeight());
         //draw hitbox
-        //utilz.Drawer.drawEntityHitbox(g,player.getPhysic().getHitboxLeft(), player.getPhysic().getHitboxRight(),player.getPhysic().getHitboxHead(),player.getPhysic().getHitboxFeet());
+        utilz.Drawer.drawEntityHitbox(g,player.getPhysic().getHitboxLeft(), player.getPhysic().getHitboxRight(),player.getPhysic().getHitboxHead(),player.getPhysic().getHitboxFeet());
         //draw level
         utilz.Drawer.drawLevel(g,LevelManager.getCurrentLevel(),levelManager.getPlatformSprite());
         //draw deathUI

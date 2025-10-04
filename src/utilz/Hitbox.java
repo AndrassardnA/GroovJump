@@ -13,14 +13,13 @@ public class Hitbox {
     }
     public static int[] entityHitboxUpdate(float x, float y, float width, float height){
         int leftX, leftY, rightX, rightY, headX, headY, feetX, feetY;
-        float moddedX=x-width/2;
-        leftX=(int)(moddedX);
+        leftX=(int)(x);
         leftY=(int)(y+2);
-        rightX=(int)(moddedX+width-1);
+        rightX=(int)(x+width-1);
         rightY=(int)(y+2);
-        headX=(int)(moddedX+2);
+        headX=(int)(x+2);
         headY=(int)(y);
-        feetX=(int)(moddedX+2);
+        feetX=(int)(x+2);
         feetY=(int)(y+height);
         return new int[]{leftX, leftY, rightX, rightY, headX, headY, feetX, feetY};
     }

@@ -43,7 +43,7 @@ public class Player extends  Entity{
         height=PLAYER_DEFAULT_HEIGHT;
         width=PLAYER_DEFAULT_WIDTH;
         screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
-        animator=new Animator(LoadSave.getSprite(LoadSave.PLAYER_SPRITE),3,15);
+        animator=new Animator(LoadSave.getSprite(LoadSave.PLAYER_SPRITE),6,15);
     }
 
     //UPDATE
