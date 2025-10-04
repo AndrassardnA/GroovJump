@@ -16,7 +16,6 @@ public class LevelManager {
     public LevelManager(){
         loadOutSideImg();
         loadLevels();
-     //   BufferedImage image=LoadSave.getSprite(LoadSave.FINISH_SPRITE);
     }
 
     //LOADERS
