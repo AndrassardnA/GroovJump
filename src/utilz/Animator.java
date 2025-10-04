@@ -18,10 +18,11 @@ public class Animator {
     }
 
     private void loadAnimation() {
-        BufferedImage img= animSprite;
+        int frameWidth=animSprite.getWidth()/animations[0].length;
+        int frameHeight=animSprite.getHeight()/animations.length;
         for (int i=0; i< animations.length;i++){
             for (int j=0; j<animations[i].length;j++){
-                animations[i][j]=img.getSubimage(j*16,i*16,16,16);
+                animations[i][j]=animSprite.getSubimage(j*frameWidth,i*frameHeight,frameWidth,frameHeight);
             }
         }
     }

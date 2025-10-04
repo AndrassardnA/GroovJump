@@ -3,6 +3,7 @@ package levels;
 import java.awt.image.BufferedImage;
 
 import utilz.Constants;
+import utilz.Drawer;
 import utilz.LoadSave;
 
 public class LevelManager {
@@ -27,11 +28,13 @@ public class LevelManager {
     }
     private void loadOutSideImg() {
         BufferedImage img =LoadSave.getSprite(LoadSave.PLATFORM_SPRITE);
+        int scale=Constants.Sizes.SCALE;
+        img= Drawer.reScale(img,img.getWidth()*scale+(scale*4), img.getHeight()*scale+(scale*3));
         platformSprite=new BufferedImage[12];
         for(int i=0; i<3;i++){
             for(int j=0; j<4;j++){
                 int index=i*4+j;
-                    platformSprite[index]=img.getSubimage(j* Constants.Sizes.TILE_DEFAULT_SIZE,i* Constants.Sizes.TILE_DEFAULT_SIZE, Constants.Sizes.TILE_DEFAULT_SIZE, Constants.Sizes.TILE_DEFAULT_SIZE);
+                    platformSprite[index]=img.getSubimage(j* (Constants.Sizes.TILE_DEFAULT_SIZE*scale+scale),i* (Constants.Sizes.TILE_DEFAULT_SIZE*scale+scale), Constants.Sizes.TILE_DEFAULT_SIZE*scale+scale, Constants.Sizes.TILE_DEFAULT_SIZE*scale+scale);
             }
         }
     }

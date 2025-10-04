@@ -4,9 +4,11 @@ import levels.LevelManager;
 import movement.Physic;
 import utilz.Animator;
 import utilz.Constants;
+import utilz.Drawer;
 import utilz.LoadSave;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static utilz.Constants.PlayerConstants.*;
 
@@ -43,7 +45,13 @@ public class Player extends  Entity{
         height=PLAYER_DEFAULT_HEIGHT;
         width=PLAYER_DEFAULT_WIDTH;
         screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
-        animator=new Animator(LoadSave.getSprite(LoadSave.PLAYER_SPRITE),6,15);
+        loadPlayerAnimator();
+    }
+
+    private void loadPlayerAnimator() {
+        BufferedImage playerSprite=LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
+        playerSprite= Drawer.reScale(playerSprite,playerSprite.getWidth()*Constants.Sizes.SCALE, playerSprite.getHeight()*Constants.Sizes.SCALE);
+        animator=new Animator(playerSprite,6,15);
     }
 
     //UPDATE

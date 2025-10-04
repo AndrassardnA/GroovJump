@@ -6,12 +6,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Drawer {
-    private static final float scale = Constants.Sizes.SCALE;
+    private static final int scale = Constants.Sizes.SCALE;
 
     public static void drawPlatform(Graphics g, Platform p, BufferedImage[] platformSprite) {
         for (int i = 0; i < p.getHeight(); i++) {
             for (int j = 0; j < p.getWidth(); j++) {
-                g.drawImage(platformSprite[p.getBody()[i][j]], (p.getPosX() * (int) scale + j * (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale)), p.getPosY() * (int) scale + i * (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale), (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale) + (int)scale, (int) (Constants.Sizes.TILE_DEFAULT_SIZE * scale) + (int)scale, null);
+                //if(p.getPosX() * scale + j * (Constants.Sizes.TILE_DEFAULT_SIZE * scale))
+                g.drawImage(platformSprite[p.getBody()[i][j]], p.getPosX() * scale + j * (Constants.Sizes.TILE_DEFAULT_SIZE * scale), p.getPosY() * scale + i * (Constants.Sizes.TILE_DEFAULT_SIZE * scale), null);
             }
         }
     }
@@ -26,35 +27,47 @@ public class Drawer {
     }
 
     public static void drawHazard(Graphics g, HazardBlock[] hazard_arr) {
-        g.setColor(Color.RED);
         for (HazardBlock h : hazard_arr) {
-             g.drawImage(LevelManager.getCurrentLevel().getHazardFrame(), (int) (h.getPosX() * scale), (int) (h.getPosY() * scale), (int) (h.getWidth() * scale), (int) (h.getHeight() * scale), null);
+             g.drawImage(LevelManager.getCurrentLevel().getHazardFrame(), h.getPosX() * scale,h.getPosY() * scale, null);
         }
     }
 
     public static void drawFinish(Graphics g, FinishBlock finish) {
-        g.drawImage(LevelManager.getCurrentLevel().getFinishFrame(), (int) (finish.getPosX()*scale), (int) (finish.getPosY() * scale), (int) (finish.getWidth()), (int) (finish.getHeight()),null);
+        g.drawImage(LevelManager.getCurrentLevel().getFinishFrame(),finish.getPosX()*scale,finish.getPosY()*scale,null);
     }
 
-    public static void drawPlayer(Graphics g, BufferedImage image, float x, float y, float width, float height) {
-        g.drawImage(image, (int)(x * scale), (int)(y * scale), (int)(width * scale), (int)(height * scale), null);
+    public static void drawPlayer(Graphics g, BufferedImage image, float x, float y) {
+        g.drawImage(image, (int)(x * scale), (int)(y * scale), null);
     }
 
     public static void drawEntityHitbox(Graphics g, Rectangle hitboxLeft, Rectangle hitboxRight, Rectangle hitboxHead, Rectangle hitboxFeet) {
         //for debug;
         g.setColor(Color.RED);
-        g.drawRect(hitboxLeft.x * (int) scale, hitboxLeft.y * (int) scale, hitboxLeft.width * (int) scale, hitboxLeft.height * (int) scale);
-        g.drawRect(hitboxRight.x * (int) scale, hitboxRight.y * (int) scale, hitboxRight.width * (int) scale, hitboxRight.height * (int) scale);
+        g.drawRect(hitboxLeft.x * scale, hitboxLeft.y * scale, hitboxLeft.width * scale, hitboxLeft.height * scale);
+        g.drawRect(hitboxRight.x * scale, hitboxRight.y * scale, hitboxRight.width * scale, hitboxRight.height * scale);
         g.setColor(Color.BLUE);
-        g.drawRect(hitboxHead.x * (int) scale, hitboxHead.y * (int) scale, hitboxHead.width * (int) scale, hitboxHead.height * (int) scale);
+        g.drawRect(hitboxHead.x * scale, hitboxHead.y * scale, hitboxHead.width * scale, hitboxHead.height * scale);
 
-        g.drawRect(hitboxFeet.x * (int) scale, hitboxFeet.y * (int) scale, hitboxFeet.width * (int) scale, hitboxFeet.height * (int) scale);
+        g.drawRect(hitboxFeet.x * scale, hitboxFeet.y * scale, hitboxFeet.width * scale, hitboxFeet.height * scale);
     }
 
     public static void renderDeathUI(Graphics g, int deaths) {
         String kiir = "Deaths: " + deaths;
-        g.setFont(new Font("Arial", Font.BOLD, 13 * (int) scale));
+        g.setFont(new Font("Arial", Font.BOLD, 13 * scale));
         g.setColor(Color.black);
-        g.drawString(kiir, 11 * Constants.Sizes.TILE_DEFAULT_SIZE * (int) scale, 1 * Constants.Sizes.TILE_DEFAULT_SIZE * (int) scale);
+        g.drawString(kiir, 11 * Constants.Sizes.TILE_DEFAULT_SIZE * scale, 1 * Constants.Sizes.TILE_DEFAULT_SIZE * scale);
+    }
+
+    public static BufferedImage reScale(BufferedImage img,int reWidth, int reHeight) {
+        //Dimension newDimension= new Dimension(reWidth,reHeight);
+
+        BufferedImage resized = new BufferedImage(reWidth,reHeight,(img.getColorModel().hasAlpha()? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB));
+
+        Graphics2D g = resized.createGraphics();
+
+        g.drawImage(img,0,0,reWidth, reHeight,null);
+        g.dispose();
+
+        return resized;
     }
 }

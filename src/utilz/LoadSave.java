@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class LoadSave {
-    public static final String PLAYER_SPRITE="sprites/Player_Sprite2.png";
+    public static final String PLAYER_SPRITE="sprites/Player_Sprite.png";
     public static final String PLATFORM_SPRITE="sprites/ground_sprite.png";
     public static final String FINISH_SPRITE="sprites/finish_flag_sprite.png";
     public static final String HAZARD_SPRITE="sprites/spike_sprite.png";

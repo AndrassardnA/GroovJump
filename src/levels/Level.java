@@ -2,6 +2,7 @@ package levels;
 
 import utilz.Animator;
 import utilz.Constants;
+import utilz.Drawer;
 import utilz.LoadSave;
 
 import java.awt.image.BufferedImage;
@@ -21,9 +22,11 @@ public class Level {
 
     private void loadAnimators() {
         BufferedImage hazardImage= LoadSave.getSprite(LoadSave.HAZARD_SPRITE);
+        hazardImage=Drawer.reScale(hazardImage,hazardImage.getWidth()*Constants.Sizes.SCALE,hazardImage.getHeight()*Constants.Sizes.SCALE);
         hazard_Animator=new Animator(hazardImage,1, Constants.LevelConstants.getSpritesAmount(Constants.LevelConstants.HAZARD));
+
         BufferedImage finishImage= LoadSave.getSprite(LoadSave.FINISH_SPRITE);
-       // finishImage.getScaledInstance()
+        finishImage= Drawer.reScale(finishImage,finishImage.getWidth()*Constants.Sizes.SCALE,finishImage.getHeight()*Constants.Sizes.SCALE);
         finish_Animator=new Animator(finishImage,1,Constants.LevelConstants.getSpritesAmount(Constants.LevelConstants.FINISH));
     }
 

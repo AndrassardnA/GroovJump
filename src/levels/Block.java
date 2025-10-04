@@ -9,7 +9,7 @@ public class Block {
     private int posY;
     private final int originalPosX;
     private final int originalPosY;
-    private int width, height;
+    private final int width, height;
 
     public Block(int posX, int posY, int width, int height) {
         this.posX = posX * Constants.Sizes.TILE_DEFAULT_SIZE;
