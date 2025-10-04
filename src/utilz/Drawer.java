@@ -9,12 +9,14 @@ public class Drawer {
     private static final int scale = Constants.Sizes.SCALE;
 
     public static void drawPlatform(Graphics g, Platform p, BufferedImage[] platformSprite) {
+        int windowsWidth=Constants.Sizes.WINDOW_WIDTH*scale;
+        int tileSize=Constants.Sizes.TILE_DEFAULT_SIZE * scale;
+
         for (int i = 0; i < p.getHeight(); i++) {
             for (int j = 0; j < p.getWidth(); j++) {
-                int tileSize=Constants.Sizes.TILE_DEFAULT_SIZE * scale;
                 int x= p.getPosX() * scale + j * (tileSize);
                 int y = p.getPosY() * scale + i * (tileSize);
-                int windowsWidth=Constants.Sizes.WINDOW_WIDTH*scale;
+
                 if(x>-tileSize&&x<windowsWidth+tileSize) {
                     g.drawImage(platformSprite[p.getBody()[i][j]], x, y, null);
                 }
@@ -32,11 +34,13 @@ public class Drawer {
     }
 
     public static void drawHazard(Graphics g, HazardBlock[] hazard_arr) {
+        int tileSize=Constants.Sizes.TILE_DEFAULT_SIZE * scale;
+        int windowsWidth=Constants.Sizes.WINDOW_WIDTH*scale;
+
         for (HazardBlock h : hazard_arr) {
             int x=h.getPosX() * scale;
             int y=h.getPosY() * scale;
-            int tileSize=Constants.Sizes.TILE_DEFAULT_SIZE * scale;
-            int windowsWidth=Constants.Sizes.WINDOW_WIDTH*scale;
+
             if(x>-tileSize&&x<windowsWidth+tileSize) {
                 g.drawImage(LevelManager.getCurrentLevel().getHazardFrame(), x, y, null);
             }
@@ -76,8 +80,6 @@ public class Drawer {
     }
 
     public static BufferedImage reScale(BufferedImage img,int reWidth, int reHeight) {
-        //Dimension newDimension= new Dimension(reWidth,reHeight);
-
         BufferedImage resized = new BufferedImage(reWidth,reHeight,(img.getColorModel().hasAlpha()? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB));
 
         Graphics2D g = resized.createGraphics();
