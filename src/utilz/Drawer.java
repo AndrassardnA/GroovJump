@@ -10,6 +10,7 @@ public class Drawer {
 
     public static void drawPlatform(Graphics g, Platform p, BufferedImage[] platformSprite) {
         int windowsWidth=Constants.Sizes.WINDOW_WIDTH*scale;
+        int windowsHeight=Constants.Sizes.WINDOW_HEIGHT*scale;
         int tileSize=Constants.Sizes.TILE_DEFAULT_SIZE * scale;
 
         for (int i = 0; i < p.getHeight(); i++) {
@@ -17,7 +18,7 @@ public class Drawer {
                 int x= p.getPosX() * scale + j * (tileSize);
                 int y = p.getPosY() * scale + i * (tileSize);
 
-                if(x>-tileSize&&x<windowsWidth+tileSize) {
+                if(x>-tileSize&&x<windowsWidth+tileSize&&y>-tileSize&&y<windowsHeight+tileSize) {
                     g.drawImage(platformSprite[p.getBody()[i][j]], x, y, null);
                 }
             }
@@ -41,7 +42,7 @@ public class Drawer {
             int x=h.getPosX() * scale;
             int y=h.getPosY() * scale;
 
-            if(x>-tileSize&&x<windowsWidth+tileSize) {
+            if(x>-tileSize&&x<windowsWidth+tileSize&&y>=-16*scale&&y<=11*16*scale) {
                 g.drawImage(LevelManager.getCurrentLevel().getHazardFrame(), x, y, null);
             }
         }

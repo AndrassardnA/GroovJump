@@ -54,7 +54,7 @@ public class LevelManager {
         currFinish.setPosX(currFinish.getOriginalPosX()-xMod);
     }
 
-    public void nextLevel(){
+    public static void nextLevel(){
             if (currentLevel < levels.length - 1) {
                 currentLevel++;
             } else {

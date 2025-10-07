@@ -33,8 +33,6 @@ public static void drawBackGround(Graphics g){
         }
 }
     public static void sortBackgroundTiles(){
-        System.out.println(back_ground_img.getWidth());
-        System.out.println(back_ground_img.getHeight());
         Random r = new Random();
         BufferedImage img;
         for(int y=0;y<back_ground.length;y++){

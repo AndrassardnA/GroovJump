@@ -1,6 +1,7 @@
 package Inputs;
 
 import entityes.Player;
+import levels.LevelManager;
 import main.GamePanel;
 
 import java.awt.event.KeyEvent;
@@ -41,7 +42,7 @@ public class KeyboardInputs implements KeyListener {
                 break;
             case KeyEvent.VK_SHIFT:
                 if(!shiftHolded){
-                    gamePanel.getLevelManager().nextLevel();
+                    LevelManager.nextLevel();
                     player.levelChanged();
                     shiftHolded=true;
                 }
