@@ -18,6 +18,8 @@ public class LoadSave {
     public static final String PLATFORM_SPRITE="sprites/ground_sprite.png";
     public static final String FINISH_SPRITE="sprites/finish_flag_sprite.png";
     public static final String HAZARD_SPRITE="sprites/spike_sprite.png";
+    public static final String FORE_GROUND_SPRITE="sprites/front_ground_sprite2.png";
+    public static final String BACK_GROUND_SPRITE="sprites/back_ground3.png";
     public static BufferedImage getSprite(String filePath){
         BufferedImage img=null;
         InputStream is = LoadSave.class.getResourceAsStream("/" + filePath);

@@ -39,7 +39,7 @@ public class GameControl implements Runnable{
     }
     private void initClasses() {
         levelManager=new LevelManager();
-        player=new Player(Constants.Sizes.TILE_DEFAULT_SIZE*1,Constants.Sizes.TILE_DEFAULT_SIZE*4);
+        player=new Player(Constants.Sizes.TILE_DEFAULT_SIZE*-7,Constants.Sizes.TILE_DEFAULT_SIZE*3);
     }
     public Player getPlayer(){
         return player;

@@ -102,7 +102,7 @@ public class Player extends  Entity{
         jump=false;
     }
     public void levelChanged(){
-            worldX = 1 * Constants.Sizes.TILE_DEFAULT_SIZE;
+            worldX = -7 * Constants.Sizes.TILE_DEFAULT_SIZE;
             worldY = 4 * Constants.Sizes.TILE_DEFAULT_SIZE;
             physic.setyVel(0);
             physic.updateEntityHitboxes();
@@ -217,7 +217,6 @@ public class Player extends  Entity{
     //GAME OVER
     private void die(){
             deaths++;
-            System.out.println("You Died! Deaths: " + deaths);
             levelChanged();
     }
     public void tryDying(){

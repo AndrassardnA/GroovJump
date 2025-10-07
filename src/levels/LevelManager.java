@@ -2,6 +2,7 @@ package levels;
 
 import java.awt.image.BufferedImage;
 
+import graphics.Background;
 import utilz.Constants;
 import utilz.Drawer;
 import utilz.LoadSave;
@@ -10,12 +11,13 @@ public class LevelManager {
     private static int currentLevel;
     private BufferedImage[] platformSprite;
     private final static Level[] levels= new Level[5];
-    public int xMod=0;
+    public static int xMod=0;
 
     //CONSTRUCTOR
     public LevelManager(){
         loadOutSideImg();
         loadLevels();
+        Background.sortBackgroundTiles();
     }
 
     //LOADERS
