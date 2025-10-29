@@ -14,6 +14,7 @@ public class Physic {
     private final Entity entity;
     private Rectangle hitboxLeft, hitboxRight, hitboxHead, hitboxFeet;
 
+
     //CONSTRUCTOR
     public Physic(Entity entity){
         this.entity=entity;

@@ -5,11 +5,11 @@ import utilz.Constants;
 import java.awt.*;
 
 public class Block {
-    private int posX;
-    private int posY;
+    protected int posX;
+    protected int posY;
     private final int originalPosX;
     private final int originalPosY;
-    private final int width, height;
+    protected final int width, height;
 
     public Block(int posX, int posY, int width, int height) {
         this.posX = posX * Constants.Sizes.TILE_DEFAULT_SIZE;

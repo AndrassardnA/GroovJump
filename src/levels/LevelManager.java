@@ -9,7 +9,7 @@ import utilz.LoadSave;
 
 public class LevelManager {
     private static int currentLevel;
-    private BufferedImage[] platformSprite;
+    private static BufferedImage[] platformSprite;
     private final static Level[] levels= new Level[5];
     public static int xMod=0;
 
@@ -27,7 +27,7 @@ public class LevelManager {
         }
         currentLevel=0;
     }
-    private void loadOutSideImg() {
+    private static void loadOutSideImg() {
         BufferedImage img =LoadSave.getSprite(LoadSave.PLATFORM_SPRITE);
         int scale=Constants.Sizes.SCALE;
         img= Drawer.reScale(img,img.getWidth()*scale+(scale*4), img.getHeight()*scale+(scale*3));
@@ -70,7 +70,7 @@ public class LevelManager {
     }
 
     //GETTERS
-    public BufferedImage[] getPlatformSprite(){
+    public static BufferedImage[] getPlatformSprite(){
         return platformSprite;
     }
     public static Level getCurrentLevel(){

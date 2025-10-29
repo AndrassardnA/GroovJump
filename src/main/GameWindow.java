@@ -1,11 +1,13 @@
 package main;
 
+import graphics.Draw;
+
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
 public class GameWindow {
-    private JFrame jFrame;
+    private final JFrame jFrame;
     public GameWindow(GamePanel gamePanel, GameControl gameControl){
         jFrame=new JFrame();
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -3,47 +3,43 @@ package main;
 import Inputs.KeyboardInputs;
 import Inputs.MouseInputs;
 import entityes.Player;
-import graphics.Background;
-import levels.LevelManager;
+import graphics.Draw;
 import utilz.Constants;
 
 import javax.swing.*;
+
 import java.awt.*;
 
-public class GamePanel extends JPanel {
-    private final MouseInputs mouseInputs;
-    private final Player player;
-    private final LevelManager levelManager;
 
-    public GamePanel(Player player, LevelManager levelManager){
+
+public class GamePanel extends JPanel{
+    private final MouseInputs mouseInputs;
+    private final Draw draw;
+    private final Player player;
+
+    public GamePanel(Player player){
         setPanelSize();
+        this.draw=new Draw(player);
         this.player=player;
-        this.levelManager=levelManager;
         mouseInputs = new MouseInputs(player);
         addKeyListener(new KeyboardInputs(player,this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
-    }
-    public LevelManager getLevelManager(){
-        return levelManager;
+        setBackground(new Color(91, 151, 235));
     }
     private void setPanelSize() {
-        Dimension size = new Dimension((int)(Constants.Sizes.WINDOW_WIDTH*Constants.Sizes.SCALE), (int)(Constants.Sizes.WINDOW_HEIGHT*Constants.Sizes.SCALE));
+        Dimension size = new Dimension(Constants.Sizes.WINDOW_WIDTH*Constants.Sizes.SCALE, Constants.Sizes.WINDOW_HEIGHT*Constants.Sizes.SCALE);
         setPreferredSize(size);
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        //draw background
-        Background.drawBackGround(g);
-        //draw player
-        utilz.Drawer.drawPlayer(g,player.getAnimator().getCurrentFrame(player.getAction()+(player.isFacingRight() ? 0 : 1)), player.getX(), player.getY());
-        //draw hitbox
-        //utilz.Drawer.drawEntityHitbox(g,player.getPhysic().getHitboxLeft(), player.getPhysic().getHitboxRight(),player.getPhysic().getHitboxHead(),player.getPhysic().getHitboxFeet());
-        //draw level
-        utilz.Drawer.drawLevel(g,LevelManager.getCurrentLevel(),levelManager.getPlatformSprite());
-        //draw frontGround
-        Background.drawFront_Ground(g);
-        //draw deathUI
-        utilz.Drawer.renderDeathUI(g,player.getDeaths());
+        switch (GameControl.gamestate){
+            case PLAYING -> draw.renderPlaying(g);
+            case MENU -> draw.renderMenu(g);
+            case PAUSE -> draw.renderPause(g);
+            case WIN -> draw.renderWin(g);
+        }
+
+
     }
 }

@@ -37,6 +37,7 @@ public class Drawer {
     public static void drawHazard(Graphics g, HazardBlock[] hazard_arr) {
         int tileSize=Constants.Sizes.TILE_DEFAULT_SIZE * scale;
         int windowsWidth=Constants.Sizes.WINDOW_WIDTH*scale;
+        //g.setColor(Color.RED);
 
         for (HazardBlock h : hazard_arr) {
             int x=h.getPosX() * scale;
@@ -44,17 +45,20 @@ public class Drawer {
 
             if(x>-tileSize&&x<windowsWidth+tileSize&&y>=-16*scale&&y<=11*16*scale) {
                 g.drawImage(LevelManager.getCurrentLevel().getHazardFrame(), x, y, null);
+                //g.fillRect((int)h.getBounds().getX()*scale,(int)h.getBounds().getY()*scale,(int)h.getBounds().getWidth()*scale,(int)h.getBounds().getHeight()*scale);
             }
         }
     }
 
     public static void drawFinish(Graphics g, FinishBlock finish) {
+       // g.setColor(Color.BLUE);
         int x=finish.getPosX() * scale;
         int y=finish.getPosY() * scale;
         int tileSize=Constants.Sizes.TILE_DEFAULT_SIZE * scale;
         int windowsWidth=Constants.Sizes.WINDOW_WIDTH*scale;
         if(x>-tileSize&&x<windowsWidth+tileSize) {
             g.drawImage(LevelManager.getCurrentLevel().getFinishFrame(), x, y, null);
+           // g.fillRect((int)finish.getBounds().getX()*scale,(int)finish.getBounds().getY()*scale,(int)finish.getBounds().getWidth()*scale,(int)finish.getBounds().getHeight()*scale);
         }
     }
 
