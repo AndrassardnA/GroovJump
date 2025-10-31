@@ -1,5 +1,6 @@
 package main;
 
+import UI.MainMenu;
 import entityes.Player;
 import levels.LevelManager;
 import utilz.Constants;
@@ -11,10 +12,11 @@ public class GameControl implements Runnable {
     private Thread gameLoop;
     private final int FPS_SET = Constants.Game.FPS;
     private final int UPS_SET = Constants.Game.UPS;
-    public static GameState gamestate = GameState.PLAYING;
+    public static GameState gamestate = GameState.MENU;
 
     private LevelManager levelManager;
-    Player player;
+    private Player player;
+    private MainMenu mainMenu;
 
     private void startGameLoop() {
         gameLoop = new Thread(this);
@@ -33,7 +35,7 @@ public class GameControl implements Runnable {
 
     public GameControl() {
         initClasses();
-        gamePanel = new GamePanel(player);
+        gamePanel = new GamePanel(player, mainMenu);
         gameWindow = new GameWindow(gamePanel, this);
         gamePanel.setFocusable(true); // engedélyezi, hogy fókuszolható legyen (fogadhasson inputokat)
         gamePanel.requestFocus(true); // az inputok a gampanelbe fognak menni
@@ -43,6 +45,7 @@ public class GameControl implements Runnable {
     private void initClasses() {
         levelManager = new LevelManager();
         player = new Player(Constants.Sizes.TILE_DEFAULT_SIZE * -7, Constants.Sizes.TILE_DEFAULT_SIZE * 3);
+        mainMenu = new MainMenu();
     }
 
     public Player getPlayer() {

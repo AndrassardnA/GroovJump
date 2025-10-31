@@ -1,29 +1,43 @@
 package UI;
 
 import java.awt.*;
+import java.awt.geom.Dimension2D;
+import java.awt.image.BufferedImage;
 
 public class Button {
-    private String szoveg;
-    private int x, y;
-    private Rectangle body;
+    private Dimension size;
+    private int x,y;
+    private BufferedImage sImg,uImg;
     private boolean selected;
 
-    public Button(String szoveg, int x, int y, int width, int height){
-        this.szoveg=szoveg;
+    public Button(int x, int y, int width, int height, BufferedImage sImg,BufferedImage uImg){
+        this.size= new Dimension(width,height);
         this.x=x;
         this.y=y;
-        this.body=new Rectangle(x,y,width,height);
+        this.sImg=sImg;
+        this.uImg=uImg;
         selected=false;
     }
-    public void drawButton(Graphics g){
-        if(selected){
-            g.setColor(Color.RED);
-        }else{
-            g.setColor(Color.BLUE);
-        }
-        g.fillRect(body.x, body.y, body.width, body.height);
-        g.setColor(Color.WHITE);
-        //g.setFont(new Font());
-        g.drawString(szoveg,x,y);
+    public int getX(){
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Dimension getSize() {
+        return size;
+    }
+
+    public BufferedImage getImg() {
+        return selected ? sImg : uImg;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean value){
+        this.selected=value;
     }
 }

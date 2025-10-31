@@ -1,14 +1,17 @@
 package graphics;
 
+import UI.MainMenu;
 import entityes.Player;
 import levels.LevelManager;
 
 import java.awt.*;
 
-public class Draw{
-    private Player player;
-    public Draw(Player player){
+public class Render {
+    private final Player player;
+    private final MainMenu mainMenu;
+    public Render(Player player,MainMenu mm){
         this.player=player;
+        this.mainMenu=mm;
     }
 
     public void renderPlaying(Graphics g){
@@ -18,7 +21,9 @@ public class Draw{
         Background.drawFront_Ground(g);
         utilz.Drawer.renderDeathUI(g,player.getDeaths());
     }
-    public void renderMenu(Graphics g){}
+    public void renderMenu(Graphics g){
+        utilz.Drawer.drawMainMenu(g,mainMenu);
+    }
     public void renderPause(Graphics g){}
     public void renderWin(Graphics g){}
 
