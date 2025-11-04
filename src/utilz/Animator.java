@@ -2,7 +2,7 @@ package utilz;
 
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.PlayerConstants.*;
+import static utilz.Constants.ActionConstants.*;
 
 public class Animator {
     private final BufferedImage[][] animations;
@@ -39,7 +39,7 @@ public class Animator {
         }
     }
 
-    public BufferedImage getCurrentFrame(int action){
-        return animations[action][animIndex];
+    public BufferedImage getCurrentFrame(int row_index){
+        return animations[row_index][animIndex];
     }
 }

@@ -2,31 +2,26 @@ package utilz;
 
 public class Constants {
 
-    public static class PlayerConstants{
+    public static class ActionConstants {
         public static final int IDLE=0;
         public static final int JUMP=4;
         public static final int RUN=2;
         public static final int ATTACK=-1;
+
+        public static final int FINISH = 5;
+        public static final int HAZARD = 6;
+        public static final int STAR = 7;
+
         public static int getSpritesAmount(int playerAction){
             return switch (playerAction) {
-                case IDLE -> 15;
+                case IDLE, FINISH, HAZARD -> 15;
                 case ATTACK, JUMP -> 12;
                 case RUN -> 14;
+                case STAR -> 10;
                 default -> 1;
             };
         }
 
-    }
-    public static class LevelConstants {
-        public static final int FINISH = 0;
-        public static final int HAZARD = 1;
-
-        public static int getSpritesAmount(int blockType) {
-            return switch (blockType) {
-                case FINISH, HAZARD -> 15;
-                default -> 1;
-            };
-        }
     }
     public static class Sizes{
         public final static int TILE_DEFAULT_SIZE=16;

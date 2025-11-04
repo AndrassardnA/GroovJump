@@ -1,6 +1,8 @@
 package main;
 
 import UI.MainMenu;
+import UI.PauseMenu;
+import UI.WinScreen;
 import entityes.Player;
 import levels.LevelManager;
 import utilz.Constants;
@@ -17,6 +19,8 @@ public class GameControl implements Runnable {
     private LevelManager levelManager;
     private Player player;
     private MainMenu mainMenu;
+    private PauseMenu pauseMenu;
+    private WinScreen winScreen;
 
     private void startGameLoop() {
         gameLoop = new Thread(this);
@@ -24,18 +28,28 @@ public class GameControl implements Runnable {
     }
 
     private void update() {
-        player.update();
-        levelManager.xMod = (int) player.getWorldX();
-        levelManager.update();
-        if (Player.levelFinished) {
-            levelManager.nextLevel();
-            player.levelChanged();
+        if(gamestate==GameState.PLAYING) {
+            player.update();
+            levelManager.xMod = (int) player.getWorldX();
+            levelManager.update();
+            if (Player.levelFinished) {
+                levelManager.nextLevel();
+                player.levelChanged();
+            }
         }
+        else if(gamestate==GameState.WIN){
+            player.update();
+            winScreen.updateAnims();
+        }
+        else if(gamestate==GameState.MENU){
+            mainMenu.updateAnim();
+        }
+        gamePanel.updateBackground();
     }
 
     public GameControl() {
         initClasses();
-        gamePanel = new GamePanel(player, mainMenu);
+        gamePanel = new GamePanel(player, mainMenu, pauseMenu, winScreen);
         gameWindow = new GameWindow(gamePanel, this);
         gamePanel.setFocusable(true); // engedélyezi, hogy fókuszolható legyen (fogadhasson inputokat)
         gamePanel.requestFocus(true); // az inputok a gampanelbe fognak menni
@@ -45,7 +59,9 @@ public class GameControl implements Runnable {
     private void initClasses() {
         levelManager = new LevelManager();
         player = new Player(Constants.Sizes.TILE_DEFAULT_SIZE * -7, Constants.Sizes.TILE_DEFAULT_SIZE * 3);
-        mainMenu = new MainMenu();
+        mainMenu = new MainMenu(2);
+        pauseMenu = new PauseMenu(2);
+        winScreen = new WinScreen(3);
     }
 
     public Player getPlayer() {

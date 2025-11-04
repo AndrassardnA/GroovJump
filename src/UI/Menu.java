@@ -1,8 +1,30 @@
 package UI;
 
+import utilz.Drawer;
+
+import java.awt.image.BufferedImage;
+
+import static utilz.Constants.Sizes.SCALE;
+
 public class Menu {
     protected Button[] buttons;
+    protected BufferedImage title=new BufferedImage(1,1,1);
+    protected int titleX, titleY;
 
+    public Menu(int arrSize){
+        buttons=new Button[arrSize];
+        loadButtons();
+        setTitle();
+        title=Drawer.reScale(title,title.getWidth()*SCALE,title.getHeight()*SCALE);
+    }
+
+    protected void setTitle(){}
+    protected BufferedImage[] getSubImg(BufferedImage img){
+        img= Drawer.reScale(img,img.getWidth()*SCALE,img.getHeight()*SCALE);
+        BufferedImage sImg = img.getSubimage(0,0,img.getWidth()/2,img.getHeight());
+        BufferedImage uImg = img.getSubimage(img.getWidth()/2,0,img.getWidth()/2,img.getHeight());
+        return new BufferedImage[]{sImg,uImg};
+    }
     protected void loadButtons(){}
     public Button[] getButtons() {
         return buttons;
@@ -28,4 +50,16 @@ public class Menu {
         buttons[buttons.length-1].setSelected(true);
     }
     public void executeButton(){}
+    public BufferedImage getTitle() {
+        return title;
+    }
+
+    public int getTitleX() {
+        return titleX;
+    }
+
+    public int getTitleY() {
+        return titleY;
+    }
+
 }

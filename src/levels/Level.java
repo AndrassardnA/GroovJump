@@ -23,11 +23,11 @@ public class Level {
     private void loadAnimators() {
         BufferedImage hazardImage= LoadSave.getSprite(LoadSave.HAZARD_SPRITE);
         hazardImage=Drawer.reScale(hazardImage,hazardImage.getWidth()*Constants.Sizes.SCALE,hazardImage.getHeight()*Constants.Sizes.SCALE);
-        hazard_Animator=new Animator(hazardImage,1, Constants.LevelConstants.getSpritesAmount(Constants.LevelConstants.HAZARD));
+        hazard_Animator=new Animator(hazardImage,1, Constants.ActionConstants.getSpritesAmount(Constants.ActionConstants.HAZARD));
 
         BufferedImage finishImage= LoadSave.getSprite(LoadSave.FINISH_SPRITE);
         finishImage= Drawer.reScale(finishImage,finishImage.getWidth()*Constants.Sizes.SCALE,finishImage.getHeight()*Constants.Sizes.SCALE);
-        finish_Animator=new Animator(finishImage,1,Constants.LevelConstants.getSpritesAmount(Constants.LevelConstants.FINISH));
+        finish_Animator=new Animator(finishImage,1,Constants.ActionConstants.getSpritesAmount(Constants.ActionConstants.FINISH));
     }
 
     public void updateHazardFrame(){
@@ -37,10 +37,10 @@ public class Level {
         return hazard_Animator.getCurrentFrame(0);
     }
     public void updateFinishFrame(){
-        finish_Animator.updateAnimLoop(Constants.LevelConstants.FINISH);
+        finish_Animator.updateAnimLoop(Constants.ActionConstants.FINISH);
     }
     public BufferedImage getFinishFrame(){
-        return finish_Animator.getCurrentFrame(Constants.LevelConstants.FINISH);
+        return finish_Animator.getCurrentFrame(0);
     }
 
     public Platform[] getPlatforms(){

@@ -1,6 +1,9 @@
 package Inputs;
 
 import UI.MainMenu;
+import UI.Menu;
+import UI.PauseMenu;
+import UI.WinScreen;
 import entityes.Player;
 import levels.LevelManager;
 import main.GamePanel;
@@ -14,10 +17,14 @@ import static main.GameControl.gamestate;
 public class KeyboardInputs implements KeyListener {
     private final Player player;
     private final MainMenu mainMenu;
+    private final PauseMenu pauseMenu;
+    private final WinScreen winScreen;
     private final GamePanel gamePanel;
-    public KeyboardInputs(Player p, MainMenu m, GamePanel gp){
+    public KeyboardInputs(Player p, MainMenu mm, PauseMenu pm, WinScreen ws, GamePanel gp){
         this.player =p;
-        this.mainMenu=m;
+        this.mainMenu=mm;
+        this.pauseMenu=pm;
+        this.winScreen=ws;
         this.gamePanel=gp;
     }
     private boolean shiftHolded=false;
@@ -55,6 +62,8 @@ public class KeyboardInputs implements KeyListener {
                         shiftHolded = true;
                     }
                     break;
+                case KeyEvent.VK_ESCAPE:
+                    gamestate=GameState.PAUSE;
             }
         }
         else if(gamestate==GameState.MENU){
@@ -67,6 +76,33 @@ public class KeyboardInputs implements KeyListener {
                     break;
                 case KeyEvent.VK_ENTER:
                     mainMenu.executeButton();
+                    player.levelChanged();
+                    break;
+            }
+        }
+        else if(gamestate==GameState.PAUSE){
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP:
+                    pauseMenu.previousSelected();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    pauseMenu.nextSelected();
+                    break;
+                case KeyEvent.VK_ENTER:
+                    pauseMenu.executeButton();
+                    break;
+            }
+        }
+        else{
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP:
+                    winScreen.previousSelected();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    winScreen.nextSelected();
+                    break;
+                case KeyEvent.VK_ENTER:
+                    winScreen.executeButton();
                     break;
             }
         }

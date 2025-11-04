@@ -2,10 +2,14 @@ package levels;
 
 import java.awt.image.BufferedImage;
 
+import entityes.Player;
 import graphics.Background;
 import utilz.Constants;
 import utilz.Drawer;
+import utilz.GameState;
 import utilz.LoadSave;
+
+import static main.GameControl.gamestate;
 
 public class LevelManager {
     private static int currentLevel;
@@ -58,7 +62,7 @@ public class LevelManager {
             if (currentLevel < levels.length - 1) {
                 currentLevel++;
             } else {
-                System.out.println("No more levels to load");
+                gamestate= GameState.WIN;
             }
     }
 
@@ -75,5 +79,9 @@ public class LevelManager {
     }
     public static Level getCurrentLevel(){
         return levels[currentLevel];
+    }
+    public static void resetLevels(){
+        currentLevel=0;
+        Player.deaths=0;
     }
 }

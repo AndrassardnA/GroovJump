@@ -2,15 +2,12 @@ package entityes;
 
 import levels.LevelManager;
 import movement.Physic;
-import utilz.Animator;
-import utilz.Constants;
-import utilz.Drawer;
-import utilz.LoadSave;
+import utilz.*;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.PlayerConstants.*;
+import static main.GameControl.gamestate;
+import static utilz.Constants.ActionConstants.*;
 
 
 public class Player extends  Entity{
@@ -36,7 +33,7 @@ public class Player extends  Entity{
     private static final int PLAYER_DEFAULT_HEIGHT=16;
     private static final int PLAYER_DEFAULT_WIDTH=16;
     //GAME PLAY
-    public int deaths=0;
+    public static int deaths=0;
     public static boolean levelFinished=false;
     private boolean respawning=false;
     //CONSTRUCTOR
@@ -56,19 +53,23 @@ public class Player extends  Entity{
 
     //UPDATE
     public void update(){
-        levelFinished=false;
-        updatePos();
-        physic.detectCollision(LevelManager.getCurrentLevel());
-        physic.calculateGravity(fallingSpeed);
-        jump();
-        physic.applyGravity();
-        physic.dontStuck();
+        if(gamestate== GameState.PLAYING) {
+            levelFinished = false;
+            updatePos();
+            physic.detectCollision(LevelManager.getCurrentLevel());
+            physic.calculateGravity(fallingSpeed);
+            jump();
+            physic.applyGravity();
+            physic.dontStuck();
+        }
         physic.updateEntityHitboxes();
-        setAnimation();
-        animator.updateAnimLoop(action);
-        tryDying();
-        if(physic.isFinishCollision()){
-            levelFinished=true;
+        if(gamestate==GameState.PLAYING) {
+            setAnimation();
+            animator.updateAnimLoop(action);
+            tryDying();
+            if (physic.isFinishCollision()) {
+                levelFinished = true;
+            }
         }
     }
 
