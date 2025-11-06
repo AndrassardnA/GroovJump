@@ -3,15 +3,14 @@ package utilz;
 import UI.MainMenu;
 import UI.Button;
 import UI.Menu;
-import UI.PauseMenu;
 import UI.WinScreen;
+import entityes.Player;
 import levels.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.Sizes.WINDOW_HEIGHT;
-import static utilz.Constants.Sizes.WINDOW_WIDTH;
+import static utilz.Constants.Sizes.*;
 
 public class Drawer {
     private static final int scale = Constants.Sizes.SCALE;
@@ -81,11 +80,10 @@ public class Drawer {
         g.drawRect(hitboxFeet.x * scale, hitboxFeet.y * scale, hitboxFeet.width * scale, hitboxFeet.height * scale);
     }
 
-    public static void renderDeathUI(Graphics g, int deaths) {
-        String kiir = "Deaths: " + deaths;
-        g.setFont(new Font("Arial", Font.BOLD, 13 * scale));
-        g.setColor(Color.black);
-        g.drawString(kiir, 11 * Constants.Sizes.TILE_DEFAULT_SIZE * scale, 1 * Constants.Sizes.TILE_DEFAULT_SIZE * scale);
+    public static void drawDeathUI(Graphics g) {
+        int y=scale*5;
+        g.drawImage(Player.deathTextImg,WINDOW_WIDTH*scale-Player.deathTextImg.getWidth()-30*scale,y,null);
+        g.drawImage(Player.deathNumImg,WINDOW_WIDTH*scale-30*scale,y,null);
     }
     public static void drawButton(Graphics g, Button b){
         g.drawImage(b.getImg(),b.getX(),b.getY(),null);
@@ -112,11 +110,8 @@ public class Drawer {
         int y = WINDOW_HEIGHT/2*scale-13*scale;
         g.drawImage(frame,x,y,null);
     }
-    public static void drawWinScreenScore(Graphics g, WinScreen ws, String deaths){
-        g.setFont(new Font("Arial",Font.BOLD,20*scale));
-        g.setColor(Color.BLACK);
-        g.drawString(deaths,(int)(WINDOW_WIDTH/2*scale-g.getFont().getSize()/2),(int)(WINDOW_HEIGHT/2*scale-g.getFont().getSize()-scale));
-
+    public static void drawWinScreenScore(Graphics g){
+        g.drawImage(Player.deathNumImg,WINDOW_WIDTH*scale/2-Player.deathNumImg.getWidth()/2-scale,WINDOW_HEIGHT*scale/2-scale*32,null);
     }
 
     public static BufferedImage reScale(BufferedImage img, int reWidth, int reHeight) {

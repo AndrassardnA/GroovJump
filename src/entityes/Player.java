@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import static main.GameControl.gamestate;
 import static utilz.Constants.ActionConstants.*;
+import static utilz.Constants.Sizes.SCALE;
 
 
 public class Player extends  Entity{
@@ -34,6 +35,9 @@ public class Player extends  Entity{
     private static final int PLAYER_DEFAULT_WIDTH=16;
     //GAME PLAY
     public static int deaths=0;
+    public static BufferedImage deathNumImg=utilz.MyString.getMyNumImg(deaths);
+    private static final BufferedImage preScaledeathTextImg=LoadSave.getSprite("sprites/deaths_text_sprite.png");
+    public static final BufferedImage deathTextImg=Drawer.reScale(preScaledeathTextImg,preScaledeathTextImg.getWidth()*SCALE,preScaledeathTextImg.getHeight()*SCALE);
     public static boolean levelFinished=false;
     private boolean respawning=false;
     //CONSTRUCTOR
@@ -47,7 +51,7 @@ public class Player extends  Entity{
 
     private void loadPlayerAnimator() {
         BufferedImage playerSprite=LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
-        playerSprite= Drawer.reScale(playerSprite,playerSprite.getWidth()*Constants.Sizes.SCALE, playerSprite.getHeight()*Constants.Sizes.SCALE);
+        playerSprite= Drawer.reScale(playerSprite,playerSprite.getWidth()* SCALE, playerSprite.getHeight()* SCALE);
         animator=new Animator(playerSprite,6,15);
     }
 
@@ -209,15 +213,10 @@ public class Player extends  Entity{
         return physic;
     }
 
-    //UI GETTERS
-
-    public int getDeaths() {
-        return deaths;
-    }
-
     //GAME OVER
     private void die(){
             deaths++;
+            deathNumImg=MyString.getMyNumImg(deaths);
             levelChanged();
     }
     public void tryDying(){

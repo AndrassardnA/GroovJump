@@ -4,10 +4,7 @@ import java.awt.image.BufferedImage;
 
 import entityes.Player;
 import graphics.Background;
-import utilz.Constants;
-import utilz.Drawer;
-import utilz.GameState;
-import utilz.LoadSave;
+import utilz.*;
 
 import static main.GameControl.gamestate;
 
@@ -83,5 +80,6 @@ public class LevelManager {
     public static void resetLevels(){
         currentLevel=0;
         Player.deaths=0;
+        Player.deathNumImg= MyString.getMyNumImg(Player.deaths);
     }
 }

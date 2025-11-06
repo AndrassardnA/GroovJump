@@ -35,7 +35,7 @@ public class GamePanel extends JPanel{
     public void updateBackground(){
         switch(gamestate){
             case PLAYING -> setBackground(new Color(91, 151, 235));
-            case MENU -> setBackground(new Color(100, 139, 205));
+            case MENU -> setBackground(new Color(91, 151, 235));
             case PAUSE -> setBackground(new Color(91, 151, 235));
             case WIN -> setBackground(new Color(91, 151, 235));
         }

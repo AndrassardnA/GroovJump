@@ -27,7 +27,7 @@ public class Render {
         utilz.Drawer.drawPlayer(g,player.getAnimator().getCurrentFrame(player.getAction()+(player.isFacingRight() ? 0 : 1)), player.getX(), player.getY());
         utilz.Drawer.drawLevel(g, LevelManager.getCurrentLevel(),LevelManager.getPlatformSprite());
         Background.drawFront_Ground(g);
-        utilz.Drawer.renderDeathUI(g,player.getDeaths());
+        utilz.Drawer.drawDeathUI(g);
     }
     public void renderMenu(Graphics g){
         utilz.Drawer.drawMenu(g,mainMenu);
@@ -45,7 +45,7 @@ public class Render {
     public void renderWin(Graphics g){
         utilz.Drawer.drawMenu(g,winScreen);
         utilz.Drawer.drawWinScreenAnimFrame(g,winScreen);
-        utilz.Drawer.drawWinScreenScore(g,winScreen,Integer.toString(player.getDeaths()));
+        utilz.Drawer.drawWinScreenScore(g);
     }
 
 }
