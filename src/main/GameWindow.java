@@ -15,6 +15,7 @@ public class GameWindow {
         jFrame.setLocation(0,0);//a bal felső sarokba helyezi az ablakot
         jFrame.pack(); // a jpanelhez képest nagyítja az ablakot
         jFrame.setIconImage(LoadSave.getSprite("sprites/game_icon.png"));
+        jFrame.setTitle("Groove Jump");
         jFrame.setResizable(false);
         jFrame.setVisible(true);
         jFrame.addWindowFocusListener(new WindowFocusListener() {
