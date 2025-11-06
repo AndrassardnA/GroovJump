@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="GrooveJump:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GrooveJump_jar</output-path>
+    <root id="archive" name="GrooveJump_jar.jar">
+      <element id="module-output" name="GroovJump" />
+    </root>
+  </artifact>
+</component>

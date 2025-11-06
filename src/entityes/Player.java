@@ -6,160 +6,159 @@ import utilz.*;
 
 import java.awt.image.BufferedImage;
 
-import static main.GameControl.gamestate;
 import static utilz.Constants.ActionConstants.*;
 import static utilz.Constants.Sizes.SCALE;
 
 
-public class Player extends  Entity{
+public class Player extends Entity {
     //ANIMATION
-    private int action =IDLE;
+    private int action = IDLE;
     private Animator animator;
     //MOVEMENT
-    private final float speed=0.65f;
-    private final float jumpPower=1.7f;
-    private final float fallingSpeed=0.038f;
-    private boolean up,down,right,left,jump; // jump: ha lenyomom a space-t true, ha felengedem false. Ha nyomvatartás közben bármi falsra állítja a nyomvatartás nem állítja vissza, újra fel kell engeni és le kell nyomni
+    private final float speed = 0.65f;
+    private final float jumpPower = 1.7f;
+    private final float fallingSpeed = 0.038f;
+    private boolean up, down, right, left, jump; // jump: ha lenyomom a space-t true, ha felengedem false. Ha nyomvatartás közben bármi falsra állítja a nyomvatartás nem állítja vissza, újra fel kell engeni és le kell nyomni
     private boolean jumpBeingHeld; // figyeli, hogy nyomvatartás közben a jump ne álljon automatikusan true-ra ha egyszer false lett. Player ugráskor lesz true és input felengedéskor false
-    private final float coyotJump=0.13f;
-    private float coyotJumpTimer=0;
-    private boolean jumpAlradyPressed=false; //ha lenyomták az ugrást true, ha földreért false
-    private final float prejump=0.15f;
-    private float prejumpTimer=prejump;
-    private boolean prejumpTimerStarted=false;
-    private boolean prejumpIntent=false;
+    private final float coyotJump = 0.13f;
+    private float coyotJumpTimer = 0;
+    private boolean jumpAlradyPressed = false; //ha lenyomták az ugrást true, ha földreért false
+    private final float prejump = 0.15f;
+    private float prejumpTimer = prejump;
+    private boolean prejumpTimerStarted = false;
+    private boolean prejumpIntent = false;
     //RENDER
     private final int screenX;
-    private boolean facingRight =true; //1 if facing right -1 if facing left
-    private static final int PLAYER_DEFAULT_HEIGHT=16;
-    private static final int PLAYER_DEFAULT_WIDTH=16;
+    private boolean facingRight = true; //1 if facing right -1 if facing left
+    private static final int PLAYER_DEFAULT_HEIGHT = 16;
+    private static final int PLAYER_DEFAULT_WIDTH = 16;
     //GAME PLAY
-    public static int deaths=0;
-    public static BufferedImage deathNumImg=utilz.MyString.getMyNumImg(deaths);
-    private static final BufferedImage preScaledeathTextImg=LoadSave.getSprite("sprites/deaths_text_sprite.png");
-    public static final BufferedImage deathTextImg=Drawer.reScale(preScaledeathTextImg,preScaledeathTextImg.getWidth()*SCALE,preScaledeathTextImg.getHeight()*SCALE);
-    public static boolean levelFinished=false;
-    private boolean respawning=false;
+    public static int deaths = 0;
+    public static BufferedImage deathNumImg = utilz.MyString.getMyNumImg(deaths);
+    private static final BufferedImage preScaledeathTextImg = LoadSave.getSprite("sprites/deaths_text_sprite.png");
+    public static final BufferedImage deathTextImg = Drawer.reScale(preScaledeathTextImg, preScaledeathTextImg.getWidth() * SCALE, preScaledeathTextImg.getHeight() * SCALE);
+    public static boolean levelFinished = false;
+    private boolean respawning = false;
+
     //CONSTRUCTOR
     public Player(float x, float y) {
-        super(x, y,(PLAYER_DEFAULT_WIDTH), (PLAYER_DEFAULT_HEIGHT));
-        height=PLAYER_DEFAULT_HEIGHT;
-        width=PLAYER_DEFAULT_WIDTH;
-        screenX=(int)(Constants.Sizes.WINDOW_WIDTH/2-width/2);
+        super(x, y, (PLAYER_DEFAULT_WIDTH), (PLAYER_DEFAULT_HEIGHT));
+        height = PLAYER_DEFAULT_HEIGHT;
+        width = PLAYER_DEFAULT_WIDTH;
+        screenX = (int) (Constants.Sizes.WINDOW_WIDTH / 2 - width / 2);
         loadPlayerAnimator();
     }
 
     private void loadPlayerAnimator() {
-        BufferedImage playerSprite=LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
-        playerSprite= Drawer.reScale(playerSprite,playerSprite.getWidth()* SCALE, playerSprite.getHeight()* SCALE);
-        animator=new Animator(playerSprite,6,15);
+        BufferedImage playerSprite = LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
+        playerSprite = Drawer.reScale(playerSprite, playerSprite.getWidth() * SCALE, playerSprite.getHeight() * SCALE);
+        animator = new Animator(playerSprite, 6, 15);
     }
 
     //UPDATE
-    public void update(){
-        if(gamestate== GameState.PLAYING) {
-            levelFinished = false;
-            updatePos();
-            physic.detectCollision(LevelManager.getCurrentLevel());
-            physic.calculateGravity(fallingSpeed);
-            jump();
-            physic.applyGravity();
-            physic.dontStuck();
-        }
+    public void update() {
+        levelFinished = false;
+        updatePos();
+        physic.detectCollision(LevelManager.getCurrentLevel());
+        physic.calculateGravity(fallingSpeed);
+        jump();
+        physic.applyGravity();
+        physic.dontStuck();
         physic.updateEntityHitboxes();
-        if(gamestate==GameState.PLAYING) {
-            setAnimation();
-            animator.updateAnimLoop(action);
-            tryDying();
-            if (physic.isFinishCollision()) {
-                levelFinished = true;
-            }
+        setAnimation();
+        animator.updateAnimLoop(action);
+        tryDying();
+        if (physic.isFinishCollision()) {
+            levelChanged();
+            levelFinished = true;
+        }
+
+    }
+
+    private void setAnimation() {
+        if (!physic.isGrounded()) {
+            action = JUMP;
+        } else if ((right || left) && !(left && right)) {
+            action = RUN;
+        } else {
+            action = IDLE;
         }
     }
 
-    private void setAnimation(){
-        if(!physic.isGrounded()){
-            action=JUMP;
-        }
-        else if((right||left)&&!(left&&right)){
-            action =RUN;
-        }
-        else {
-            action =IDLE;
-        }
-    }
-    private void updatePos(){
-        if(left && !right && !physic.isLeftCollision()){
+    private void updatePos() {
+        if (left && !right && !physic.isLeftCollision()) {
             physic.moveLeft(speed);
-            facingRight =false;
+            facingRight = false;
         } else if (right && !left && !physic.isRightCollision()) {
             physic.moveRight(speed);
-            facingRight =true;
+            facingRight = true;
         }
     }
 
     //OTHER
-    public void stopMoving(){
-        up=false;
-        down=false;
-        left=false;
-        right=false;
-        jump=false;
+    public void stopMoving() {
+        up = false;
+        down = false;
+        left = false;
+        right = false;
+        jump = false;
     }
-    public void levelChanged(){
-            worldX = -7 * Constants.Sizes.TILE_DEFAULT_SIZE;
-            worldY = 4 * Constants.Sizes.TILE_DEFAULT_SIZE;
-            physic.setyVel(0);
-            physic.updateEntityHitboxes();
-            respawning=false;
-    }
-    private void jump(){
 
-        if(physic.isGrounded()){
-            jumpAlradyPressed=false;
+    public void levelChanged() {
+        worldX = -7 * Constants.Sizes.TILE_DEFAULT_SIZE;
+        worldY = 4 * Constants.Sizes.TILE_DEFAULT_SIZE;
+        physic.setyVel(0);
+        physic.updateEntityHitboxes();
+        respawning = false;
+    }
+
+    private void jump() {
+
+        if (physic.isGrounded()) {
+            jumpAlradyPressed = false;
         }
         setCoyotJumpTimer();
         setPrejumpTimer();
-        boolean canJump=(physic.isGrounded() || coyotJumpTimer<=coyotJump) && !jumpBeingHeld && !jumpAlradyPressed;
-        boolean shouldJump= prejumpTimer>0 && physic.isGrounded();
-        if((jump && canJump) || (prejumpIntent && shouldJump)){
+        boolean canJump = (physic.isGrounded() || coyotJumpTimer <= coyotJump) && !jumpBeingHeld && !jumpAlradyPressed;
+        boolean shouldJump = prejumpTimer > 0 && physic.isGrounded();
+        if ((jump && canJump) || (prejumpIntent && shouldJump)) {
             physic.setyVel(jumpPower);
-            jumpBeingHeld=true;
-            prejumpTimer=-1;
-            prejumpIntent=false;
+            jumpBeingHeld = true;
+            prejumpTimer = -1;
+            prejumpIntent = false;
+        } else if (!jump && !jumpBeingHeld && !physic.isGrounded() && physic.getyVel() > 0) { //small jump
+            physic.setyVel(physic.getyVel() / 1.1f);
         }
-        else if(!jump && !jumpBeingHeld && !physic.isGrounded() && physic.getyVel()>0){ //small jump
-            physic.setyVel(physic.getyVel()/1.1f);
+        if (jump) {
+            jumpAlradyPressed = true;
+            jumpBeingHeld = true;
         }
-        if(jump) {
-            jumpAlradyPressed=true;
-            jumpBeingHeld=true;
+        if (prejumpTimer < 0) {
+            jump = false;
         }
-        if(prejumpTimer<0){
-            jump=false;
-        }
-        if(physic.isHeadButt()){
+        if (physic.isHeadButt()) {
             physic.setyVel(0);
         }
     }
-    private void setPrejumpTimer(){
-        if(!physic.isGrounded()&&prejumpIntent&&!prejumpTimerStarted&&!jumpBeingHeld){
-            prejumpTimer=prejump;
-            prejumpTimerStarted=true;
+
+    private void setPrejumpTimer() {
+        if (!physic.isGrounded() && prejumpIntent && !prejumpTimerStarted && !jumpBeingHeld) {
+            prejumpTimer = prejump;
+            prejumpTimerStarted = true;
         } else if (prejumpTimerStarted) {
-            prejumpTimer-=1f/200f;
+            prejumpTimer -= 1f / 200f;
         }
-        if(physic.getyVel()>0){
-            prejumpTimerStarted=false;
-            prejumpTimer=-1;
+        if (physic.getyVel() > 0) {
+            prejumpTimerStarted = false;
+            prejumpTimer = -1;
         }
     }
-    private void setCoyotJumpTimer(){
-        if(physic.isGrounded()){
-            coyotJumpTimer=0;
-        }
-        else{
-            coyotJumpTimer+=1f/200f;
+
+    private void setCoyotJumpTimer() {
+        if (physic.isGrounded()) {
+            coyotJumpTimer = 0;
+        } else {
+            coyotJumpTimer += 1f / 200f;
         }
     }
 
@@ -167,35 +166,44 @@ public class Player extends  Entity{
     public void setUp(boolean up) {
         this.up = up;
     }
+
     public void setDown(boolean down) {
         this.down = down;
     }
+
     public void setRight(boolean right) {
         this.right = right;
     }
+
     public void setLeft(boolean left) {
         this.left = left;
     }
-    public void setJump(boolean jump){
-        this.jump=jump;
+
+    public void setJump(boolean jump) {
+        this.jump = jump;
     }
+
     public void setJumpBeingHeld(boolean jumpBeingHeld) {
         this.jumpBeingHeld = jumpBeingHeld;
     }
-    public void setPrejumpIntent(boolean prejumpIntent){this.prejumpIntent=prejumpIntent;}
+
+    public void setPrejumpIntent(boolean prejumpIntent) {
+        this.prejumpIntent = prejumpIntent;
+    }
 
     //BOOLEAN GETTERS
     public boolean isJumpBeingHeld() {
         return jumpBeingHeld;
     }
-    public boolean isFacingRight(){
+
+    public boolean isFacingRight() {
         return facingRight;
     }
 
     //POSITION GETTERS
 
     @Override
-    public int getX(){
+    public int getX() {
         return screenX;
     }
 
@@ -204,24 +212,26 @@ public class Player extends  Entity{
     public Animator getAnimator() {
         return animator;
     }
-    public int getAction(){
+
+    public int getAction() {
         return action;
     }
 
     //for debug
-    public Physic getPhysic(){
+    public Physic getPhysic() {
         return physic;
     }
 
     //GAME OVER
-    private void die(){
-            deaths++;
-            deathNumImg=MyString.getMyNumImg(deaths);
-            levelChanged();
+    private void die() {
+        deaths++;
+        deathNumImg = MyString.getMyNumImg(deaths);
+        levelChanged();
     }
-    public void tryDying(){
-        if(physic.isHazardCollision()&&!respawning){
-            respawning=true;
+
+    public void tryDying() {
+        if (physic.isHazardCollision() && !respawning) {
+            respawning = true;
             die();
         }
     }

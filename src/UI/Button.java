@@ -1,24 +1,24 @@
 package UI;
 
 import java.awt.*;
-import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 
 public class Button {
-    private Dimension size;
-    private int x,y;
-    private BufferedImage sImg,uImg;
+    private final Dimension size;
+    private final int x, y;
+    private final BufferedImage sImg, uImg;
     private boolean selected;
 
-    public Button(int x, int y, int width, int height, BufferedImage sImg,BufferedImage uImg){
-        this.size= new Dimension(width,height);
-        this.x=x;
-        this.y=y;
-        this.sImg=sImg;
-        this.uImg=uImg;
-        selected=false;
+    public Button(int x, int y, int width, int height, BufferedImage sImg, BufferedImage uImg) {
+        this.size = new Dimension(width, height);
+        this.x = x;
+        this.y = y;
+        this.sImg = sImg;
+        this.uImg = uImg;
+        selected = false;
     }
-    public int getX(){
+
+    public int getX() {
         return x;
     }
 
@@ -37,7 +37,8 @@ public class Button {
     public boolean isSelected() {
         return selected;
     }
-    public void setSelected(boolean value){
-        this.selected=value;
+
+    public void setSelected(boolean value) {
+        this.selected = value;
     }
 }

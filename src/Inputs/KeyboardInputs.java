@@ -6,7 +6,6 @@ import UI.PauseMenu;
 import UI.WinScreen;
 import entityes.Player;
 import levels.LevelManager;
-import main.GamePanel;
 import utilz.GameState;
 
 import java.awt.event.KeyEvent;
@@ -19,15 +18,15 @@ public class KeyboardInputs implements KeyListener {
     private final MainMenu mainMenu;
     private final PauseMenu pauseMenu;
     private final WinScreen winScreen;
-    private final GamePanel gamePanel;
-    public KeyboardInputs(Player p, MainMenu mm, PauseMenu pm, WinScreen ws, GamePanel gp){
-        this.player =p;
-        this.mainMenu=mm;
-        this.pauseMenu=pm;
-        this.winScreen=ws;
-        this.gamePanel=gp;
+
+    public KeyboardInputs(Player p, MainMenu mm, PauseMenu pm, WinScreen ws) {
+        this.player = p;
+        this.mainMenu = mm;
+        this.pauseMenu = pm;
+        this.winScreen = ws;
     }
-    private boolean shiftHolded=false;
+
+    private boolean shiftHolded = false;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -35,7 +34,7 @@ public class KeyboardInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(gamestate== GameState.PLAYING) {
+        if (gamestate == GameState.PLAYING) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_W:
                     player.setUp(true);
@@ -63,54 +62,20 @@ public class KeyboardInputs implements KeyListener {
                     }
                     break;
                 case KeyEvent.VK_ESCAPE:
-                    gamestate=GameState.PAUSE;
+                    gamestate = GameState.PAUSE;
             }
-        }
-        else if(gamestate==GameState.MENU){
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_UP:
-                    mainMenu.previousSelected();
-                    break;
-                case KeyEvent.VK_DOWN:
-                    mainMenu.nextSelected();
-                    break;
-                case KeyEvent.VK_ENTER:
-                    mainMenu.executeButton();
-                    player.levelChanged();
-                    break;
-            }
-        }
-        else if(gamestate==GameState.PAUSE){
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_UP:
-                    pauseMenu.previousSelected();
-                    break;
-                case KeyEvent.VK_DOWN:
-                    pauseMenu.nextSelected();
-                    break;
-                case KeyEvent.VK_ENTER:
-                    pauseMenu.executeButton();
-                    break;
-            }
-        }
-        else{
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_UP:
-                    winScreen.previousSelected();
-                    break;
-                case KeyEvent.VK_DOWN:
-                    winScreen.nextSelected();
-                    break;
-                case KeyEvent.VK_ENTER:
-                    winScreen.executeButton();
-                    break;
-            }
+        } else if (gamestate == GameState.MENU) {
+            menuNavigation(mainMenu, e.getKeyCode());
+        } else if (gamestate == GameState.PAUSE) {
+            menuNavigation(pauseMenu, e.getKeyCode());
+        } else {
+            menuNavigation(winScreen, e.getKeyCode());
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()){
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 player.setUp(false);
                 break;
@@ -128,7 +93,21 @@ public class KeyboardInputs implements KeyListener {
                 player.setJumpBeingHeld(false);
                 break;
             case KeyEvent.VK_SHIFT:
-                shiftHolded=false;
+                shiftHolded = false;
+                break;
+        }
+    }
+
+    private void menuNavigation(Menu m, int kc) {
+        switch (kc) {
+            case KeyEvent.VK_UP:
+                m.previousSelected();
+                break;
+            case KeyEvent.VK_DOWN:
+                m.nextSelected();
+                break;
+            case KeyEvent.VK_ENTER:
+                m.executeButton();
                 break;
         }
     }

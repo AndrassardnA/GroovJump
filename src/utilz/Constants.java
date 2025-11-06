@@ -3,16 +3,16 @@ package utilz;
 public class Constants {
 
     public static class ActionConstants {
-        public static final int IDLE=0;
-        public static final int JUMP=4;
-        public static final int RUN=2;
-        public static final int ATTACK=-1;
+        public static final int IDLE = 0;
+        public static final int JUMP = 4;
+        public static final int RUN = 2;
+        public static final int ATTACK = -1;
 
         public static final int FINISH = 5;
         public static final int HAZARD = 6;
         public static final int STAR = 7;
 
-        public static int getSpritesAmount(int playerAction){
+        public static int getSpritesAmount(int playerAction) {
             return switch (playerAction) {
                 case IDLE, FINISH, HAZARD -> 15;
                 case ATTACK, JUMP -> 12;
@@ -23,15 +23,17 @@ public class Constants {
         }
 
     }
-    public static class Sizes{
-        public final static int TILE_DEFAULT_SIZE=16;
-        public final static int SCALE=4;
-        public final static int WINDOW_WIDTH=TILE_DEFAULT_SIZE*16;
-        public final static int WINDOW_HEIGHT=TILE_DEFAULT_SIZE*10;
+
+    public static class Sizes {
+        public final static int TILE_DEFAULT_SIZE = 16;
+        public final static int SCALE = 4;
+        public final static int WINDOW_WIDTH = TILE_DEFAULT_SIZE * 16;
+        public final static int WINDOW_HEIGHT = TILE_DEFAULT_SIZE * 10;
     }
-    public static class Game{
-        public static final int FPS=240;
-        public static final int UPS=200;
+
+    public static class Game {
+        public static final int FPS = 240;
+        public static final int UPS = 200;
     }
 
 }

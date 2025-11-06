@@ -8,8 +8,9 @@ import levels.LevelManager;
 import utilz.Constants;
 import utilz.GameState;
 
+import static utilz.Constants.Sizes.TILE_DEFAULT_SIZE;
+
 public class GameControl implements Runnable {
-    private final GameWindow gameWindow;
     private final GamePanel gamePanel;
     private Thread gameLoop;
     private final int FPS_SET = Constants.Game.FPS;
@@ -28,20 +29,17 @@ public class GameControl implements Runnable {
     }
 
     private void update() {
-        if(gamestate==GameState.PLAYING) {
+        if (gamestate == GameState.PLAYING) {
             player.update();
-            levelManager.xMod = (int) player.getWorldX();
+            LevelManager.xMod = (int) player.getWorldX();
             levelManager.update();
             if (Player.levelFinished) {
-                levelManager.nextLevel();
+                LevelManager.nextLevel();
                 player.levelChanged();
             }
-        }
-        else if(gamestate==GameState.WIN){
-            player.update();
+        } else if (gamestate == GameState.WIN) {
             winScreen.updateAnims();
-        }
-        else if(gamestate==GameState.MENU){
+        } else if (gamestate == GameState.MENU) {
             mainMenu.updateAnim();
         }
         gamePanel.updateBackground();
@@ -50,7 +48,7 @@ public class GameControl implements Runnable {
     public GameControl() {
         initClasses();
         gamePanel = new GamePanel(player, mainMenu, pauseMenu, winScreen);
-        gameWindow = new GameWindow(gamePanel, this);
+        GameWindow gameWindow = new GameWindow(gamePanel, this);
         gamePanel.setFocusable(true); // engedélyezi, hogy fókuszolható legyen (fogadhasson inputokat)
         gamePanel.requestFocus(true); // az inputok a gampanelbe fognak menni
         startGameLoop();
@@ -58,7 +56,7 @@ public class GameControl implements Runnable {
 
     private void initClasses() {
         levelManager = new LevelManager();
-        player = new Player(Constants.Sizes.TILE_DEFAULT_SIZE * -7, Constants.Sizes.TILE_DEFAULT_SIZE * 3);
+        player = new Player(TILE_DEFAULT_SIZE * -7, TILE_DEFAULT_SIZE * 3);
         mainMenu = new MainMenu(2);
         pauseMenu = new PauseMenu(2);
         winScreen = new WinScreen(3);

@@ -15,35 +15,38 @@ public class Level {
 
     public Level(Platform[] platforms, HazardBlock[] hazards, FinishBlock finish) {
         this.platforms = platforms;
-        this.hazards=hazards;
-        this.finish=finish;
+        this.hazards = hazards;
+        this.finish = finish;
         loadAnimators();
     }
 
     private void loadAnimators() {
-        BufferedImage hazardImage= LoadSave.getSprite(LoadSave.HAZARD_SPRITE);
-        hazardImage=Drawer.reScale(hazardImage,hazardImage.getWidth()*Constants.Sizes.SCALE,hazardImage.getHeight()*Constants.Sizes.SCALE);
-        hazard_Animator=new Animator(hazardImage,1, Constants.ActionConstants.getSpritesAmount(Constants.ActionConstants.HAZARD));
+        BufferedImage hazardImage = LoadSave.getSprite(LoadSave.HAZARD_SPRITE);
+        hazardImage = Drawer.reScale(hazardImage, hazardImage.getWidth() * Constants.Sizes.SCALE, hazardImage.getHeight() * Constants.Sizes.SCALE);
+        hazard_Animator = new Animator(hazardImage, 1, Constants.ActionConstants.getSpritesAmount(Constants.ActionConstants.HAZARD));
 
-        BufferedImage finishImage= LoadSave.getSprite(LoadSave.FINISH_SPRITE);
-        finishImage= Drawer.reScale(finishImage,finishImage.getWidth()*Constants.Sizes.SCALE,finishImage.getHeight()*Constants.Sizes.SCALE);
-        finish_Animator=new Animator(finishImage,1,Constants.ActionConstants.getSpritesAmount(Constants.ActionConstants.FINISH));
+        BufferedImage finishImage = LoadSave.getSprite(LoadSave.FINISH_SPRITE);
+        finishImage = Drawer.reScale(finishImage, finishImage.getWidth() * Constants.Sizes.SCALE, finishImage.getHeight() * Constants.Sizes.SCALE);
+        finish_Animator = new Animator(finishImage, 1, Constants.ActionConstants.getSpritesAmount(Constants.ActionConstants.FINISH));
     }
 
-    public void updateHazardFrame(){
+    public void updateHazardFrame() {
         hazard_Animator.updateAnimLoop(0);
     }
-    public BufferedImage getHazardFrame(){
+
+    public BufferedImage getHazardFrame() {
         return hazard_Animator.getCurrentFrame(0);
     }
-    public void updateFinishFrame(){
+
+    public void updateFinishFrame() {
         finish_Animator.updateAnimLoop(Constants.ActionConstants.FINISH);
     }
-    public BufferedImage getFinishFrame(){
+
+    public BufferedImage getFinishFrame() {
         return finish_Animator.getCurrentFrame(0);
     }
 
-    public Platform[] getPlatforms(){
+    public Platform[] getPlatforms() {
         return platforms;
     }
 

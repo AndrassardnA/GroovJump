@@ -1,23 +1,23 @@
 package levels;
 
-import utilz.Constants;
 
 import java.awt.*;
+
+import static utilz.Constants.Sizes.TILE_DEFAULT_SIZE;
 
 public class Block {
     protected int posX;
     protected int posY;
     private final int originalPosX;
-    private final int originalPosY;
+
     protected final int width, height;
 
     public Block(int posX, int posY, int width, int height) {
-        this.posX = posX * Constants.Sizes.TILE_DEFAULT_SIZE;
-        this.posY = posY * Constants.Sizes.TILE_DEFAULT_SIZE;
-        originalPosX=this.posX;
-        originalPosY=this.posY;
-        this.width=width;
-        this.height=height;
+        this.posX = posX * TILE_DEFAULT_SIZE;
+        this.posY = posY * TILE_DEFAULT_SIZE;
+        originalPosX = this.posX;
+        this.width = width;
+        this.height = height;
     }
 
     public int getPosX() {
@@ -32,19 +32,12 @@ public class Block {
         return originalPosX;
     }
 
-    public int getOriginalPosY() {
-        return originalPosY;
-    }
-    public Rectangle getBounds(){
-        return new Rectangle(posX,posY,width,height);
+    public Rectangle getBounds() {
+        return new Rectangle(posX, posY, width, height);
     }
 
     public void setPosX(int posX) {
         this.posX = posX;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
     }
 
     public int getWidth() {
