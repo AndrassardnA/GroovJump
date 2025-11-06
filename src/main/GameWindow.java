@@ -1,5 +1,7 @@
 package main;
 
+import utilz.LoadSave;
+
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -12,6 +14,7 @@ public class GameWindow {
         jFrame.add(gamePanel);
         jFrame.setLocation(0,0);//a bal felső sarokba helyezi az ablakot
         jFrame.pack(); // a jpanelhez képest nagyítja az ablakot
+        jFrame.setIconImage(LoadSave.getSprite("sprites/game_icon.png"));
         jFrame.setResizable(false);
         jFrame.setVisible(true);
         jFrame.addWindowFocusListener(new WindowFocusListener() {
