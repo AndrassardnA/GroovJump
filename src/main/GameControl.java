@@ -38,8 +38,10 @@ public class GameControl implements Runnable {
                 player.levelChanged();
             }
         } else if (gamestate == GameState.WIN) {
+            player.levelChanged();
             winScreen.updateAnims();
         } else if (gamestate == GameState.MENU) {
+            player.levelChanged();
             mainMenu.updateAnim();
         }
         gamePanel.updateBackground();
